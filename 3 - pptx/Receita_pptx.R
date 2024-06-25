@@ -21,8 +21,11 @@ my <- read_pptx('template.pptx') %>%
 
 ###############################################
 # 1.1 - Participação percentual por atividade econômica
+setwd("./4 - TABELA_FLEXTABLE/")
+source( encoding = 'UTF-8', file = 'Receita_pptx.R')
 ###############################################
 # carregar a tabela total chamada df
+
 
 
 my <- my %>%

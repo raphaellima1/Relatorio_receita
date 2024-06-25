@@ -84,6 +84,30 @@ receitas_base <- ICMS_base %>%
   rbind(ITCD_base) %>% 
   rbind(FUNDEINFRA_base)
 
+########################################
+# Tabela Projeções
+########################################
+
+projecao_base <- read_excel("Previsão_receitas_tributarias.xlsx", sheet = 2) %>% 
+  pivot_longer(cols = Janeiro:Dezembro) %>% 
+  mutate(Valor = as.numeric(gsub( ",", ".",value)),
+         mes = case_when(
+           name == "Janeiro" ~ 1,
+           name == "Fevereiro" ~ 2,
+           name == "Março" ~ 3,
+           name == "Abril" ~ 4,
+           name == "Maio" ~ 5,
+           name == "Junho" ~ 6,
+           name == "Julho" ~ 7,
+           name == "Agosto" ~ 8,
+           name == "Setembro" ~ 9,
+           name == "Outubro" ~ 10,
+           name == "Novembro" ~ 11,
+           name == "Dezembro" ~ 12,
+           TRUE ~ NA_real_
+         ),
+         ano = 2024) 
+
 
 setwd("./../")
 
