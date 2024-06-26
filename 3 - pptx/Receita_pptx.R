@@ -21,8 +21,10 @@ my <- read_pptx('template.pptx') %>%
 
 ###############################################
 # 1.1 - Participação percentual por atividade econômica
-setwd("./4 - TABELA_FLEXTABLE/")
-source( encoding = 'UTF-8', file = 'Receita_pptx.R')
+setwd("./4- SLIDE/")
+source( encoding = 'UTF-8', file = '1 - SLIDE.R')
+source( encoding = 'UTF-8', file = '1.1 - SLIDE.R')
+
 ###############################################
 # carregar a tabela total chamada df
 
@@ -41,13 +43,13 @@ my <- my %>%
           location = ph_location_type(type = "dt")) %>% 
   
   ph_with(value = "Secretaria de Economia do Estado de Goiás", 
-          location = ph_location_type(type = "ftr")) 
+          location = ph_location_type(type = "ftr")) %>% 
   
-  #ph_with(value = empty_content(), 
-  #        location = ph_location_type(type = "sldNum")) %>%
+  ph_with(value = empty_content(), 
+          location = ph_location_type(type = "sldNum")) %>% 
 #  
-#  ph_with(table_setor, 
-#          location = ph_location(left = 0.6, top = 1.4))
+  ph_with(tabela_acumulado, 
+          location = ph_location(left = 0.3, top = 1.7))
 
 
 
