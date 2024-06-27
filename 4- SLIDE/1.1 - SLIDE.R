@@ -53,8 +53,12 @@ fig1 <- tabela_graf_total %>%
                      name="Legenda:")+
 
   labs(fill = "Title") +
-  theme_hc()
+  theme_hc() + 
+  theme(
+    legend.title = element_blank(),
+    legend.position = "bottom"
+  )
   
-rm(filtro, tabela_graf_total)
+rm(filtro)
 
-fig1
+setwd("./../")

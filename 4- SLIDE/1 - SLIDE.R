@@ -81,7 +81,7 @@ tabela_total <- receitas_base %>%
              " Mensal", " Acumulado", "   ", 'Mensal', 'Acumulado'))
 
 set_flextable_defaults(
-  font.size = 11, font.family = "Calibri",
+  font.size = 10, font.family = "Calibri",
   font.color = "#333333",
   table.layout = "fixed",
   border.color = "gray",
@@ -143,6 +143,6 @@ tabela_acumulado <- tabela_total %>%
   align(i = 1, j = NULL, align = "center", part = "header") %>% 
   hline(i = 1, j = c(2,3,5,6,8,9,11,12), part = "header", 
         border =  std_border) %>% 
-  width(j = c(4,7,10), width = .3, unit = 'cm') %>% 
-  width(j = 1, width = 2.7, unit = 'cm') %>% 
-  width(j = c(2,3,5,6,8,9,11,12), width = 2.2, unit = 'cm') 
+  width(j = c(4,7,10), width = .2, unit = 'cm') %>% 
+  width(j = 1, width = 2.6, unit = 'cm') %>% 
+  width(j = c(2,3,5,6,8,9,11,12), width = 2, unit = 'cm') 

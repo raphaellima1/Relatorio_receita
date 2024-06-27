@@ -49,11 +49,81 @@ my <- my %>%
           location = ph_location_type(type = "sldNum")) %>% 
 #  
   ph_with(tabela_acumulado, 
-          location = ph_location(left = 0.3, top = 1.7))
+          location = ph_location(left = 0.3, top = 1.9)) %>% 
+  
+  ph_with(dml(code = plot(fig1)), 
+          location = ph_location(left =8.1 , top = 1.5, 
+                                 width = 5, height = 4))
+
+
+rm(fig1)
+
+###############################################
+# 1.1 - Participação percentual por atividade econômica
+setwd("./4- SLIDE/")
+source( encoding = 'UTF-8', file = '2 - SLIDE.R')
+###############################################
+# carregar a tabela total chamada df
+
+my <- my %>%
+  add_slide(layout = "título_conteúdo", master = "RRF_template_01") %>%
+  
+  ph_with(value = "Receitas Tributárias", 
+          location = ph_location_type(type = "title")) %>%
+  
+  ph_with(value = glue("Arrecadação das receitas tributárias"),
+          location = ph_location_type(type = "subTitle")) %>%
+  
+  ph_with(value = format(Sys.Date(), "%d/%m/%Y"),
+          location = ph_location_type(type = "dt")) %>% 
+  
+  ph_with(value = "Secretaria de Economia do Estado de Goiás", 
+          location = ph_location_type(type = "ftr")) %>% 
+  
+  ph_with(value = empty_content(), 
+          location = ph_location_type(type = "sldNum")) %>% 
+  #  
+
+  ph_with(dml(code = plot(fig.allg)), 
+          location = ph_location(left = 0.6,
+                                 top = 1.1,
+                                 width = 12,8,
+                                 height = 5.9)
+          )  
+
+rm(fig1, fig2, fig3, fig4, fig.allg)
+
+###############################################
+# 1.1 - Participação percentual por atividade econômica
+setwd("./4- SLIDE/")
+source( encoding = 'UTF-8', file = '3 - SLIDE.R')
+
+
+###############################################
+# carregar a tabela total chamada df
 
 
 
-
+my <- my %>%
+  add_slide(layout = "título_conteúdo", master = "RRF_template_01") %>%
+  
+  ph_with(value = "Receitas Tributárias", 
+          location = ph_location_type(type = "title")) %>%
+  
+  ph_with(value = glue("Arrecadação das receitas tributárias"),
+          location = ph_location_type(type = "subTitle")) %>%
+  
+  ph_with(value = format(Sys.Date(), "%d/%m/%Y"),
+          location = ph_location_type(type = "dt")) %>% 
+  
+  ph_with(value = "Secretaria de Economia do Estado de Goiás", 
+          location = ph_location_type(type = "ftr")) %>% 
+  
+  ph_with(value = empty_content(), 
+          location = ph_location_type(type = "sldNum")) %>% 
+  #  
+  ph_with(tabela_COM_ICMS, 
+          location = ph_location(left = 0.4, top = 1.3)) 
 
 
 ##############################################

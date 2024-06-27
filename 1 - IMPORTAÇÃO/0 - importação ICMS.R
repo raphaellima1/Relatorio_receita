@@ -108,6 +108,17 @@ projecao_base <- read_excel("Previsão_receitas_tributarias.xlsx", sheet = 2) %>
          ),
          ano = 2024) 
 
-
+########################################
+# Tabela Projeções - Componentes do ICMS
+########################################
+# 
+projecao_ICMS <- read_csv2("previsoes_icms_setor_mar_2024.csv") %>% 
+  setNames(c('Setor', 'Mes', 'Valor', 'pred') ) %>% 
+  mutate(ano = year(Mes),
+         mes = month(Mes)) %>%
+  filter(ano > 2022) %>%
+  mutate(valor = rowSums(select(., Valor, pred), na.rm = TRUE)) %>% 
+  select(Setor, Mes, valor, ano, mes)
+  
 setwd("./../")
 
