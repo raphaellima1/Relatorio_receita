@@ -121,9 +121,9 @@ tabela_COMB %>%
   select(Grupo, dif_acum) %>% 
   ggplot(aes(x = dif_acum, y = reorder(Grupo, dif_acum), fill = dif_acum > 0)) +  # Reorder para ordenar os grupos
   geom_col()+
-  geom_label(aes(label = sprintf("%.2f", dif_acum)),  # Reduzir o número de casas decimais
-             position = position_stack(vjust = 0.5),  # Centraliza o texto na barra
-             color = "black", fill = "white") +  # Cor do texto e do fundo do rótulo
+  geom_label(aes(label = sprintf("%.2f", dif_acum),
+                 x = ifelse(dif_acum > 0, dif_acum - 1.6, dif_acum + 1.6)),  # Ajusta a posição dos rótulos
+             color = "black", fill = "white") +
   scale_fill_manual(values = c("#b6293a", "#29B6A5"), guide = FALSE) 
 
 setwd("./../")
