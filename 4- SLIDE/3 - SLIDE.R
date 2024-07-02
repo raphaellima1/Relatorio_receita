@@ -116,14 +116,27 @@ tabela_COM_ICMS <- tabela_COMB %>%
   width(j = 1, width = 4.3, unit = 'cm') %>% 
   width(j = c(2,3,5,6,8,9,11,12), width = 2.1, unit = 'cm')
 
-
-tabela_COMB %>% 
-  select(Grupo, dif_acum) %>% 
+# Definir o tamanho do gráfico
+#options(repr.plot.width = 3.4, repr.plot.height = 5)
+fig6 <- tabela_COMB %>% 
+  select(Grupo, dif_acum) %>%
   ggplot(aes(x = dif_acum, y = reorder(Grupo, dif_acum), fill = dif_acum > 0)) +  # Reorder para ordenar os grupos
-  geom_col()+
-  geom_label(aes(label = sprintf("%.2f", dif_acum),
-                 x = ifelse(dif_acum > 0, dif_acum - 1.6, dif_acum + 1.6)),  # Ajusta a posição dos rótulos
-             color = "black", fill = "white") +
-  scale_fill_manual(values = c("#b6293a", "#29B6A5"), guide = FALSE) 
+  geom_col() +
+  geom_label(aes(label = sub("\\.", ",", sprintf("%.2f", dif_acum)),
+                 x = ifelse(dif_acum > 0, dif_acum - 2.5, dif_acum + 2.5)),  # Ajusta a posição dos rótulos
+             color = "black", fill = "white", size = 2.5) +
+  scale_fill_manual(values = c("#940f0f", "#1e5cda"), guide = FALSE) +
+  theme_hc() + 
+  labs(title = "Acumulado mês / Acumulado mês anterior",
+       x = "Variação (%)", 
+       y = "Grupo de ICMS") +
+  theme(text=element_text(size=8),
+        plot.title = element_text(hjust = 0.9),
+        legend.title = element_blank(),
+        legend.position = "bottom"
+  )
+
+
+print(fig6)
 
 setwd("./../")

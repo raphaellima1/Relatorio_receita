@@ -30,7 +30,7 @@ fig1 <- tabela_ICMS %>%
                 linetype = "Projeção 2024"), size=1) +
   
   labs(x = "  ", 
-       y = " Valores em bilhões de Reais (R$) ", 
+       y = "Valores em Reais (R$)", 
        title = ' ',
        linetype = "Variable",
        color = "Variable") +
@@ -161,7 +161,7 @@ fig3 <- tabela_ITCD %>%
                 linetype = "Projeção ITCD 2024"), size=1) +
   
   labs(x = "  ", 
-       y = " Valores em bilhões de Reais (R$) ", 
+       y = "Valores em Reais (R$)", 
        title = ' ',
        linetype = "Variable",
        color = "Variable") +

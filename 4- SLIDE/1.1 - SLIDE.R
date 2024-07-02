@@ -32,8 +32,8 @@ fig1 <- tabela_graf_total %>%
                 linetype = "Projeção 2024"), size=1) +
   
   labs(x = "  ", 
-       y = " Valores em bilhões de Reais (R$) ", 
-       title = ' ',
+       y = "Valores em Reais (R$)", 
+       title = "RECEITA TOTAL",
        linetype = "Variable",
        color = "Variable") +
   
@@ -55,6 +55,7 @@ fig1 <- tabela_graf_total %>%
   labs(fill = "Title") +
   theme_hc() + 
   theme(
+    plot.title = element_text(hjust = 0.5),
     legend.title = element_blank(),
     legend.position = "bottom"
   )

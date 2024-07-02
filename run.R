@@ -10,6 +10,9 @@ setwd('\\\\sefazarquivos/AEMFPF/DIVERSOS/Relatorio_receita')
 setwd("./1 - IMPORTAÇÃO/")
 source( encoding = 'UTF-8', file = '0 - importação ICMS.R')
 
+setwd("./1 - IMPORTAÇÃO/")
+source( encoding = 'UTF-8', file = '1 - importação Receita Total.R')
 
 setwd("./3 - pptx/")
 source( encoding = 'UTF-8', file = 'Receita_pptx.R')
+
