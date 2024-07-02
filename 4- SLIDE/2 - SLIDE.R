@@ -21,13 +21,13 @@ tabela_ICMS$acum_proj <- cumsum(tabela_ICMS$acum_proj)
 fig1 <- tabela_ICMS %>% 
   ggplot()+
   geom_line(aes(x = data, y = acum_23, color = "Acumulado 2023", 
-                linetype = "Acumulado 2023"), size=1) +
+                linetype = "Acumulado 2023"), size=0.5) +
   
   geom_line(aes(x = data, y = acum_24, color = "Acumulado 2024", 
                 linetype = "Acumulado 2024"), size=1) +
   
   geom_line(aes(x = data, y = acum_proj, color = "Projeção 2024", 
-                linetype = "Projeção 2024"), size=1) +
+                linetype = "Projeção 2024"), size=0.5) +
   
   labs(x = "  ", 
        y = "Valores em Reais (R$)", 
@@ -40,9 +40,9 @@ fig1 <- tabela_ICMS %>%
   scale_x_date(date_breaks = "2 month", 
                date_labels = "%b")+
   scale_color_manual(breaks = c('Acumulado 2023', "Acumulado 2024", 'Projeção 2024'),
-                     values = c("Acumulado 2024"="#940f0f",
-                                "Acumulado 2023"="#1e5cda",
-                                "Projeção 2024"="#dc2d2d") 
+                     values = c("Acumulado 2024"="#3f3939",
+                                "Acumulado 2023"="#4a760b",
+                                "Projeção 2024"="#fc7768") 
                      # name="Legenda:"
                      )+
   scale_linetype_manual(breaks = c('Acumulado 2023', "Acumulado 2024", 'Projeção 2024'),
@@ -88,13 +88,13 @@ tabela_IPVA$acum_proj <- cumsum(tabela_IPVA$acum_proj)
 fig2 <- tabela_IPVA %>% 
   ggplot()+
   geom_line(aes(x = data, y = acum_23, color = "Acumulado IPVA 2023", 
-                linetype = "Acumulado IPVA 2023"), size=1) +
+                linetype = "Acumulado IPVA 2023"), size=0.5) +
   
   geom_line(aes(x = data, y = acum_24, color = "Acumulado IPVA 2024", 
                 linetype = "Acumulado IPVA 2024"), size=1) +
   
   geom_line(aes(x = data, y = acum_proj, color = "Projeção IPVA 2024", 
-                linetype = "Projeção IPVA 2024"), size=1) +
+                linetype = "Projeção IPVA 2024"), size=0.5) +
   
   labs(x = "  ", 
        y = NULL, 
@@ -107,9 +107,9 @@ fig2 <- tabela_IPVA %>%
   scale_x_date(date_breaks = "2 month", 
                date_labels = "%b")+
   scale_color_manual(breaks = c('Acumulado IPVA 2023', "Acumulado IPVA 2024", 'Projeção IPVA 2024'),
-                     values = c("Acumulado IPVA 2024"="#940f0f",
-                                "Acumulado IPVA 2023"="#1e5cda",
-                                "Projeção IPVA 2024"="#dc2d2d"), 
+                     values = c("Acumulado IPVA 2024"="#3f3939",
+                                "Acumulado IPVA 2023"="#4a760b",
+                                "Projeção IPVA 2024"="#fc7768"), 
                      name="Legenda:")+
   scale_linetype_manual(breaks = c('Acumulado IPVA 2023', "Acumulado IPVA 2024", 'Projeção IPVA 2024'),
                         values = c("Acumulado IPVA 2024"='solid',
@@ -152,13 +152,13 @@ tabela_ITCD$acum_proj <- cumsum(tabela_ITCD$acum_proj)
 fig3 <- tabela_ITCD %>% 
   ggplot()+
   geom_line(aes(x = data, y = acum_23, color = "Acumulado ITCD 2023", 
-                linetype = "Acumulado ITCD 2023"), size=1) +
+                linetype = "Acumulado ITCD 2023"), size=0.5) +
   
   geom_line(aes(x = data, y = acum_24, color = "Acumulado ITCD 2024", 
                 linetype = "Acumulado ITCD 2024"), size=1) +
   
   geom_line(aes(x = data, y = acum_proj, color = "Projeção ITCD 2024", 
-                linetype = "Projeção ITCD 2024"), size=1) +
+                linetype = "Projeção ITCD 2024"), size=0.5) +
   
   labs(x = "  ", 
        y = "Valores em Reais (R$)", 
@@ -171,9 +171,9 @@ fig3 <- tabela_ITCD %>%
   scale_x_date(date_breaks = "2 month", 
                date_labels = "%b")+
   scale_color_manual(breaks = c('Acumulado ITCD 2023', "Acumulado ITCD 2024", 'Projeção ITCD 2024'),
-                     values = c("Acumulado ITCD 2024"="#940f0f",
-                                "Acumulado ITCD 2023"="#1e5cda",
-                                "Projeção ITCD 2024"="#dc2d2d"), 
+                     values = c("Acumulado ITCD 2024"="#3f3939",
+                                "Acumulado ITCD 2023"="#4a760b",
+                                "Projeção ITCD 2024"="#fc7768"), 
                      name="Legenda:")+
   scale_linetype_manual(breaks = c('Acumulado ITCD 2023', "Acumulado ITCD 2024", 'Projeção ITCD 2024'),
                         values = c("Acumulado ITCD 2024"='solid',
@@ -216,13 +216,13 @@ tabela_FUNDEINFRA$acum_proj <- cumsum(tabela_FUNDEINFRA$acum_proj)
 fig4 <- tabela_FUNDEINFRA %>% 
   ggplot()+
   geom_line(aes(x = data, y = acum_23, color = "Acumulado FUNDEINFRA 2023", 
-                linetype = "Acumulado FUNDEINFRA 2023"), size=1) +
+                linetype = "Acumulado FUNDEINFRA 2023"), size=0.5) +
   
   geom_line(aes(x = data, y = acum_24, color = "Acumulado FUNDEINFRA 2024", 
                 linetype = "Acumulado FUNDEINFRA 2024"), size=1) +
   
   geom_line(aes(x = data, y = acum_proj, color = "Projeção FUNDEINFRA 2024", 
-                linetype = "Projeção FUNDEINFRA 2024"), size=1) +
+                linetype = "Projeção FUNDEINFRA 2024"), size=0.5) +
   
   labs(x = "  ", 
        y = NULL, 
@@ -235,9 +235,9 @@ fig4 <- tabela_FUNDEINFRA %>%
   scale_x_date(date_breaks = "2 month", 
                date_labels = "%b")+
   scale_color_manual(breaks = c('Acumulado FUNDEINFRA 2023', "Acumulado FUNDEINFRA 2024", 'Projeção FUNDEINFRA 2024'),
-                     values = c("Acumulado FUNDEINFRA 2024"="#940f0f",
-                                "Acumulado FUNDEINFRA 2023"="#1e5cda",
-                                "Projeção FUNDEINFRA 2024"="#dc2d2d"), 
+                     values = c("Acumulado FUNDEINFRA 2024"="#3f3939",
+                                "Acumulado FUNDEINFRA 2023"="#4a760b",
+                                "Projeção FUNDEINFRA 2024"="#fc7768"), 
                      name="Legenda:")+
   scale_linetype_manual(breaks = c('Acumulado FUNDEINFRA 2023', "Acumulado FUNDEINFRA 2024", 'Projeção FUNDEINFRA 2024'),
                         values = c("Acumulado FUNDEINFRA 2024"='solid',

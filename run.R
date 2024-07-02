@@ -1,6 +1,6 @@
 pacman::p_load(tidyverse, readxl, lubridate, glue, ggpubr,gridExtra,grid,
                ggthemes,officer, gt, flextable, kableExtra, magrittr,rvg, 
-               mschart, janitor,sidrar, lemon)
+               mschart, janitor,sidrar, lemon,zoo)
 
 setwd('\\\\sefazarquivos/AEMFPF/DIVERSOS/Relatorio_receita')
 

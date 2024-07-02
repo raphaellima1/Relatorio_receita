@@ -139,20 +139,6 @@ my <- my %>%
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ###############################################
 # 1.1 - Participação percentual por atividade econômica
 setwd("./4- SLIDE/")

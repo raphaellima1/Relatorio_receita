@@ -125,7 +125,7 @@ fig6 <- tabela_COMB %>%
   geom_label(aes(label = sub("\\.", ",", sprintf("%.2f", dif_acum)),
                  x = ifelse(dif_acum > 0, dif_acum - 2.5, dif_acum + 2.5)),  # Ajusta a posição dos rótulos
              color = "black", fill = "white", size = 2.5) +
-  scale_fill_manual(values = c("#940f0f", "#1e5cda"), guide = FALSE) +
+  scale_fill_manual(values = c("#fc7768", "#4a760b"), guide = FALSE) +
   theme_hc() + 
   labs(title = "Acumulado mês / Acumulado mês anterior",
        x = "Variação (%)", 

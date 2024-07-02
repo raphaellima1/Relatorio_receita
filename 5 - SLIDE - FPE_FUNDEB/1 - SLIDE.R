@@ -5,8 +5,8 @@ FPE <- realizado %>%
   pivot_longer(cols =  2:13) %>% 
   mutate(data = ymd(paste0(name, '01'))) %>% 
   setNames(c('FPE', 'name', 'RCL_2024', 'data')) %>% 
-  bind_cols(projeção %>% 
-              filter(...4 == 'Cota-Parte do FPE') %>% 
+  bind_cols(projeção1 %>% 
+              filter(Colunas1 == 'Cota-Parte do FPE') %>% 
               select(c(3, starts_with(glue('{year(Sys.Date())}')))) %>% 
               mutate(across(2:13, as.numeric)/1000000) %>% 
               pivot_longer(cols =  2:13) %>% 

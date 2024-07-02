@@ -5,8 +5,8 @@ FUNDEB <- realizado %>%
   pivot_longer(cols =  2:13) %>% 
   mutate(data = ymd(paste0(name, '01'))) %>% 
   setNames(c('FUNDEB', 'name', 'RCL_2024', 'data')) %>% 
-  bind_cols(projeção %>% 
-              filter(...4 == 'Transferências do FUNDEB') %>% 
+  bind_cols(projeção1 %>% 
+              filter(Colunas1 == 'Transferências do FUNDEB') %>% 
               select(c(4, starts_with(glue('{year(Sys.Date())}')))) %>% 
               mutate(across(2:13, as.numeric)/1000000) %>% 
               pivot_longer(cols =  2:13) %>% 
