@@ -11,7 +11,7 @@ fig1 <- RLT %>%
   
   labs(x = "  ", 
        y = "Valores em Reais (R$)", 
-       title = "RLT ACUMULADA",
+       title = "RTL ACUMULADA",
        linetype = "Variable",
        color = "Variable") +
   
@@ -31,10 +31,11 @@ fig1 <- RLT %>%
                         name="Legenda:")+
   
   labs(fill = "Title") +
-  theme_hc() + 
+  theme_classic2() +  
   theme(
     plot.title = element_text(hjust = 0.5),
     legend.title = element_blank(),
+    plot.background = element_rect(colour = "gray", linewidth = 0.2),
     legend.position = "bottom"
   )
 
@@ -53,7 +54,7 @@ fig2 <- RLT %>%
   
   labs(x = "  ", 
        y = "Valores em Reais (R$)", 
-       title = "RLT MENSAL",
+       title = "RTL MENSAL",
        linetype = "Variable",
        color = "Variable") +
   
@@ -73,13 +74,26 @@ fig2 <- RLT %>%
                         name="Legenda:")+
   
   labs(fill = "Title") +
-  theme_hc() + 
+  theme_classic2() + 
   theme(
     plot.title = element_text(hjust = 0.5),
     legend.title = element_blank(),
+    plot.background = element_rect(colour = "gray", linewidth = 0.2),
     legend.position = "bottom"
   )
 
-fig.allg <- ggarrange(fig1, fig2, ncol = 2, nrow = 1, common.legend = T, legend = "bottom")
+# Utilizando Gráfico em branco para criar espaço
+spacer <- ggplot() +
+  theme_void() +
+  theme(panel.background = element_rect(fill = "white", color = NA))
+
+# Juntando gráficos
+fig.allg <- ggarrange(
+                      fig1, spacer, fig2,
+                      ncol = 3, nrow = 1, 
+                      widths = c(1, 0.04, 1),  # Ajustar proporção das colunas, onde 0.2 é o espaçador
+                      common.legend = TRUE, 
+                      legend = "bottom"
+                      )
 
 setwd("./../")

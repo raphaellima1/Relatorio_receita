@@ -1,12 +1,13 @@
 pacman::p_load(tidyverse, readxl, lubridate, glue, ggpubr,gridExtra,grid,
                ggthemes,officer, gt, flextable, kableExtra, magrittr,rvg, 
-               mschart, janitor,sidrar, lemon,zoo)
+               mschart, janitor,sidrar, lemon,zoo, rlang)
 
-setwd('\\\\sefazarquivos/AEMFPF/DIVERSOS/Relatorio_receita')
+setwd('C:/Users/rapha/OneDrive/Documentos/Trabalhos em R/Relatorio_receita')
 
 # Carregar base
 
 #importaçãp das bases
+
 setwd("./1 - IMPORTAÇÃO/")
 source( encoding = 'UTF-8', file = '0 - importação ICMS.R')
 

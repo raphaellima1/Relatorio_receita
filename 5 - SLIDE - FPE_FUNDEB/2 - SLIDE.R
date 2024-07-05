@@ -29,8 +29,8 @@ FUNDEB <- realizado %>%
   select(data, RCL_2023, RCL_2024, col_space,acum_23, acum_24, 
          col_space2, Projeção_RCL, proj_acum) %>% 
   add_column(col_space3 = NA, .name_repair = "universal") %>% 
-  mutate(dif_mes = (RCL_2024/RCL_2023 - 1)*100,
-         dif_acum = (acum_24/acum_23 - 1)*100,
+  mutate(dif_mes = (RCL_2024 - Projeção_RCL),
+         dif_acum = (acum_24 - proj_acum),
          data1 = format(as.Date(data), "%B"))
   
 set_flextable_defaults(
@@ -78,9 +78,11 @@ tabela_acumulado <- FUNDEB %>%
   
   color( ~ Projeção_RCL < 0, ~ Projeção_RCL,  color = 'red' ) %>% 
   color( ~ proj_acum < 0, ~ proj_acum,  color = 'red' ) %>% 
+  color( ~ dif_mes < 0, ~ dif_mes,  color = 'red' ) %>% 
+  color( ~ dif_acum < 0, ~ dif_acum,  color = 'red' ) %>%
 
   add_header_row(values = c('Arrecadação', 'Mensal', '  ', "Acumulado (Ano)",
-                            '   ', "Projeções", '    ', 'Diferença (%) - Igual periodo'), 
+                            '   ', "Projeções", '    ', 'Diferença em R$ (Real./24) - (Proj./24)'), 
                  colwidths = c(1,2,1,2,1,2,1,2)) %>% 
 
   merge_at(i = 1:2, j = 1, part = "header") %>% 

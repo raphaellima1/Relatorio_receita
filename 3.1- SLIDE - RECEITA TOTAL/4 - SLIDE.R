@@ -79,6 +79,39 @@ RCL <- realizado %>%
               mutate(RCL12 = rollsum(RCL_2024, 12, fill = NA, align = "right"),
                      ano = year(data)) %>% 
               filter(ano == 2024) %>% 
-              select(RCL12))
+              select(RCL12)) %>% 
+  setNames(c('data', 'RCL_24', 'PROJ_24'))
   
+RCL %>% 
+  ggplot()+
+  geom_line(aes(x = data, y = PROJ_24, color = "PROJEÇÂO", 
+                linetype = "PROJEÇÂO"), size=0.5) +
+  
+  geom_line(aes(x = data, y = RCL_24, color = "REALIZADO", 
+                linetype = "REALIZADO"), size=1) +
+  labs(x = "  ", 
+       y = "Valores em Reais (R$)", 
+       title = "RCL 12 MESES",
+       linetype = "Variable",
+       color = "Variable")+
+  scale_y_continuous(labels=scales::label_number(scale_cut = scales::cut_short_scale())) +
+  
+  scale_x_date(date_breaks = "2 month", 
+               date_labels = "%b")+
+  scale_color_manual(breaks = c('PROJEÇÂO', 'REALIZADO'),
+                     values = c("REALIZADO"="#3f3939",
+                                "PROJEÇÂO"="#fc7768"), 
+                     name="Legenda:")+
+  scale_linetype_manual(breaks = c('PROJEÇÂO', 'REALIZADO'),
+                        values = c("REALIZADO"='solid',
+                                   "PROJEÇÂO"='longdash'), 
+                        name="Legenda:")+
+  
+  labs(fill = "Title") +
+  theme_hc() + 
+  theme(
+    plot.title = element_text(hjust = 0.5),
+    legend.title = element_blank(),
+    legend.position = "bottom"
+  ) 
   

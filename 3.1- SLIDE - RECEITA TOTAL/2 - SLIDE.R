@@ -32,7 +32,7 @@ RLT <- realizado %>%
   mutate(dif_mes = (RCL_2024/RCL_2023 - 1)*100,
          dif_acum = (acum_24/acum_23 - 1)*100,
          col_space4 = NA,
-         dif_proj = RCL_2024 - Projeção_RCL,,
+         dif_proj = RCL_2024 - Projeção_RCL,
          dif_proj_acum = acum_24 - proj_acum,
          data1 = format(as.Date(data), "%B"))
   
@@ -87,7 +87,7 @@ tabela_acumulado <- RLT %>%
 
   add_header_row(values = c('Arrecadação', 'Mensal', '  ', "Acumulado (Ano)",
                             '   ', "Projeções", '    ', 'Diferença (%) - Igual periodo',
-                             ' ', 'Diferença em R$ Realizado e projeção'), 
+                             ' ', 'Diferença em R$ (Real./24) - (Proj./24)'), 
                  colwidths = c(1,2,1,2,1,2,1,2,1,2)) %>% 
 
   merge_at(i = 1:2, j = 1, part = "header") %>% 
@@ -96,5 +96,5 @@ tabela_acumulado <- RLT %>%
         border =  std_border) %>% 
   width(j = c(4,7,10,13), width = .2, unit = 'cm') %>% 
   width(j = 1, width = 3.3, unit = 'cm') %>% 
-  width(j = c(2,3,5,6,8,9,11,12,14,15), width = 2.4, unit = 'cm') 
+  width(j = c(2,3,5,6,8,9,11,12,14,15), width = 2.3, unit = 'cm') 
 

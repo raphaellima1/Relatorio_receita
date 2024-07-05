@@ -1,32 +1,104 @@
-fig1 <- RCL %>% 
+RCL12_m <- realizado %>% 
+  filter(RECEITAS == 'RECEITA CORRENTE LÍQUIDA') %>% 
+  select(c(1, starts_with(glue('{year(Sys.Date())}')))) %>% 
+  mutate(across(2:13, ~ na_if(as.numeric(.), 0.00))) %>% 
+  pivot_longer(cols =  2:13) %>% 
+  mutate(data = ymd(paste0(name, '01'))) %>% 
+  setNames(c('RCL', 'name', 'RCL_2024', 'data')) %>% 
+  bind_rows(realizado %>% 
+              filter(RECEITAS == 'RECEITA CORRENTE LÍQUIDA') %>% 
+              select(c(1, starts_with(glue('{year(Sys.Date())-1}')))) %>% 
+              mutate(across(2:13, ~ na_if(as.numeric(.), 0.00))) %>% 
+              pivot_longer(cols =  2:13) %>% 
+              mutate(data = ymd(paste0(name, '01'))) %>% 
+              setNames(c('RCL', 'name', 'RCL_2024', 'data'))) %>% 
+  bind_rows(realizado %>% 
+              filter(RECEITAS == 'RECEITA CORRENTE LÍQUIDA') %>% 
+              select(c(1, starts_with(glue('{year(Sys.Date())-2}')))) %>% 
+              mutate(across(2:13, ~ na_if(as.numeric(.), 0.00))) %>% 
+              pivot_longer(cols =  2:13) %>% 
+              mutate(data = ymd(paste0(name, '01'))) %>% 
+              setNames(c('RCL', 'name', 'RCL_2024', 'data'))) %>% 
+  arrange(data) %>% 
+  mutate(RCL12 = rollsum(RCL_2024, 12, fill = NA, align = "right"),
+         ano = year(data)) %>% 
+  filter(ano == 2024) %>% 
+  select(data, RCL12) %>% 
+  bind_cols(realizado %>% 
+              filter(RECEITAS == 'RECEITA CORRENTE LÍQUIDA') %>% 
+              select(c(1, starts_with(glue('{year(Sys.Date())-1}')))) %>% 
+              mutate(across(2:13, ~ na_if(as.numeric(.), 0.00))) %>% 
+              pivot_longer(cols =  2:13) %>% 
+              mutate(data = ymd(paste0(name, '01'))) %>% 
+              setNames(c('RCL', 'name', 'RCL_2024', 'data')) %>% 
+              bind_rows(projeção %>% 
+                          filter(ESPECIFICAÇÃO == 'RECEITA CORRENTE LÍQUIDA (III) = (I-II)') %>% 
+                          select(c(1, starts_with(glue('{year(Sys.Date())}')))) %>% 
+                          mutate(across(2:13, as.numeric)) %>% 
+                          pivot_longer(cols =  2:13) %>% 
+                          mutate(data = ymd(paste0(name, '01')),
+                                 CAMPO = as.character(CAMPO)) %>% 
+                          setNames(c('RCL', 'name', 'RCL_2024', 'data'))) %>% 
+              arrange(data) %>% 
+              mutate(RCL12 = rollsum(RCL_2024, 12, fill = NA, align = "right"),
+                     ano = year(data)) %>% 
+              filter(ano == 2024) %>% 
+              select(RCL12)) %>% 
+  setNames(c('data', 'RCL_24', 'PROJ_24')) %>% 
+  bind_cols(realizado %>% 
+              filter(RECEITAS == 'RECEITA CORRENTE LÍQUIDA') %>% 
+              select(c(1, starts_with(glue('{year(Sys.Date())}')))) %>% 
+              mutate(across(2:13, ~ na_if(as.numeric(.), 0.00))) %>% 
+              pivot_longer(cols =  2:13) %>% 
+              mutate(data = ymd(paste0(name, '01'))) %>% 
+              setNames(c('RCL', 'name', 'RCL_2024', 'data')) %>% 
+              bind_rows(realizado %>% 
+                          filter(RECEITAS == 'RECEITA CORRENTE LÍQUIDA') %>% 
+                          select(c(1, starts_with(glue('{year(Sys.Date())-1}')))) %>% 
+                          mutate(across(2:13, ~ na_if(as.numeric(.), 0.00))) %>% 
+                          pivot_longer(cols =  2:13) %>% 
+                          mutate(data = ymd(paste0(name, '01'))) %>% 
+                          setNames(c('RCL', 'name', 'RCL_2024', 'data'))) %>% 
+              bind_rows(realizado %>% 
+                          filter(RECEITAS == 'RECEITA CORRENTE LÍQUIDA') %>% 
+                          select(c(1, starts_with(glue('{year(Sys.Date())-2}')))) %>% 
+                          mutate(across(2:13, ~ na_if(as.numeric(.), 0.00))) %>% 
+                          pivot_longer(cols =  2:13) %>% 
+                          mutate(data = ymd(paste0(name, '01'))) %>% 
+                          setNames(c('RCL', 'name', 'RCL_2024', 'data'))) %>% 
+              arrange(data) %>% 
+              mutate(RCL_23 = rollsum(RCL_2024, 12, fill = NA, align = "right"),
+                     ano = year(data)) %>% 
+              filter(ano == 2023) %>% 
+              select(RCL_23))
+
+fig1 <- RCL12_m %>%
+  mutate(fant_24 = round(RCL_24/1000000000, digits = 2),
+         fantp_24 = round(PROJ_24/1000000000, digits = 2)) %>% 
   ggplot()+
-  geom_line(aes(x = data, y = acum_23*1000000, color = "Acumulado 2023", 
-                linetype = "Acumulado 2023"), size=0.5) +
-  
-  geom_line(aes(x = data, y = acum_24*1000000, color = "Acumulado 2024", 
-                linetype = "Acumulado 2024"), size=1) +
-  
-  geom_line(aes(x = data, y = proj_acum*1000000, color = "Projeção 2024", 
+  geom_line(aes(x = data, y = PROJ_24, color = "Projeção 2024", 
                 linetype = "Projeção 2024"), size=0.5) +
   
+  geom_line(aes(x = data, y = RCL_24, color = "Realizado 2024", 
+                linetype = "Realizado 2024"), size=1) +
+  geom_label(aes(x = data, y = RCL_24, label = fant_24),vjust = -0.7)+
+  geom_label(aes(x = data, y = RCL_24, label = fantp_24),vjust = 1.1,colour = "#fc7768")+
+ 
   labs(x = "  ", 
        y = "Valores em Reais (R$)", 
-       title = "RCL ACUMULADA",
+       title = "RCL 12 MESES",
        linetype = "Variable",
-       color = "Variable") +
-  
+       color = "Variable")+
   scale_y_continuous(labels=scales::label_number(scale_cut = scales::cut_short_scale())) +
   
   scale_x_date(date_breaks = "2 month", 
                date_labels = "%b")+
-  scale_color_manual(breaks = c('Acumulado 2023', "Acumulado 2024", 'Projeção 2024'),
-                     values = c("Acumulado 2024"="#3f3939",
-                                "Acumulado 2023"="#4a760b",
+  scale_color_manual(breaks = c('Projeção 2024', 'Realizado 2024'),
+                     values = c("Realizado 2024"="#3f3939",
                                 "Projeção 2024"="#fc7768"), 
                      name="Legenda:")+
-  scale_linetype_manual(breaks = c('Acumulado 2023', "Acumulado 2024", 'Projeção 2024'),
-                        values = c("Acumulado 2024"='solid',
-                                   "Acumulado 2023"='solid',
+  scale_linetype_manual(breaks = c('Projeção 2024', 'Realizado 2023', 'Realizado 2024'),
+                        values = c('Realizado 2024' = 'solid',
                                    "Projeção 2024"='longdash'), 
                         name="Legenda:")+
   
@@ -36,7 +108,7 @@ fig1 <- RCL %>%
     plot.title = element_text(hjust = 0.5),
     legend.title = element_blank(),
     legend.position = "bottom"
-  )
+  ) 
 
 
 
@@ -80,6 +152,6 @@ fig2 <- RCL %>%
     legend.position = "bottom"
   )
 
-fig.allg <- ggarrange(fig1, fig2, ncol = 2, nrow = 1, common.legend = T, legend = "bottom")
+fig.allg <- ggarrange(fig1, fig2, ncol = 2, nrow = 1, common.legend = F)
 
 setwd("./../")
