@@ -30,7 +30,7 @@ my <- read_pptx('template.pptx') %>%
 
 
 my <- my %>%
-  add_slide(layout = "título_conteúdo_nota", master = "RRF_template_01") %>%
+  add_slide(layout = "título_conteúdo_nota",  master = "RRF_template_01") %>%
 
   ph_with(value = "Cenários da Receita Orçamentária",
           location = ph_location_type(type = "title")) %>%
