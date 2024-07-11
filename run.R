@@ -2,7 +2,7 @@ pacman::p_load(tidyverse, readxl, lubridate, glue, ggpubr,gridExtra,grid,
                ggthemes,officer, gt, flextable, kableExtra, magrittr,rvg, 
                mschart, janitor,sidrar, lemon,zoo, rlang)
 
-setwd('C:/Users/rapha/OneDrive/Documentos/Trabalhos em R/Relatorio_receita')
+# setwd('C:/Users/rapha/OneDrive/Documentos/Trabalhos em R/Relatorio_receita')
 
 # Carregar base
 

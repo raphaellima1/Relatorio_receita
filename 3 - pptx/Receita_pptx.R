@@ -14,19 +14,29 @@ t <- 1
 # Capa Slide
 ###############################################
 
-my <- read_pptx('template.pptx') %>% 
+my <- read_pptx('template - v2.pptx') %>% 
   
-  ph_with(value = "Acompanhamento Receitas", 
+  ph_with(value = "Boletim Econômico", 
           location = ph_location_type(type = "ctrTitle")) %>% 
   
-  ph_with(value = glue("Ultima atualização: {format(Sys.Date(), '%d-%m-%Y')}"), 
-          location = ph_location_type(type = "subTitle")) 
+  ph_with(value = glue("Edição de {format(Sys.Date(), '%d/%m/%Y')}"), 
+          location = ph_location_type(type = "subTitle"))
+
+
+###############################################
+# add capa_seção - Seção 1
+###############################################
+my <- my %>%
+  add_slide(layout = "capa_seção", master = "RRF_template_01") %>% 
+  ph_with(value = "RECEITA TOTAL", location = ph_location_type(type = "title")) %>% 
+  ph_with(value = "1.", location = ph_location_type(type = "subTitle"))
+
 
 ###############################################
 # Resumo Gerencial 323
 ###############################################
-#setwd("./3.1- SLIDE - RECEITA TOTAL/")
-#source( encoding = 'UTF-8', file = '5 - SLIDE.R')
+setwd("./3.1- SLIDE - RECEITA TOTAL/")
+source( encoding = 'UTF-8', file = '5 - SLIDE.R')
 
 
 my <- my %>%
@@ -41,7 +51,7 @@ my <- my %>%
   ph_with(value = format(Sys.Date(), "%d/%m/%Y"),
           location = ph_location_type(type = "dt")) %>%
 
-  ph_with(value = "Secretaria de Economia do Estado de Goiás",
+  ph_with(value = "Boletim Econômico | Secretaria de Estado da Economia",
           location = ph_location_type(type = "ftr")) %>%
 
   ph_with(value = empty_content(),
@@ -59,18 +69,15 @@ my <- my %>%
                                  width = 6.501,
                                  height = 0.201)) %>% 
   
-  ph_with(block_list(fpar(ftext(glue('* Resultados preliminares - Atualizado em {format(Sys.Date(), "%d/%m/%Y")}'),
+  ph_with(block_list(fpar(ftext(glue('* Resultados preliminares'),
                                 prop = fp_text(font.size = 11,
-                                               color = "#292929")),
-                          fp_p = border1)),
+                                               color = "#292929")))),
           
-          location = ph_location(left = -2.65, top = 0.88,
-                                 width = 6.501,
+          location = ph_location(left = 0, top = 0.88,
+                                 width = 2,
                                  height = 0.201))
   
   
-
-
 
 ###############################################
 # Receita TOtAL
@@ -91,7 +98,7 @@ my <- my %>%
   ph_with(value = format(Sys.Date(), "%d/%m/%Y"),
           location = ph_location_type(type = "dt")) %>% 
   
-  ph_with(value = "Secretaria de Economia do Estado de Goiás", 
+  ph_with(value = "Boletim Econômico | Secretaria de Estado da Economia", 
           location = ph_location_type(type = "ftr")) %>% 
   
   ph_with(value = empty_content(), 
@@ -109,13 +116,12 @@ my <- my %>%
                                  width = 6.5,
                                  height = 0.3)) %>% 
   
-  ph_with(block_list(fpar(ftext(glue('* Resultados preliminares - Atualizado em {format(Sys.Date(), "%d/%m/%Y")}'),
+  ph_with(block_list(fpar(ftext(glue('* Resultados preliminares'),
                                 prop = fp_text(font.size = 11,
-                                               color = "#292929")),
-                          fp_p = border1)),
+                                               color = "#292929")))),
           
-          location = ph_location(left = -2.65, top = 0.88,
-                                 width = 6.501,
+          location = ph_location(left = 0, top = 0.88,
+                                 width = 2,
                                  height = 0.201))
 
 
@@ -133,7 +139,7 @@ my <- my %>%
   ph_with(value = format(Sys.Date(), "%d/%m/%Y"),
           location = ph_location_type(type = "dt")) %>% 
   
-  ph_with(value = "Secretaria de Economia do Estado de Goiás", 
+  ph_with(value = "Boletim Econômico | Secretaria de Estado da Economia", 
           location = ph_location_type(type = "ftr")) %>% 
   
   ph_with(value = empty_content(), 
@@ -148,6 +154,15 @@ my <- my %>%
 
 
 ###############################################
+# add capa_seção - Seção 2
+###############################################
+my <- my %>%
+  add_slide(layout = "capa_seção", master = "RRF_template_01") %>% 
+  ph_with(value = "TRANSFERÊNCIAS CORRENTES", location = ph_location_type(type = "title")) %>% 
+  ph_with(value = "2.", location = ph_location_type(type = "subTitle"))
+
+
+###############################################
 # 1.1 - FPE
 setwd("./5 - SLIDE - FPE_FUNDEB/")
 source( encoding = 'UTF-8', file = '1 - SLIDE.R')
@@ -156,12 +171,10 @@ source( encoding = 'UTF-8', file = '1.1 SLIDE.R')
 ###############################################
 # carregar a tabela total chamada df
 
-
-
 my <- my %>%
   add_slide(layout = "título_conteúdo", master = "RRF_template_01") %>%
   
-  ph_with(value = "Trnsferências Correntes", 
+  ph_with(value = "Transferências Correntes", 
           location = ph_location_type(type = "title")) %>%
   
   ph_with(value = glue("Cota-Parte do FPE"),
@@ -170,7 +183,7 @@ my <- my %>%
   ph_with(value = format(Sys.Date(), "%d/%m/%Y"),
           location = ph_location_type(type = "dt")) %>% 
   
-  ph_with(value = "Secretaria de Economia do Estado de Goiás", 
+  ph_with(value = "Boletim Econômico | Secretaria de Estado da Economia", 
           location = ph_location_type(type = "ftr")) %>% 
   
   ph_with(value = empty_content(), 
@@ -205,11 +218,10 @@ source( encoding = 'UTF-8', file = '2.1 SLIDE.R')
 # carregar a tabela total chamada df
 
 
-
 my <- my %>%
   add_slide(layout = "título_conteúdo", master = "RRF_template_01") %>%
   
-  ph_with(value = "Trnsferências Correntes", 
+  ph_with(value = "Transferências Correntes", 
           location = ph_location_type(type = "title")) %>%
   
   ph_with(value = glue("Transferências do FUNDEB"),
@@ -218,7 +230,7 @@ my <- my %>%
   ph_with(value = format(Sys.Date(), "%d/%m/%Y"),
           location = ph_location_type(type = "dt")) %>% 
   
-  ph_with(value = "Secretaria de Economia do Estado de Goiás", 
+  ph_with(value = "Boletim Econômico | Secretaria de Estado da Economia", 
           location = ph_location_type(type = "ftr")) %>% 
   
   ph_with(value = empty_content(), 
@@ -242,10 +254,6 @@ my <- my %>%
 
 
 
-
-
-
-
 ###############################################
 # RCL
 ###############################################
@@ -265,7 +273,7 @@ my <- my %>%
   ph_with(value = format(Sys.Date(), "%d/%m/%Y"),
           location = ph_location_type(type = "dt")) %>% 
   
-  ph_with(value = "Secretaria de Economia do Estado de Goiás", 
+  ph_with(value = "Boletim Econômico | Secretaria de Estado da Economia", 
           location = ph_location_type(type = "ftr")) %>% 
   
   ph_with(value = empty_content(), 
@@ -283,13 +291,12 @@ my <- my %>%
                                  width = 6.5,
                                  height = 0.3)) %>% 
   
-  ph_with(block_list(fpar(ftext(glue('* Resultados preliminares - Atualizado em {format(Sys.Date(), "%d/%m/%Y")}'),
+  ph_with(block_list(fpar(ftext(glue('* Resultados preliminares'),
                                 prop = fp_text(font.size = 11,
-                                               color = "#292929")),
-                          fp_p = border1)),
+                                               color = "#292929")))),
           
-          location = ph_location(left = -2.65, top = 0.88,
-                                 width = 6.501,
+          location = ph_location(left = 0, top = 0.88,
+                                 width = 2,
                                  height = 0.201))
 
 
@@ -301,13 +308,13 @@ my <- my %>%
   ph_with(value = "Receita Corrente Líquida (RCL)", 
           location = ph_location_type(type = "title")) %>%
   
-  ph_with(value = glue("Comparativo mensal *"),
+  ph_with(value = glue("Comparativo mensal*"),
           location = ph_location_type(type = "subTitle")) %>%
   
   ph_with(value = format(Sys.Date(), "%d/%m/%Y"),
           location = ph_location_type(type = "dt")) %>% 
   
-  ph_with(value = "Secretaria de Economia do Estado de Goiás", 
+  ph_with(value = "Boletim Econômico | Secretaria de Estado da Economia", 
           location = ph_location_type(type = "ftr")) %>% 
   
   ph_with(value = empty_content(), 
@@ -319,15 +326,22 @@ my <- my %>%
                                  width = 12,8,
                                  height = 4.9)) %>% 
   
-  ph_with(block_list(fpar(ftext(glue('* Resultados preliminares - Atualizado em {format(Sys.Date(), "%d/%m/%Y")}'),
+  ph_with(block_list(fpar(ftext(glue('* Resultados preliminares'),
                                 prop = fp_text(font.size = 11,
-                                               color = "#292929")),
-                          fp_p = border1)),
+                                               color = "#292929")))),
           
-          location = ph_location(left = -2.65, top = 0.88,
-                                 width = 6.501,
+          location = ph_location(left = 0, top = 0.88,
+                                 width = 2,
                                  height = 0.201))
 
+
+###############################################
+# add capa_seção - Seção 3
+###############################################
+my <- my %>%
+  add_slide(layout = "capa_seção", master = "RRF_template_01") %>% 
+  ph_with(value = "RECEITAS TRIBUTÁRIAS", location = ph_location_type(type = "title")) %>% 
+  ph_with(value = "3.", location = ph_location_type(type = "subTitle"))
 
 
 ###############################################
@@ -338,7 +352,6 @@ source( encoding = 'UTF-8', file = '1.1 - SLIDE.R')
 
 ###############################################
 # carregar a tabela total chamada df
-
 
 
 my <- my %>%
@@ -353,7 +366,7 @@ my <- my %>%
   ph_with(value = format(Sys.Date(), "%d/%m/%Y"),
           location = ph_location_type(type = "dt")) %>% 
   
-  ph_with(value = "Secretaria de Economia do Estado de Goiás", 
+  ph_with(value = "Boletim Econômico | Secretaria de Estado da Economia", 
           location = ph_location_type(type = "ftr")) %>% 
   
   ph_with(value = empty_content(), 
@@ -375,13 +388,12 @@ my <- my %>%
                                  width = 6.5,
                                  height = 0.3)) %>% 
   
-  ph_with(block_list(fpar(ftext(glue('* Resultados preliminares - Atualizado em {format(Sys.Date(), "%d/%m/%Y")}'),
+  ph_with(block_list(fpar(ftext(glue('* Resultados preliminares'),
                                 prop = fp_text(font.size = 11,
-                                               color = "#292929")),
-                          fp_p = border1)),
+                                               color = "#292929")))),
           
-          location = ph_location(left = -2.65, top = 0.88,
-                                 width = 6.501,
+          location = ph_location(left = 0, top = 0.88,
+                                 width = 2,
                                  height = 0.201))
 
 
@@ -406,7 +418,7 @@ my <- my %>%
   ph_with(value = format(Sys.Date(), "%d/%m/%Y"),
           location = ph_location_type(type = "dt")) %>% 
   
-  ph_with(value = "Secretaria de Economia do Estado de Goiás", 
+  ph_with(value = "Boletim Econômico | Secretaria de Estado da Economia", 
           location = ph_location_type(type = "ftr")) %>% 
   
   ph_with(value = empty_content(), 
@@ -419,13 +431,12 @@ my <- my %>%
                                  width = 12,8,
                                  height = 5.9)) %>% 
   
-  ph_with(block_list(fpar(ftext(glue('* Resultados preliminares - Atualizado em {format(Sys.Date(), "%d/%m/%Y")}'),
+  ph_with(block_list(fpar(ftext(glue('* Resultados preliminares'),
                                 prop = fp_text(font.size = 11,
-                                               color = "#292929")),
-                          fp_p = border1)),
+                                               color = "#292929")))),
           
-          location = ph_location(left = -2.65, top = 0.88,
-                                 width = 6.501,
+          location = ph_location(left = 0, top = 0.88,
+                                 width = 2,
                                  height = 0.201))
 
 rm(fig1, fig2, fig3, fig4, fig.allg)
@@ -453,7 +464,7 @@ my <- my %>%
   ph_with(value = format(Sys.Date(), "%d/%m/%Y"),
           location = ph_location_type(type = "dt")) %>% 
   
-  ph_with(value = "Secretaria de Economia do Estado de Goiás", 
+  ph_with(value = "Boletim Econômico | Secretaria de Estado da Economia", 
           location = ph_location_type(type = "ftr")) %>% 
   
   ph_with(value = empty_content(), 
@@ -477,13 +488,12 @@ my <- my %>%
                                  width = 6.5,
                                  height = 0.3)) %>% 
   
-  ph_with(block_list(fpar(ftext(glue('* Resultados preliminares - Atualizado em {format(Sys.Date(), "%d/%m/%Y")}'),
+  ph_with(block_list(fpar(ftext(glue('* Resultados preliminares'),
                                 prop = fp_text(font.size = 11,
-                                               color = "#292929")),
-                          fp_p = border1)),
+                                               color = "#292929")))),
           
-          location = ph_location(left = -2.65, top = 0.88,
-                                 width = 6.501,
+          location = ph_location(left = 0, top = 0.88,
+                                 width = 2,
                                  height = 0.201))
 
 ###############################################
@@ -505,7 +515,7 @@ my <- my %>%
   ph_with(value = format(Sys.Date(), "%d/%m/%Y"),
           location = ph_location_type(type = "dt")) %>% 
   
-  ph_with(value = "Secretaria de Economia do Estado de Goiás", 
+  ph_with(value = "Boletim Econômico | Secretaria de Estado da Economia", 
           location = ph_location_type(type = "ftr")) %>% 
   
   ph_with(value = empty_content(), 
@@ -518,14 +528,13 @@ my <- my %>%
                                  width = 12.75,
                                  height = 5.9)) %>% 
   
-  ph_with(block_list(fpar(ftext(glue('* Resultados preliminares - Atualizado em {format(Sys.Date(), "%d/%m/%Y")}'),
+  ph_with(block_list(fpar(ftext(glue('* Resultados preliminares'),
                                 prop = fp_text(font.size = 11,
-                                               color = "#292929")),
-                          fp_p = border1)),
+                                               color = "#292929")))),
           
-          location = ph_location(left = -2.65, top = 0.88,
-                                 width = 6.50,
-                                 height = 0.20))
+          location = ph_location(left = 0, top = 0.88,
+                                 width = 2,
+                                 height = 0.201))
 
 
 

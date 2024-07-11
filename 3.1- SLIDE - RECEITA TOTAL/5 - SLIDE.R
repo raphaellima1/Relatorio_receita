@@ -1,11 +1,14 @@
-library(readxl)
-library(dplyr)
-library(tidyverse)
-library(rlang)
+# library(readxl)
+# library(dplyr)
+# library(tidyverse)
+# library(rlang)
+
+setwd("./../")
+setwd('./0 - DADOS/')
 
 # PLOA 2024 --------------------
 
-df <- read_excel(dir('\\\\sefazarquivos/AEMFPF/DIVERSOS/Relatorio_receita/0 - DADOS', full.names=T, pattern="^RECEITA_LIQUIDA_MONITOR_PLDO25.*\\.xlsx$"), sheet = "PLOA2024")
+df <- read_excel(dir(full.names=T, pattern="^RECEITA_LIQUIDA_MONITOR_PLDO25.*\\.xlsx$"), sheet = "PLOA2024")
 df_PLOA2024 <- df %>% 
   filter(RECEITAS == "1. RECEITAS CORRENTES" |
            RECEITAS == "1.1. IMPOSTOS, TAXAS E CONTRIBUIÇÕES DE MELHORIA" |
@@ -47,7 +50,7 @@ df_PLOA2024 <- df %>%
 
 # CEN. GER. 323 ACUMULADO ANO --------------------
 
-df <- read_excel(dir('\\\\sefazarquivos/AEMFPF/DIVERSOS/Relatorio_receita/0 - DADOS', full.names=T, pattern="^RECEITA_LIQUIDA_MONITOR_PLDO25.*\\.xlsx$"), sheet = "PLDO2025")
+df <- read_excel(dir(full.names=T, pattern="^RECEITA_LIQUIDA_MONITOR_PLDO25.*\\.xlsx$"), sheet = "PLDO2025")
 df_G323_T <- df %>% 
   filter(RECEITAS == "1. RECEITAS CORRENTES" |
            RECEITAS == "1.1. IMPOSTOS, TAXAS E CONTRIBUIÇÕES DE MELHORIA" |
@@ -90,7 +93,7 @@ df_G323_T <- df %>%
 
 # CEN. GER. 323 ACUMULADO ATÉ O MÊS --------------------
 
-df <- read_excel(dir('\\\\sefazarquivos/AEMFPF/DIVERSOS/Relatorio_receita/0 - DADOS', full.names=T, pattern="^RECEITA_LIQUIDA_MONITOR_PLDO25.*\\.xlsx$"), sheet = "PLDO2025")
+df <- read_excel(dir(full.names=T, pattern="^RECEITA_LIQUIDA_MONITOR_PLDO25.*\\.xlsx$"), sheet = "PLDO2025")
 mes_dados <- glue::glue("Até {format(Sys.Date() %m-% months(1), '%B')}")
 
 df_G323 <- df %>% 
@@ -135,7 +138,7 @@ df_G323 <- df %>%
 
 # REALIZADO ACUM --------------------
 
-df <- read_excel(dir('\\\\sefazarquivos/AEMFPF/DIVERSOS/Relatorio_receita/0 - DADOS', full.names=T, pattern="^RECEITA_LIQUIDA_MONITOR_PLDO25.*\\.xlsx$"), sheet = "realizado") %>% 
+df <- read_excel(dir(full.names=T, pattern="^RECEITA_LIQUIDA_MONITOR_PLDO25.*\\.xlsx$"), sheet = "realizado") %>% 
   slice(-1) %>% 
   setNames(.[1,]) %>% 
   .[-1,]
