@@ -136,38 +136,45 @@ tabela_acumulado <- RCL %>%
                    decimal.mark = ',', 
                    digits = 2, 
                    na_str = "--") %>% 
-
-
+  
+  colformat_double(j = c('dif_mes', 'dif_acum'),
+                   big.mark=".",
+                   decimal.mark = ',', 
+                   digits = 2, 
+                   na_str = "--",
+                   suffix = " %") %>%
+  
   set_header_labels(values = c('Arrecadação',"2023", "2024",'', '2023', '2024','',
-                               "Mensal", "Acumulado",' ', "Mensal", "Acumulado",
+                               "Mensal", "Acumulado 12M",' ', "Mensal", "Acumulado",
                                '   ',"Mensal", "Acumulado")) %>% 
   bg(., 
      part = "header", 
-     bg = "gray70") %>% 
+     bg = cor1[2]) %>% 
+  
   style( pr_t = fp_text_default(
-    bold = T
-    #,color = "black"
+    bold = F,
+    color = cor1[3]
   ),
   part = 'header') %>% 
   bg(., i= c(2,4,6,8,10,12), 
      part = "body", 
-     bg = "#E3E7E7") %>% 
+     bg = cor1[1]) %>% 
   
-  color( ~ Projeção_RCL < 0, ~ Projeção_RCL,  color = 'red' ) %>% 
-  color( ~ proj_acum < 0, ~ proj_acum,  color = 'red' ) %>% 
-  color( ~ dif_proj < 0, ~ dif_proj,  color = 'red' ) %>% 
-  color( ~ dif_proj_acum < 0, ~ dif_proj_acum,  color = 'red' ) %>% 
-
+  color( ~ dif_mes < 0, ~ dif_mes,  color = cor1[4] ) %>% 
+  color( ~ dif_acum < 0, ~ dif_acum,  color = cor1[4] ) %>% 
+  color( ~ dif_proj < 0, ~ dif_proj,  color = cor1[4] ) %>% 
+  color( ~ dif_proj_acum < 0, ~ dif_proj_acum,  color = cor1[4]) %>% 
+  
   add_header_row(values = c('Arrecadação', 'Mensal', '  ', "Acumulado (12 meses)",
                             '   ', "Projeções", '    ', 'Diferença (%) - Igual periodo',
-                             ' ', 'Diferença em R$ (Real./24) - (Proj./24)'), 
+                            ' ', 'Diferença em R$ (Real./24) - (Proj./24)'), 
                  colwidths = c(1,2,1,2,1,2,1,2,1,2)) %>% 
-
+  
   merge_at(i = 1:2, j = 1, part = "header") %>% 
-  align(i = 1, j = NULL, align = "center", part = "header") %>% 
+  align(i = c(1,2), j = NULL, align = "center", part = "header") %>% 
   hline(i = 1, j = c(2,3,5,6,8,9,11,12,14,15), part = "header", 
         border =  std_border) %>% 
   width(j = c(4,7,10,13), width = .2, unit = 'cm') %>% 
-  width(j = 1, width = 3.3, unit = 'cm') %>% 
-  width(j = c(2,3,5,6,8,9,11,12,14,15), width = 2.4, unit = 'cm') 
+  width(j = 1, width = 3.6, unit = 'cm') %>% 
+  width(j = c(2,3,5,6,8,9,11,12,14,15), width = 2.6, unit = 'cm') 
 

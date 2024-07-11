@@ -72,6 +72,29 @@ RCL12_m <- realizado %>%
               filter(ano == 2023) %>% 
               select(RCL_23))
 
+
+#########################################################
+bloco1 <- RCL12_m |> 
+  select(RCL_24) |> 
+  drop_na() |> 
+  tail(1) |> 
+  mutate(RCL_24 = round(RCL_24/1000000000,2)) |> 
+  pull()
+
+bloco2 <- RCL12_m |> 
+  
+  drop_na() |>
+  select(PROJ_24) |> 
+  tail(1) |> 
+  mutate(PROJ_24 = round(PROJ_24/1000000000,2)) |> 
+  pull() 
+
+bloco3 <- round(bloco1 - bloco2, 2)
+########################################################
+
+
+
+
 fig1 <- RCL12_m %>%
   mutate(fant_24 = round(RCL_24/1000000000, digits = 2),
          fantp_24 = round(PROJ_24/1000000000, digits = 2)) %>% 
@@ -82,8 +105,8 @@ fig1 <- RCL12_m %>%
   geom_line(aes(x = data, y = RCL_24, color = "Realizado 2024", 
                 linetype = "Realizado 2024"), size=1) +
   geom_label(aes(x = data, y = RCL_24, label = fant_24),vjust = -0.7)+
-  geom_label(aes(x = data, y = RCL_24, label = fantp_24),vjust = 1.1,colour = "#fc7768")+
- 
+  geom_label(aes(x = data, y = RCL_24, label = fantp_24),vjust = 1.1,colour = cor2[3])+
+  
   labs(x = "  ", 
        y = "Valores em Reais (R$)", 
        title = "RCL 12 MESES",
@@ -94,8 +117,8 @@ fig1 <- RCL12_m %>%
   scale_x_date(date_breaks = "2 month", 
                date_labels = "%b")+
   scale_color_manual(breaks = c('Projeção 2024', 'Realizado 2024'),
-                     values = c("Realizado 2024"="#3f3939",
-                                "Projeção 2024"="#fc7768"), 
+                     values = c("Realizado 2024"= cor2[1],
+                                "Projeção 2024"=cor2[3]), 
                      name="Legenda:")+
   scale_linetype_manual(breaks = c('Projeção 2024', 'Realizado 2023', 'Realizado 2024'),
                         values = c('Realizado 2024' = 'solid',
@@ -134,9 +157,9 @@ fig2 <- RCL %>%
   scale_x_date(date_breaks = "2 month", 
                date_labels = "%b")+
   scale_color_manual(breaks = c('Acumulado 2023', "Acumulado 2024", 'Projeção 2024'),
-                     values = c("Acumulado 2024"="#3f3939",
-                                "Acumulado 2023"="#4a760b",
-                                "Projeção 2024"="#fc7768"), 
+                     values = c("Acumulado 2024"= cor2[1],
+                                "Acumulado 2023"= cor2[2],
+                                "Projeção 2024"=  cor2[3]), 
                      name="Legenda:")+
   scale_linetype_manual(breaks = c('Acumulado 2023', "Acumulado 2024", 'Projeção 2024'),
                         values = c("Acumulado 2024"='solid',

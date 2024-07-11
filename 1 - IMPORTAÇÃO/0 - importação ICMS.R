@@ -1,12 +1,8 @@
-setwd("./../")
-setwd('./0 - DADOS/')
-
-
 ########################################
 # tabela do ICMS 
 #########################################
 
-ICMS_base <- read_excel("ICMS_TOTAL_2024.xlsx", 
+ICMS_base <- read_excel("./0 - DADOS/ICMS_TOTAL_2024.xlsx", 
                         sheet = "ICMS", 
                         col_types = c("text", "text", "numeric", "text", "numeric")) %>% 
   setNames(c('Tipo', 'Grupo', 'data','Ano', 'Valor')) %>% 
@@ -17,7 +13,7 @@ ICMS_base <- read_excel("ICMS_TOTAL_2024.xlsx",
 # Tabela do Adicional de 2% 
 #########################################
 
-ADD2_base <- read_excel("ICMS_TOTAL_2024.xlsx", 
+ADD2_base <- read_excel("./0 - DADOS/ICMS_TOTAL_2024.xlsx", 
                         sheet = "Adicional_2%", 
                         col_types = c("text","text", "numeric", "text", "numeric")) %>% 
   setNames(c('Tipo', 'Grupo', 'data','Ano', 'Valor')) %>% 
@@ -29,7 +25,7 @@ ADD2_base <- read_excel("ICMS_TOTAL_2024.xlsx",
 # Tabela do PROTEGE
 ########################################
 
-PROTEGE_base <- read_excel("ICMS_TOTAL_2024.xlsx", 
+PROTEGE_base <- read_excel("./0 - DADOS/ICMS_TOTAL_2024.xlsx", 
                            sheet = "PROTEGE", 
                            col_types = c("text", "text", "numeric", "text", "numeric")) %>% 
   setNames(c('Tipo', 'Grupo', 'data','Ano', 'Valor')) %>% 
@@ -40,7 +36,7 @@ PROTEGE_base <- read_excel("ICMS_TOTAL_2024.xlsx",
 # Tabela do IPVA
 ########################################
 
-IPVA_base <- read_excel("ICMS_TOTAL_2024.xlsx", 
+IPVA_base <- read_excel("./0 - DADOS/ICMS_TOTAL_2024.xlsx", 
                         sheet = "IPVA", 
                         col_types = c("text", "text", "numeric", "text", "numeric")) %>% 
   setNames(c( 'Tipo', 'Grupo', 'data','Ano', 'Valor')) %>%  
@@ -52,7 +48,7 @@ IPVA_base <- read_excel("ICMS_TOTAL_2024.xlsx",
 # Tabela do ITCD
 ########################################
 
-ITCD_base <- read_excel("ICMS_TOTAL_2024.xlsx", 
+ITCD_base <- read_excel("./0 - DADOS/ICMS_TOTAL_2024.xlsx", 
                         sheet = "ITCD", 
                         col_types = c("text", "text", "numeric", "text", "numeric")) %>% 
   setNames(c( 'Tipo', 'Grupo', 'data','Ano', 'Valor')) %>% 
@@ -63,7 +59,7 @@ ITCD_base <- read_excel("ICMS_TOTAL_2024.xlsx",
 ########################################
 # Tabela do FUNDEINFRA
 ########################################
-FUNDEINFRA_base <- read_excel("ICMS_TOTAL_2024.xlsx", 
+FUNDEINFRA_base <- read_excel("./0 - DADOS/ICMS_TOTAL_2024.xlsx", 
                         sheet = "FUNDEINFRA", 
                         col_types = c("text", "text", "numeric", "text", "numeric")) %>% 
   setNames(c( 'Tipo', 'Grupo', 'data','Ano', 'Valor')) %>% 
@@ -88,7 +84,7 @@ receitas_base <- ICMS_base %>%
 # Tabela Projeções
 ########################################
 
-projecao_base <- read_excel("Previsão_receitas_tributarias.xlsx", sheet = 2) %>% 
+projecao_base <- read_excel("./0 - DADOS/Previsão_receitas_tributarias.xlsx", sheet = 2) %>% 
   pivot_longer(cols = Janeiro:Dezembro) %>% 
   mutate(Valor = as.numeric(gsub( ",", ".",value)),
          mes = case_when(
@@ -112,7 +108,7 @@ projecao_base <- read_excel("Previsão_receitas_tributarias.xlsx", sheet = 2) %>
 # Tabela Projeções - Componentes do ICMS
 ########################################
 # 
-projecao_ICMS <- read_csv2("previsoes_icms_setor_mar_2024.csv") %>% 
+projecao_ICMS <- read_csv2("./0 - DADOS/previsoes_icms_setor_mar_2024.csv") %>% 
   setNames(c('Setor', 'Mes', 'Valor', 'pred') ) %>% 
   mutate(ano = year(Mes),
          mes = month(Mes)) %>%
@@ -120,5 +116,5 @@ projecao_ICMS <- read_csv2("previsoes_icms_setor_mar_2024.csv") %>%
   mutate(valor = rowSums(select(., Valor, pred), na.rm = TRUE)) %>% 
   select(Setor, Mes, valor, ano, mes)
   
-setwd("./../")
+
 
