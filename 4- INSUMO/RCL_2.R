@@ -90,6 +90,12 @@ bloco2 <- RCL12_m |>
   pull() 
 
 bloco3 <- round(bloco1 - bloco2, 2)
+
+bloco4 <- RCL12_m |> 
+  select(PROJ_24) |> 
+  tail(1) |> 
+  mutate(PROJ_24 = round(PROJ_24/1000000000,2)) |> 
+  pull()
 ########################################################
 
 
