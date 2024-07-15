@@ -38,7 +38,7 @@ source( encoding = 'UTF-8', file = './3 - pptx/RCL.R')
 ###############################################
 my <- my %>%
   add_slide(layout = "capa_seção", master = "RRF_template_01") %>% 
-  ph_with(value = "RECEITA TOTAL LIQUÍDA", location = ph_location_type(type = "title")) %>% 
+  ph_with(value = "RECEITA TOTAL LÍQUIDA", location = ph_location_type(type = "title")) %>% 
   ph_with(value = "1.", location = ph_location_type(type = "subTitle"))
 
 # RECEITA TOTAL

@@ -134,14 +134,14 @@ my <- my %>%
           location = ph_location_type(type = "sldNum")) %>% 
   #  
   ph_with(tabela_acumulado, 
-          location = ph_location(left = 1.35, top = 1.3)) %>% 
+          location = ph_location(left = 0.5, top = 1.2))  %>% 
   
   ph_with(block_list(fpar(ftext(glue('(Em R$ milhões)'), 
                                 prop = fp_text(font.size = 12, 
                                                color = "#292929")), 
                           fp_p = border1)),
           
-          location = ph_location(left = 5.5, top = 1.0, 
+          location = ph_location(left = 5.8, top = 0.9, 
                                  width = 6.5,
                                  height = 0.3)) %>% 
   
@@ -149,7 +149,7 @@ my <- my %>%
                                 prop = fp_text(font.size = 11,
                                                color = "#292929")))),
           
-          location = ph_location(left = 0, top = 0.88,
+          location = ph_location(left = 0.18, top = 0.96,
                                  width = 2,
                                  height = 0.201))
 
