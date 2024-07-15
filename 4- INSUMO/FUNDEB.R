@@ -1,21 +1,21 @@
-FPE <- realizado %>% 
-  filter(Column1 == 'Cota-Parte do FPE') %>% 
+FUNDEB <- realizado %>% 
+  filter(Column1 == 'Transferências do FUNDEB') %>% 
   select(c(2, starts_with(glue('{year(Sys.Date())}')))) %>% 
   mutate(across(2:13, ~ na_if(as.numeric(.), 0.00)/1000000)) %>% 
   pivot_longer(cols =  2:13) %>% 
   mutate(data = ymd(paste0(name, '01'))) %>% 
-  setNames(c('FPE', 'name', 'RCL_2024', 'data')) %>% 
+  setNames(c('FUNDEB', 'name', 'RCL_2024', 'data')) %>% 
   bind_cols(projeção1 %>% 
-              filter(Colunas1 == 'Cota-Parte do FPE') %>% 
-              select(c(3, starts_with(glue('{year(Sys.Date())}')))) %>% 
+              filter(Colunas1 == 'Transferências do FUNDEB') %>% 
+              select(c(4, starts_with(glue('{year(Sys.Date())}')))) %>% 
               mutate(across(2:13, as.numeric)/1000000) %>% 
               pivot_longer(cols =  2:13) %>% 
               mutate(data = ymd(paste0(name, '01'))) %>% 
               select(value) %>% 
               setNames('Projeção_RCL')) %>% 
   bind_cols(realizado %>% 
-              filter(Column1 == 'Cota-Parte do FPE') %>% 
-              select(c(2, starts_with(glue('{year(Sys.Date())-1}')))) %>% 
+              filter(Column1 == 'Transferências do FUNDEB') %>% 
+              select(c(1, starts_with(glue('{year(Sys.Date())-1}')))) %>% 
               mutate(across(2:13, as.numeric)/1000000) %>% 
               pivot_longer(cols =  2:13) %>% 
               mutate(data = ymd(paste0(name, '01'))) %>% 
@@ -43,7 +43,7 @@ set_flextable_defaults(
 
 std_border <- fp_border(color = cor1[3], width = 0.5)
 
-tabela_acumulado <- FPE %>%
+tabela_acumulado <- FUNDEB %>%
   mutate(data = data1) %>% 
   select(-data1) %>% 
   flextable() %>% 
@@ -91,14 +91,10 @@ tabela_acumulado <- FPE %>%
         border =  std_border) %>% 
   width(j = c(4,7,10), width = .2, unit = 'cm') %>% 
   width(j = 1, width = 2.6, unit = 'cm') %>% 
-  width(j = c(2,3,5,6,8,9,11,12), width = 2, unit = 'cm')
-
-##################################################################
-
-##################################################################
+  width(j = c(2,3,5,6,8,9,11,12), width = 2, unit = 'cm') 
 
 
-fig1 <- FPE %>% 
+fig1 <- FUNDEB %>% 
   ggplot()+
   
   geom_line(aes(x = data, y = proj_acum*1000000, color = "Projeção 2024", 
@@ -112,7 +108,7 @@ fig1 <- FPE %>%
   
   labs(x = "  ", 
        y = "Valores em Reais (R$)", 
-       title = "COTA-PARTE DO FPE",
+       title = "TRANSF. DO FUNDEB",
        linetype = "Variable",
        color = "Variable") +
   
@@ -138,5 +134,3 @@ fig1 <- FPE %>%
     legend.title = element_blank(),
     legend.position = "bottom"
   )
-
-

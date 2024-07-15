@@ -86,3 +86,5 @@ my <- my %>%
           location = ph_location(left = 1.5, top = 0.9,
                                  width = 6.5,
                                  height = 0.3))
+
+print('FUNDEB <- OK')
