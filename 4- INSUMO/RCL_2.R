@@ -23,28 +23,35 @@ RCL12_m <- realizado %>%
   mutate(RCL12 = rollsum(RCL_2024, 12, fill = NA, align = "right"),
          ano = year(data)) %>% 
   filter(ano == 2024) %>% 
-  select(data, RCL12) %>% 
+  select(data, RCL12) %>%
+  
   bind_cols(realizado %>% 
               filter(RECEITAS == 'RECEITA CORRENTE LÍQUIDA') %>% 
               select(c(1, starts_with(glue('{year(Sys.Date())-1}')))) %>% 
               mutate(across(2:13, ~ na_if(as.numeric(.), 0.00))) %>% 
               pivot_longer(cols =  2:13) %>% 
-              mutate(data = ymd(paste0(name, '01'))) %>% 
-              setNames(c('RCL', 'name', 'RCL_2024', 'data')) %>% 
+              mutate(data = ymd(paste0(name, '01')),
+                     band_sup = value,
+                     band_inf = value) %>% 
+              setNames(c('RCL', 'name', 'RCL_2024', 'data', 'band_sup', 'band_inf')) %>% 
               bind_rows(projeção %>% 
                           filter(ESPECIFICAÇÃO == 'RECEITA CORRENTE LÍQUIDA (III) = (I-II)') %>% 
                           select(c(1, starts_with(glue('{year(Sys.Date())}')))) %>% 
                           mutate(across(2:13, as.numeric)) %>% 
                           pivot_longer(cols =  2:13) %>% 
                           mutate(data = ymd(paste0(name, '01')),
-                                 CAMPO = as.character(CAMPO)) %>% 
-                          setNames(c('RCL', 'name', 'RCL_2024', 'data'))) %>% 
+                                 CAMPO = as.character(CAMPO),
+                                 band_sup = value*(1+0.0434106013926729),
+                                 band_inf = value*(1-0.0434106013926729)) %>% 
+                          setNames(c('RCL', 'name', 'RCL_2024', 'data', 'band_sup', 'band_inf'))) %>% 
               arrange(data) %>% 
               mutate(RCL12 = rollsum(RCL_2024, 12, fill = NA, align = "right"),
+                     band_sup = rollsum(band_sup, 12, fill = NA, align = "right"),
+                     band_inf = rollsum(band_inf, 12, fill = NA, align = "right"),
                      ano = year(data)) %>% 
               filter(ano == 2024) %>% 
-              select(RCL12)) %>% 
-  setNames(c('data', 'RCL_24', 'PROJ_24')) %>% 
+              select(RCL12, band_sup, band_inf)) %>% 
+  setNames(c('data', 'RCL_24', 'PROJ_24', 'band_sup', 'band_inf')) %>% 
   bind_cols(realizado %>% 
               filter(RECEITAS == 'RECEITA CORRENTE LÍQUIDA') %>% 
               select(c(1, starts_with(glue('{year(Sys.Date())}')))) %>% 
@@ -72,6 +79,32 @@ RCL12_m <- realizado %>%
               filter(ano == 2023) %>% 
               select(RCL_23))
 
+a <- realizado %>% 
+  filter(RECEITAS == 'RECEITA CORRENTE LÍQUIDA') %>% 
+  select(c(1, starts_with(glue('{year(Sys.Date())-1}')))) %>% 
+  mutate(across(2:13, ~ na_if(as.numeric(.), 0.00))) %>% 
+  pivot_longer(cols =  2:13) %>% 
+  mutate(data = ymd(paste0(name, '01')),
+         band_sup = value,
+         band_inf = value) %>% 
+  setNames(c('RCL', 'name', 'RCL_2024', 'data', 'band_sup', 'band_inf')) %>% 
+  bind_rows(projeção %>% 
+              filter(ESPECIFICAÇÃO == 'RECEITA CORRENTE LÍQUIDA (III) = (I-II)') %>% 
+              select(c(1, starts_with(glue('{year(Sys.Date())}')))) %>% 
+              mutate(across(2:13, as.numeric)) %>% 
+              pivot_longer(cols =  2:13) %>% 
+              mutate(data = ymd(paste0(name, '01')),
+                     CAMPO = as.character(CAMPO),
+                     band_sup = value*(1+0.0434106013926729),
+                     band_inf = value*(1-0.0434106013926729)) %>% 
+              setNames(c('RCL', 'name', 'RCL_2024', 'data', 'band_sup', 'band_inf'))) %>% 
+  arrange(data) %>% 
+  mutate(RCL12 = rollsum(RCL_2024, 12, fill = NA, align = "right"),
+         band_sup = rollsum(band_sup, 12, fill = NA, align = "right"),
+         band_inf = rollsum(band_inf, 12, fill = NA, align = "right"),
+         ano = year(data)) %>% 
+  filter(ano == 2024)
+
 
 #########################################################
 bloco1 <- RCL12_m |> 
@@ -98,27 +131,26 @@ bloco4 <- RCL12_m |>
   pull()
 ########################################################
 
-
-
-
 fig1 <- RCL12_m %>%
-  mutate(fant_24 = round(RCL_24/1000000000, digits = 2),
-         fantp_24 = round(PROJ_24/1000000000, digits = 2)) %>% 
+  mutate(fant_24 = sub("\\.", ",", round(RCL_24 / 1000000000, digits = 2)),
+         fantp_24 = sub("\\.", ",", round(PROJ_24 / 1000000000, digits = 2))) %>%
   ggplot()+
+  geom_ribbon(aes(x = data, ymin = band_inf, ymax = band_sup), fill = "grey80", alpha = 0.5) +
   geom_line(aes(x = data, y = PROJ_24, color = "Projeção 2024", 
                 linetype = "Projeção 2024"), size=0.5) +
   
   geom_line(aes(x = data, y = RCL_24, color = "Realizado 2024", 
                 linetype = "Realizado 2024"), size=1) +
-  geom_label(aes(x = data, y = RCL_24, label = fant_24),vjust = -0.7)+
-  geom_label(aes(x = data, y = RCL_24, label = fantp_24),vjust = 1.1,colour = cor2[3])+
+  geom_label(aes(x = data, y = PROJ_24, label = fantp_24),vjust = 1.1,colour = cor2[3])+
+  geom_label(aes(x = data, y = RCL_24, label = fant_24),vjust = -0.7,colour = cor2[1])+
+
   
   labs(x = "  ", 
        y = "Valores em Reais (R$)", 
        title = "RCL 12 MESES",
        linetype = "Variable",
        color = "Variable")+
-  scale_y_continuous(labels=scales::label_number(scale_cut = scales::cut_short_scale())) +
+  scale_y_continuous(labels=scales::label_number(scale_cut = scales::cut_short_scale(),decimal.mark = ',')) +
   
   scale_x_date(date_breaks = "2 month", 
                date_labels = "%b")+
@@ -139,10 +171,13 @@ fig1 <- RCL12_m %>%
     legend.position = "bottom"
   ) 
 
-
+fig1
 
 fig2 <- RCL %>% 
+  mutate(band_sup= Projeção_RCL*(1+0.0434106013926729),
+         band_inf = Projeção_RCL*(1-0.0434106013926729)) |> 
   ggplot()+
+  geom_ribbon(aes(x = data, ymin = band_inf*1000000, ymax = band_sup*1000000), fill = "grey80", alpha = 0.5) +
   geom_line(aes(x = data, y = RCL_2023*1000000, color = "Acumulado 2023", 
                 linetype = "Acumulado 2023"), size=0.5) +
   
