@@ -32,52 +32,6 @@ my <- my %>%
   ph_with(value = "1.", location = ph_location_type(type = "subTitle"))
 
 
-###############################################
-# Resumo Gerencial 323
-###############################################
-setwd("./3.1- SLIDE - RECEITA TOTAL/")
-source( encoding = 'UTF-8', file = '5 - SLIDE.R')
-
-
-my <- my %>%
-  add_slide(layout = "título_conteúdo_nota",  master = "RRF_template_01") %>%
-
-  ph_with(value = "Cenários da Receita Orçamentária",
-          location = ph_location_type(type = "title")) %>%
-
-  ph_with(value = glue("Resultado até {format(Sys.Date() %m-% months(1), '%B/%Y')}*"),
-          location = ph_location_type(type = "subTitle")) %>%
-
-  ph_with(value = format(Sys.Date(), "%d/%m/%Y"),
-          location = ph_location_type(type = "dt")) %>%
-
-  ph_with(value = "Boletim Econômico | Secretaria de Estado da Economia",
-          location = ph_location_type(type = "ftr")) %>%
-
-  ph_with(value = empty_content(),
-          location = ph_location_type(type = "sldNum")) %>%
-  #
-  ph_with(tabela_acumulado,
-          location = ph_location(left = 0.6, top = 1.2)) %>%
-
-  ph_with(block_list(fpar(ftext(glue('(Em R$ milhões)'),
-                                prop = fp_text(font.size = 12,
-                                               color = "#292929")),
-                          fp_p = border1)),
-
-          location = ph_location(left = 6.2, top = 1,
-                                 width = 6.501,
-                                 height = 0.201)) %>% 
-  
-  ph_with(block_list(fpar(ftext(glue('* Resultados preliminares'),
-                                prop = fp_text(font.size = 11,
-                                               color = "#292929")))),
-          
-          location = ph_location(left = 0, top = 0.88,
-                                 width = 2,
-                                 height = 0.201))
-  
-  
 
 
 
