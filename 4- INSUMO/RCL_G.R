@@ -217,5 +217,3 @@ fig2 <- RCL %>%
   )
 
 fig.allg <- ggarrange(fig1, fig2, ncol = 2, nrow = 1, common.legend = F)
-
-setwd("./../")
