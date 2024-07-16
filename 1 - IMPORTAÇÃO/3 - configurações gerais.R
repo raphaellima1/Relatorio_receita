@@ -1,5 +1,7 @@
 
 # configuração de borda
+std_border <- fp_border(color = cor1[3], width = 0.5)
+
 border1 <- fp_par(
   text.align = "right",
   shading.color = "#2d2e2d")

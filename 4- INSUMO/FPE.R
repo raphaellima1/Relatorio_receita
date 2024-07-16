@@ -33,13 +33,8 @@ FPE <- realizado %>%
          dif_acum = (acum_24 - proj_acum),
          data1 = format(as.Date(data), "%B"))
 
-set_flextable_defaults(
-  font.size = 10, font.family = "Calibri",
-  font.color = "#333333",
-  table.layout = "fixed",
-  border.color = "gray",
-  padding.top = 3, padding.bottom = 3,
-  padding.left = 4, padding.right = 4)
+
+
 
 std_border <- fp_border(color = cor1[3], width = 0.5)
 
@@ -95,11 +90,29 @@ tabela_acumulado <- FPE %>%
 
 ##################################################################
 
+FPE_band <- FPE %>%
+  select(RCL_2024, Projeção_RCL) %>%
+  drop_na() %>%
+  mutate(dif = round(abs(RCL_2024/Projeção_RCL - 1),3)) %>%
+  summarise(valor = sum(dif) / a) %>%
+  pull() 
+
+FPE <- FPE %>%
+  mutate(band_inf = Projeção_RCL * (1 - RLT_band),
+         band_sup = Projeção_RCL * (1 + RLT_band),
+         mes = month(data)) |> 
+  mutate(band_inf = cumsum(band_inf),
+         band_sup = cumsum(band_sup))
+
 ##################################################################
 
 
 fig1 <- FPE %>% 
   ggplot()+
+  
+  geom_ribbon(aes(x = data, ymin = band_inf * 1000000, 
+                  ymax = band_sup * 1000000), 
+              fill = "grey80", alpha = 0.5) +
   
   geom_line(aes(x = data, y = proj_acum*1000000, color = "Projeção 2024", 
                 linetype = "Projeção 2024"), size=0.5) +

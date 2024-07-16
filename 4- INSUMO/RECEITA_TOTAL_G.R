@@ -12,11 +12,17 @@ RLT_band <- RLT %>%
   summarise(valor = sum(dif) / a) %>%
   pull() 
 
+RLT <- RLT %>%
+  mutate(band_inf = Projeção_RCL * (1 - RLT_band),
+         band_sup = Projeção_RCL * (1 + RLT_band),
+         mes = month(data))
+
+
+
+
 fig1 <- RLT %>% 
-  
-  
   ggplot()+
-  
+  geom_ribbon(aes(x = data, ymin = (proj_acum * (1 - RLT_band)) * 1000000, ymax = (proj_acum * (1 + RLT_band)) * 1000000), fill = "grey80", alpha = 0.5) +
   geom_line(aes(x = data, y = proj_acum*1000000, color = "Projeção 2024", 
                 linetype = "Projeção 2024"), size=0.5) +
   geom_line(aes(x = data, y = acum_23*1000000, color = "Acumulado 2023", 
@@ -57,13 +63,11 @@ fig1 <- RLT %>%
   )
 
 
-RLT <- RLT %>%
-  mutate(band_inf = Projeção_RCL * (1 - RLT_band),
-         band_sup = Projeção_RCL * (1 + RLT_band),
-         mes = month(data))
 
-fig2 <- ggplot() +
-  geom_ribbon(data = RLT %>% filter(mes > a-1), aes(x = data, ymin = band_inf * 1000000, ymax = band_sup * 1000000), fill = "grey80", alpha = 0.5) +
+
+fig2 <- RLT |> 
+  ggplot() +
+  geom_ribbon(aes(x = data, ymin = band_inf * 1000000, ymax = band_sup * 1000000), fill = "grey80", alpha = 0.5) +
   geom_line(data = RLT, aes(x = data, y = Projeção_RCL * 1000000, color = "Projeção 2024", linetype = "Projeção 2024"), size = 0.5) +
   geom_line(data = RLT, aes(x = data, y = RCL_2023 * 1000000, color = "Acumulado 2023", linetype = "Acumulado 2023"), size = 0.5) +
   geom_line(data = RLT, aes(x = data, y = RCL_2024 * 1000000, color = "Acumulado 2024", linetype = "Acumulado 2024"), size = 1) +
