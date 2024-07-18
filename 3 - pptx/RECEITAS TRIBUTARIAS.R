@@ -10,7 +10,7 @@ my <- my %>%
   ph_with(value = "Receitas Tributárias",
           location = ph_location_type(type = "title")) %>%
   
-  ph_with(value = glue("Arrecadação Bruta*"),
+  ph_with(value = glue("Arrecadação Bruta"),
           location = ph_location_type(type = "subTitle")) %>%
   
   ph_with(value = format(Sys.Date(), "%d/%m/%Y"),
@@ -52,7 +52,7 @@ my <- my %>%
   ph_with(value = "Detalhamento das Receitas com ICMS", 
           location = ph_location_type(type = "title")) %>%
   
-  ph_with(value = glue("Macro-setores estratégicos*"),
+  ph_with(value = glue("Macro-setores estratégicos"),
           location = ph_location_type(type = "subTitle")) %>%
   
   ph_with(value = format(Sys.Date(), "%d/%m/%Y"),

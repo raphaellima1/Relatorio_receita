@@ -1,17 +1,18 @@
+# FPE
 ###############################################
-# 1.1 - Participação percentual por atividade econômica
-setwd("./4- SLIDE/")
-source( encoding = 'UTF-8', file = '2 - SLIDE.R')
+source(encoding = 'UTF-8', file = './4- INSUMO/RECEITAS_TRIBUTARIAS_10G.R')
+
+###############################################
 ###############################################
 # carregar a tabela total chamada df
 
 my <- my %>%
   add_slide(layout = "título_conteúdo", master = "RRF_template_01") %>%
   
-  ph_with(value = "Receitas Tributárias", 
+  ph_with(value = "Macro Setores ICMS", 
           location = ph_location_type(type = "title")) %>%
   
-  ph_with(value = glue("Comparativo em relação ao ano anterior e o projetado*"),
+  ph_with(value = glue("Comparativo em relação ao ano anterior e o projetado"),
           location = ph_location_type(type = "subTitle")) %>%
   
   ph_with(value = format(Sys.Date(), "%d/%m/%Y"),
@@ -30,3 +31,4 @@ my <- my %>%
                                  width = 12,8,
                                  height = 5.9))
   
+print('MACRO SETORES <- OK')

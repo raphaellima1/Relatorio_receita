@@ -24,7 +24,7 @@ my <- read_pptx('template - v2.pptx') %>%
 ###############################################
 my <- my %>%
   add_slide(layout = "capa_seção", master = "RRF_template_01") %>% 
-  ph_with(value = "RECEITA CORRENTE LIQUÍDA", location = ph_location_type(type = "title")) %>% 
+  ph_with(value = "RECEITA CORRENTE LÍQUIDA", location = ph_location_type(type = "title")) %>% 
   ph_with(value = "1.", location = ph_location_type(type = "subTitle"))
 
 # RECEITA CORRENTE LIQUIDA - RCL
@@ -74,6 +74,22 @@ source( encoding = 'UTF-8', file = './3 - pptx/RECEITAS TRIBUTARIAS.R')
 # RECEITAS TRIBUTÁRIAS
 ###############################################
 source( encoding = 'UTF-8', file = './3 - pptx/RECEITAS TRIBUTARIAS G.R')
+
+# RECEITAS TRIBUTÁRIAS
+###############################################
+source( encoding = 'UTF-8', file = './3 - pptx/MACRO SETORES.R')
+
+# add capa_seção - Seção 1
+###############################################
+my <- my %>%
+  add_slide(layout = "capa_seção", master = "RRF_template_01") %>% 
+  ph_with(value = "DESPESA", location = ph_location_type(type = "title")) %>% 
+  ph_with(value = "1.", location = ph_location_type(type = "subTitle"))
+
+
+# Despesa -----------------------------------------------------------------
+source( encoding = 'UTF-8', file = './3 - pptx/MACRO SETORES.R')
+
 
 # Finalização da apresentação
 ##############################################
