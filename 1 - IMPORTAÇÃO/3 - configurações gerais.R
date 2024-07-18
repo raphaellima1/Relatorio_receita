@@ -12,8 +12,8 @@ border2 <- fp_par(
 # configuração de paleta de cor
 
 # tabela 
-cor1 <- c('#E5ECF2', # linhas
-          "#004782", # cabeçalho
+cor1 <- c('#E5F5EB', # linhas
+          "#009e3c", # cabeçalho
           '#ffffff', # Letra
           '#bf1e2e' # Numero negativo
           )

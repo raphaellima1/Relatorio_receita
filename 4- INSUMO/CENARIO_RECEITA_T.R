@@ -270,16 +270,6 @@ TAB_GER <- df_PLOA2024 %>%
 
 # FORMATAÇÃO DA TABELA -----------------
 
-set_flextable_defaults(
-  font.size = 10, font.family = "Calibri",
-  font.color = "#333333",
-  table.layout = "fixed",
-  border.color = "gray")
-
-
-std_border <- fp_border(color = "black", width = 1.1)
-
-
 tabela_acumulado <- TAB_GER %>%
   flextable() %>% 
   fontsize(size = 10, part = "header") %>% 
@@ -344,7 +334,7 @@ tabela_acumulado <- TAB_GER %>%
   width(j = c(4,6,9,12), width = .2, unit = 'cm') %>% 
   width(j = c(2,3,5,7,8,10,11,13,14), width = 2.4, unit = 'cm') %>% 
   merge_at(i = 1:2, j = 1, part = "header") %>% 
-  hline(i = 1, j = c(2:3,5,7:8,10:11,13:14), border = fp_border(color = "black", width = 1), part = 'header') %>% 
+  hline(i = 1, j = c(2:3,5,7:8,10:11,13:14), border = fp_border(color = "white", width = .5), part = 'header') %>% 
   height(height = 0.4, part = "header", unit = 'cm') %>%
   height(height = 0.4, part = "body", unit = 'cm') %>% 
   padding(padding.left = 2, padding.right = 2, padding.top = 0, padding.bottom = 0, part = "all") %>% 

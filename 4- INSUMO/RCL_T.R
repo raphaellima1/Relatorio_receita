@@ -109,15 +109,6 @@ RCL <- realizado %>%
          dif_proj_acum = acum_24 - proj_acum,
          data1 = format(as.Date(data), "%B"))
   
-set_flextable_defaults(
-  font.size = 11, font.family = "Calibri",
-  font.color = "#333333",
-  table.layout = "fixed",
-  border.color = "gray",
-  padding.top = 3, padding.bottom = 3,
-  padding.left = 4, padding.right = 4)
-
-std_border <- fp_border(color = "black", width = 1.1)
 
 tabela_acumulado <- RCL %>%
   mutate(data = data1) %>% 

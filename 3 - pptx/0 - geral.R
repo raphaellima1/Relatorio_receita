@@ -60,6 +60,20 @@ my <- my %>%
 ###############################################
 source( encoding = 'UTF-8', file = './3 - pptx/FPE_FUNDEB.R')
 
+# add capa_seção - Seção 1
+###############################################
+my <- my %>%
+  add_slide(layout = "capa_seção", master = "RRF_template_01") %>% 
+  ph_with(value = "RECEITAS TRIBUTÁRIAS", location = ph_location_type(type = "title")) %>% 
+  ph_with(value = "1.", location = ph_location_type(type = "subTitle"))
+
+# RECEITAS TRIBUTÁRIAS
+###############################################
+source( encoding = 'UTF-8', file = './3 - pptx/RECEITAS TRIBUTARIAS.R')
+
+# RECEITAS TRIBUTÁRIAS
+###############################################
+source( encoding = 'UTF-8', file = './3 - pptx/RECEITAS TRIBUTARIAS G.R')
 
 # Finalização da apresentação
 ##############################################
