@@ -142,7 +142,7 @@ tabela_acumulado <- RCL %>%
      part = "header", 
      bg = cor1[2]) %>% 
   
-  style( pr_t = fp_text_default(
+  flextable::style( pr_t = fp_text_default(
     bold = F,
     color = cor1[3]
   ),

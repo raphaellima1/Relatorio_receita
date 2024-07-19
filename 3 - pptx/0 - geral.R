@@ -83,12 +83,12 @@ source( encoding = 'UTF-8', file = './3 - pptx/MACRO SETORES.R')
 ###############################################
 my <- my %>%
   add_slide(layout = "capa_seção", master = "RRF_template_01") %>% 
-  ph_with(value = "DESPESA", location = ph_location_type(type = "title")) %>% 
+  ph_with(value = "EXECUÇÃO ORÇAMENTÁRIA", location = ph_location_type(type = "title")) %>% 
   ph_with(value = "1.", location = ph_location_type(type = "subTitle"))
 
 
-# Despesa -----------------------------------------------------------------
-source( encoding = 'UTF-8', file = './3 - pptx/MACRO SETORES.R')
+# Execução orçamentária ---------------------------------------------------
+source( encoding = 'UTF-8', file = './3 - pptx/EXECUÇÃO ORÇAMENTARIA.R')
 
 
 # Finalização da apresentação

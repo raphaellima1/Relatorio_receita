@@ -298,7 +298,7 @@ tabela_acumulado <- TAB_GER %>%
   bg(., 
      part = "header", 
      bg = cor1[2]) %>% 
-  style( pr_t = fp_text_default(
+  flextable::style( pr_t = fp_text_default(
     bold = F,
     color = cor1[3]
   ),
@@ -315,7 +315,7 @@ tabela_acumulado <- TAB_GER %>%
      part = "body", 
      bg = cor1[2]) %>%
   
-  style(i =  ~ RECEITAS == "RECEITA TOTAL", 
+  flextable::style(i =  ~ RECEITAS == "RECEITA TOTAL", 
         pr_t = fp_text_default(
           bold = F,
           color = cor1[3]
