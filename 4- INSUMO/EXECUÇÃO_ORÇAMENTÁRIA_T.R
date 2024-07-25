@@ -49,8 +49,8 @@ ft <- excu_orcamentaria_T |>
   bg(i = c(2, 4, 6), part = "body", bg = cor1[1]) |> 
   align(i = c(1), j = NULL, align = "center", part = "header") |> 
   width(j = 1, width = 2, unit = 'cm') |> 
-  width(j = c(2:4), width = 2, unit = 'cm') |> 
-  width(j = c(6:8), width = 3.5, unit = 'cm') 
+  width(j = c(2:5), width = 2.5, unit = 'cm') |> 
+  width(j = c(6:8), width = 2, unit = 'cm') 
 
 # Aplicar barras de progresso nas colunas específicas
 for (col in c("dot_emp", "liq_emp", "pgto_liqui")) {
@@ -71,7 +71,7 @@ for (col in c("dot_emp", "liq_emp", "pgto_liqui")) {
     ' ',
     as_chunk(sprintf("%.1f %%", as.numeric(.data[[col]])))
   )) |> 
-    align( j = c(6:8), align = "left", part = "body")
+    align( j = c(6:8), align = "right", part = "body")
 }
 ft
 save_as_image(ft, path = 'imagem.png')
