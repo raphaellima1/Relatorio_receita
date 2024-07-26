@@ -22,7 +22,7 @@ my <- my %>%
           location = ph_location_type(type = "sldNum")) %>%
 
   ph_with(ft, 
-          location = ph_location(left = 0.4, top = 3.5)) %>% 
+          location = ph_location(left = 0.4, top = 3.0)) %>% 
   
   ph_with(dml(code = plot(fig1)), 
           location = ph_location(left = 8.,
@@ -35,7 +35,7 @@ my <- my %>%
                                                color = "#292929")), 
                           fp_p = border1)),
           
-          location = ph_location(left = 1.1, top = 3.2, 
+          location = ph_location(left = 1.1, top = 2.7, 
                                  width = 6.5,
                                  height = 0.3)) |>
 
@@ -70,12 +70,12 @@ my <- my %>%
       fp_p = border2
     ),
     fpar(
-      ftext(glue('Projetado até jun/24'), 
+      ftext(glue('Valor Empenhado'), 
             prop = fp_text(font.size = 16, color = "#ffffff")),
       fp_p = border2
     ),
     fpar(
-      ftext(glue('(Acum. 12 meses)'), 
+      ftext(glue('Até {format(Sys.Date(), "%b")}/24'), 
             prop = fp_text(font.size = 10.5, color = "#ffffff")),
       fp_p = border2
     )
@@ -86,15 +86,18 @@ my <- my %>%
   # terceiro bloco
   ph_with(block_list(
     fpar(
-      ftext(ifelse(bloco3 > 0, 
-                   glue('+ R$ {format(bloco3, decimal.mark = ",", scientific = FALSE)} bi'), 
-                   glue('- R$ {format(bloco3, decimal.mark = ",", scientific = FALSE)} bi')), 
+      ftext(glue('R$ {format(bloco2, decimal.mark = ",", scientific = FALSE)} bi'), 
             prop = fp_text(font.size = 18, color = "#ffffff", bold = T)),
       fp_p = border2
     ),
     fpar(
-      ftext(glue('Realizado x Projetado'), 
+      ftext(glue('Valor Liquidado'), 
             prop = fp_text(font.size = 16, color = "#ffffff")),
+      fp_p = border2
+    ),
+    fpar(
+      ftext(glue('Até {format(Sys.Date(), "%b")}/24'), 
+            prop = fp_text(font.size = 10.5, color = "#ffffff")),
       fp_p = border2
     )
   ),
@@ -104,13 +107,18 @@ my <- my %>%
   # quarto bloco
   ph_with(block_list(
     fpar(
-      ftext(glue('R$ {format(bloco4, decimal.mark = ",", scientific = FALSE)} bi'), 
+      ftext(glue('R$ {format(bloco2, decimal.mark = ",", scientific = FALSE)} bi'), 
             prop = fp_text(font.size = 18, color = "#ffffff", bold = T)),
       fp_p = border2
     ),
     fpar(
-      ftext(glue('Previsão para Dez/24'), 
+      ftext(glue('Valor Pago'), 
             prop = fp_text(font.size = 16, color = "#ffffff")),
+      fp_p = border2
+    ),
+    fpar(
+      ftext(glue('Até {format(Sys.Date(), "%b")}/24'), 
+            prop = fp_text(font.size = 10.5, color = "#ffffff")),
       fp_p = border2
     )
   ),

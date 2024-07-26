@@ -4,7 +4,7 @@ suppressMessages({
                  ggthemes,officer, gt, kableExtra, magrittr,rvg, 
                  mschart, janitor,sidrar, lemon,zoo, rlang,flextable, htmltools)
   
-  setwd('C:/Users/rapha/OneDrive/Documentos/Trabalhos em R/Relatorio_receita')
+  #setwd('C:/Users/rapha/OneDrive/Documentos/Trabalhos em R/Relatorio_receita')
   
   source( encoding = 'UTF-8', file = './1 - IMPORTAÇÃO/0 - importação ICMS.R')
   
