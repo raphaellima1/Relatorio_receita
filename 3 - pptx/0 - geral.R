@@ -91,6 +91,8 @@ my <- my %>%
 source( encoding = 'UTF-8', file = './3 - pptx/EXECUÇÃO ORÇAMENTARIA.R')
 
 
+# Despesa Liquidada -------------------------------------------------------
+source( encoding = 'UTF-8', file = './3 - pptx/DESPESA LIQUIDADA.R')
 # Finalização da apresentação
 ##############################################
 
@@ -103,3 +105,4 @@ my <- my %>%
 my %>%
   print(target = glue("{Sys.Date()}V2.pptx"))%>% 
   browseURL()
+

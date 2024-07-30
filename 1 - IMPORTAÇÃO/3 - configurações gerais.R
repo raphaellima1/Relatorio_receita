@@ -12,7 +12,7 @@ border2 <- fp_par(
 
 # tabela 
 cor1 <- c('#E5F5EB', # linhas
-          "#009e3c", # cabeçalho
+          "#008E52", # cabeçalho
           '#ffffff', # Letra
           '#bf1e2e' # Numero negativo
           )

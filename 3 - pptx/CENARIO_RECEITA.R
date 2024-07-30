@@ -5,12 +5,12 @@ source(encoding = 'UTF-8', file = './4- INSUMO/CENARIO_RECEITA_T.R')
 
 
 my <- my %>%
-  add_slide(layout = "título_conteúdo_nota",  master = "RRF_template_01") %>%
+  add_slide(layout = "título_conteúdo",  master = "RRF_template_01") %>%
   
   ph_with(value = "Cenários da Receita Orçamentária",
           location = ph_location_type(type = "title")) %>%
   
-  ph_with(value = glue("Resultado até {format(Sys.Date() %m-% months(1), '%B/%Y')}*"),
+  ph_with(value = glue('Resultado até {{format(Sys.Date(), "%b")}/24)}'),
           location = ph_location_type(type = "subTitle")) %>%
   
   ph_with(value = format(Sys.Date(), "%d/%m/%Y"),
@@ -32,15 +32,7 @@ my <- my %>%
           
           location = ph_location(left = 6.2, top = 0.95,
                                  width = 6.501,
-                                 height = 0.201)) %>% 
-  
-  ph_with(block_list(fpar(ftext(glue('* Resultados preliminares'),
-                                prop = fp_text(font.size = 11,
-                                               color = "#292929")))),
-          
-          location = ph_location(left = 0.18, top = 0.96,
-                                 width = 2,
-                                 height = 0.201))
+                                 height = 0.201)) 
 
 
 print('CENARIO RECEITA <- OK')

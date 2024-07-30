@@ -45,7 +45,7 @@ my <- my %>%
   ph_with(block_list(
     fpar(
       ftext(glue('R$ {format(bloco1, decimal.mark = ",", scientific = FALSE)} bi'), 
-            prop = fp_text(font.size = 18, color = "red", bold = T)),
+            prop = fp_text(font.size = 18, color = "white", bold = T)),
       fp_p = border2
     ),
     fpar(
@@ -86,7 +86,7 @@ my <- my %>%
   # terceiro bloco
   ph_with(block_list(
     fpar(
-      ftext(glue('R$ {format(bloco2, decimal.mark = ",", scientific = FALSE)} bi'), 
+      ftext(glue('R$ {format(bloco3, decimal.mark = ",", scientific = FALSE)} bi'), 
             prop = fp_text(font.size = 18, color = "#ffffff", bold = T)),
       fp_p = border2
     ),
@@ -107,7 +107,7 @@ my <- my %>%
   # quarto bloco
   ph_with(block_list(
     fpar(
-      ftext(glue('R$ {format(bloco2, decimal.mark = ",", scientific = FALSE)} bi'), 
+      ftext(glue('R$ {format(bloco4, decimal.mark = ",", scientific = FALSE)} bi'), 
             prop = fp_text(font.size = 18, color = "#ffffff", bold = T)),
       fp_p = border2
     ),

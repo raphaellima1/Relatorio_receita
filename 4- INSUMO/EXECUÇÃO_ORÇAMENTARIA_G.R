@@ -9,17 +9,42 @@ excu_orcamentaria_G <- excu_orcamentaria |>
          Liq = cumsum(Liquidação),
          Pag = cumsum(Pagamento))
 
+bloco1 <- excu_orcamentaria_G |> 
+  select(Dot) |> 
+  tail(n = 1) |>
+  mutate(Dot = round(Dot/1000000000, 2)) |> 
+  pull()
+
+bloco2 <- excu_orcamentaria_G |> 
+  select(Emp) |> 
+  tail(n = 1) |>
+  mutate(Emp = round(Emp/1000000000, 2)) |> 
+  pull()
+
+bloco3 <- excu_orcamentaria_G |> 
+  select(Liq) |> 
+  tail(n = 1) |>
+  mutate(Liq = round(Liq/1000000000, 2)) |> 
+  pull()
+
+bloco4 <- excu_orcamentaria_G |> 
+  select(Pag) |> 
+  tail(n = 1) |>
+  mutate(Pag = round(Pag/1000000000, 2)) |> 
+  pull()
+
+
 
 fig1 <- excu_orcamentaria_G |> 
   ggplot()+
   geom_step(aes(x = data, y = Dot, color = "Dotação",
-                linetype = "Dotação"), size=1 )+
+                linetype = "Dotação"), size=0.5, )+
   geom_line(aes(x = data, y = Emp, color = "Empenho",
-                linetype = "Empenho"), size=0.5)+
+                linetype = "Empenho"), size=0.8)+
   geom_line(aes(x = data, y = Liq, color = "Liquidação",
-                linetype = "Liquidação"), size=0.5)+
+                linetype = "Liquidação"), size=0.8)+
   geom_line(aes(x = data, y = Pag, color = "Pagamento",
-                linetype = "Pagamento"), size=0.5)+
+                linetype = "Pagamento"), size=0.8)+
   scale_y_continuous(labels = scales::label_number(scale_cut = scales::cut_short_scale())) +
   scale_x_date(date_breaks = "2 month", date_labels = "%b") +
 

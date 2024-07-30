@@ -150,7 +150,7 @@ df_acum23 <- df %>%
            RECEITAS == "1.6. RECEITA DE SERVIÇOS" |
            RECEITAS == "1.7. TRANSFERÊNCIAS CORRENTES" |
            Column1 == "Cota-Parte do FPE" |
-           Column1 == "Transferências da LC 61/1989" |
+           Column1 == "Cota-Parte do IPI -  LC 61/1989" |
            Column1 == "Transferências do FUNDEB" |
            Column1 == "Outras Transferências Correntes" |
            RECEITAS == "1.9. OUTRAS RECEITAS CORRENTES" |
@@ -201,7 +201,7 @@ df_acum24 <- df %>%
            RECEITAS == "1.6. RECEITA DE SERVIÇOS" |
            RECEITAS == "1.7. TRANSFERÊNCIAS CORRENTES" |
            Column1 == "Cota-Parte do FPE" |
-           Column1 == "Transferências da LC 61/1989" |
+           Column1 == "Cota-Parte do IPI -  LC 61/1989" |
            Column1 == "Transferências do FUNDEB" |
            Column1 == "Outras Transferências Correntes" |
            RECEITAS == "1.9. OUTRAS RECEITAS CORRENTES" |

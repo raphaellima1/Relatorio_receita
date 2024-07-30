@@ -98,3 +98,4 @@ fig.allg <- ggarrange(
   common.legend = TRUE, 
   legend = "bottom"
 )
+

@@ -59,10 +59,12 @@ tabela_COMB <- ICMS_base %>%
   adorn_totals()  %>% 
   add_column(col_space = NA, .name_repair = "universal") %>%
   mutate(dif_mes = mes_24 - proj_me,
-         dif_acum = acum_24 - proj_acum)
+         dif_acum = acum_24 - proj_acum,
+         crescimento = ((acum_24 - acum_23)/acum_23)*100)
 
 
 tabela_COM_ICMS <- tabela_COMB %>%
+  select(-crescimento) |> 
   flextable() %>% 
   border_remove() %>%
   colformat_double(j = c("mes_23", "mes_24", 'acum_23', 'acum_24',
@@ -122,15 +124,15 @@ tabela_COM_ICMS <- tabela_COMB %>%
 # Definir o tamanho do gráfico
 #options(repr.plot.width = 3.4, repr.plot.height = 5)
 fig6 <- tabela_COMB %>% 
-  select(Grupo, dif_acum) %>%
-  ggplot(aes(x = dif_acum, y = reorder(Grupo, dif_acum), fill = dif_acum > 0)) +  # Reorder para ordenar os grupos
+  select(Grupo, crescimento) %>%
+  ggplot(aes(x = crescimento, y = reorder(Grupo, crescimento), fill = crescimento > 0)) +  # Reorder para ordenar os grupos
   geom_col() +
-  geom_label(aes(label = sub("\\.", ",", sprintf("%.2f", dif_acum)),
-                 x = ifelse(dif_acum > 0, dif_acum - 2.5, dif_acum + 2.5)),  # Ajusta a posição dos rótulos
+  geom_label(aes(label = sub("\\.", ",", sprintf("%.2f", crescimento)),
+                 x = ifelse(crescimento > 0, crescimento - 2.5, crescimento + 2.5)),  # Ajusta a posição dos rótulos
              color = "black", fill = "white", size = 3,label.size = 0.1) +
   scale_fill_manual(values = c(cor2[3], cor2[2]), guide = FALSE) +
   theme_hc() + 
-  labs(title = "Acumulado mês / Acumulado mês anterior",
+  labs(title = "Acumulado mês / Acumulado mês ano anterior",
        x = "Variação (%)", 
        y = "Grupo de ICMS") +
   theme(text=element_text(size=8.5),
@@ -138,3 +140,4 @@ fig6 <- tabela_COMB %>%
         legend.title = element_blank(),
         legend.position = "bottom"
   )
+

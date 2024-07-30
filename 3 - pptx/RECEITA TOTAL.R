@@ -39,12 +39,12 @@ my <- my %>%
       fp_p = border2
     ),
     fpar(
-      ftext(glue('Realizado até jun/24'), 
+      ftext(glue('Realizado até {format(Sys.Date(), "%b")}/24'), 
             prop = fp_text(font.size = 16, color = "#ffffff")),
       fp_p = border2
     ),
     fpar(
-      ftext(glue('(Acum. jan/24 a jun/24)'), 
+      ftext(glue('(Acum. jan/24 a {format(Sys.Date(), "%b")}/24)'), 
             prop = fp_text(font.size = 10.5, color = "#ffffff")),
       fp_p = border2
     )
@@ -60,12 +60,12 @@ my <- my %>%
       fp_p = border2
     ),
     fpar(
-      ftext(glue('Projetado até jun/24'), 
+      ftext(glue('Projetado até {format(Sys.Date(), "%b")}/24'), 
             prop = fp_text(font.size = 16, color = "#ffffff")),
       fp_p = border2
     ),
     fpar(
-      ftext(glue('(Acum. jan/24 a jun/24)'), 
+      ftext(glue('(Acum. jan/24 a {format(Sys.Date(), "%b")}/24)'), 
             prop = fp_text(font.size = 10.5, color = "#ffffff")),
       fp_p = border2
     )
@@ -116,12 +116,12 @@ my <- my %>%
 ###############################################
 
 my <- my %>%
-  add_slide(layout = "título_conteúdo_nota", master = "RRF_template_01") %>%
+  add_slide(layout = "título_conteúdo", master = "RRF_template_01") %>%
   
   ph_with(value = "Receita Total Líquida", 
           location = ph_location_type(type = "title")) %>%
   
-  ph_with(value = glue("Comparativo mensal*"),
+  ph_with(value = glue('Comparativo mensal {format(Sys.Date(), "%B")}/24'),
           location = ph_location_type(type = "subTitle")) %>%
   
   ph_with(value = format(Sys.Date(), "%d/%m/%Y"),
@@ -143,14 +143,6 @@ my <- my %>%
           
           location = ph_location(left = 5.8, top = 0.9, 
                                  width = 6.5,
-                                 height = 0.3)) %>% 
-  
-  ph_with(block_list(fpar(ftext(glue('* Resultados preliminares'),
-                                prop = fp_text(font.size = 11,
-                                               color = "#292929")))),
-          
-          location = ph_location(left = 0.18, top = 0.96,
-                                 width = 2,
-                                 height = 0.201))
+                                 height = 0.3)) 
 
 print('RTL <- OK')
