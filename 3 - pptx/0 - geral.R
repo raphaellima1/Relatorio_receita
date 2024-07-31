@@ -90,12 +90,13 @@ my <- my %>%
 # Execução orçamentária ---------------------------------------------------
 source( encoding = 'UTF-8', file = './3 - pptx/EXECUÇÃO ORÇAMENTARIA.R')
 
-
+source( encoding = 'UTF-8', file = './3 - pptx/EXECUÇÃO ORÇAMENTARIA_E.R')
 # Despesa Liquidada -------------------------------------------------------
 source( encoding = 'UTF-8', file = './3 - pptx/DESPESA LIQUIDADA.R')
 # Finalização da apresentação
 ##############################################
-
+# Despesa Liquidada -------------------------------------------------------
+source( encoding = 'UTF-8', file = './3 - pptx/ATIVIDADE ECONOMICA.R')
 
 # add slide equipe_imagem
 my <- my %>% 

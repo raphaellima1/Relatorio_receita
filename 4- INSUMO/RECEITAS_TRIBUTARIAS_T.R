@@ -135,5 +135,6 @@ tabela_acumulado <- tabela_total %>%
   hline(i = 1, j = c(2,3,5,6,8,9,11,12), part = "header", 
         border =  std_border) %>% 
   width(j = c(4,7,10), width = .2, unit = 'cm') %>% 
-  width(j = 1, width = 2.6, unit = 'cm') %>% 
-  width(j = c(2,3,5,6,8,9,11,12), width = 2, unit = 'cm') 
+  width(j = 1, width = 2.8, unit = 'cm') %>% 
+  width(j = c(2,3,5,6,8,9,11,12), width = 1.8, unit = 'cm') |> 
+  width(j = c(9,12), width = 2.4, unit = 'cm') 

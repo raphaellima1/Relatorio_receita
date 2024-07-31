@@ -13,7 +13,7 @@ my <- my %>%
   ph_with(value = "Receita Corrente Líquida (RCL)", 
           location = ph_location_type(type = "title")) %>%
   
-  ph_with(value = glue('Comparativo mensal {format(Sys.Date(), "%B")}/24'),
+  ph_with(value = glue('Resultados preliminares em {format(Sys.Date(), "%d/%m/%y")}'),
           location = ph_location_type(type = "subTitle")) %>%
   
   ph_with(value = format(Sys.Date(), "%d/%m/%Y"),
@@ -123,7 +123,7 @@ my <- my %>%
   ph_with(value = "Receita Corrente Líquida (RCL)", 
           location = ph_location_type(type = "title")) %>%
   
-  ph_with(value = glue('Comparativo mensal {format(Sys.Date(), "%B")}/24'),
+  ph_with(value = glue('Resultados preliminares em {format(Sys.Date(), "%d/%m/%y")}'),
           location = ph_location_type(type = "subTitle")) %>%
   
   ph_with(value = format(Sys.Date(), "%d/%m/%Y"),

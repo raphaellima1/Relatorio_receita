@@ -10,12 +10,10 @@ suppressMessages({
   
   source( encoding = 'UTF-8', file = './1 - IMPORTAÇÃO/1 - importação Receita Total.R')
   
+  source( encoding = 'UTF-8', file = './1 - IMPORTAÇÃO/2 - importação Importação Atividade.R')
+  
   source( encoding = 'UTF-8', file = './1 - IMPORTAÇÃO/3 - configurações gerais.R')
   
   source( encoding = 'UTF-8', file = './3 - pptx/0 - geral.R')
 
 })
-
-
-
-

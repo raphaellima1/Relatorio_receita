@@ -157,8 +157,8 @@ tabela_acumulado <- RCL %>%
   color( ~ dif_proj_acum < 0, ~ dif_proj_acum,  color = cor1[4]) %>% 
   
   add_header_row(values = c('Arrecadação', 'Mensal', '  ', "Acumulado (12 meses)",
-                            '   ', "Projeções", '    ', 'Diferença (%) - Igual periodo',
-                            ' ', 'Diferença em R$ (Real./24) - (Proj./24)'), 
+                            '   ', "Projeções", '    ', 'Diferença (%) \n Igual periodo',
+                            ' ', 'Realizado X Projetado'), 
                  colwidths = c(1,2,1,2,1,2,1,2,1,2)) %>% 
   
   merge_at(i = 1:2, j = 1, part = "header") %>% 

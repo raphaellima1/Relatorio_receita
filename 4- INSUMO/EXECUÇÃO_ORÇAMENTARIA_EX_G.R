@@ -33,7 +33,6 @@ bloco4 <- excu_orcamentaria_G |>
   mutate(Pag = round(Pag/1000000000, 2)) |> 
   pull()
 
-
 start_date <- as.Date('2024-08-01')
 end_date <- as.Date("2024-12-01")
 seq_dates <- seq(start_date, end_date, by = "month")
@@ -65,19 +64,18 @@ fig1 <- excu_orcamentaria_G |>
                 linetype = "Pagamento"), size=0.8)+
   scale_y_continuous(labels = scales::label_number(scale_cut = scales::cut_short_scale())) +
   scale_x_date(date_breaks = "1 month", date_labels = "%b") +
-
+  
   scale_color_manual(breaks = c('Dotação', "Empenho", 'Liquidação', 'Pagamento'),
-                   values = c("Dotação" = 'gray20', "Empenho" = cor2[3], 
-                              "Liquidação" = cor2[2],"Pagamento" = cor2[1]), 
-                   name = "Legenda:") + 
+                     values = c("Dotação" = 'gray20', "Empenho" = cor2[3], 
+                                "Liquidação" = cor2[2],"Pagamento" = cor2[1]), 
+                     name = "Legenda:") + 
   
   scale_linetype_manual(breaks = c('Dotação', "Empenho", 'Liquidação', 'Pagamento'),
                         values = c("Dotação" = 'solid', "Empenho" = 'solid', 
                                    "Liquidação" = 'solid',"Pagamento" = 'solid'), 
                         name = "Legenda:") +
-  theme_classic2() +
+  theme_classic2()+
   theme(plot.title = element_text(hjust = 0.5),
         legend.title = element_blank(),
         legend.position = "bottom")
 
-  

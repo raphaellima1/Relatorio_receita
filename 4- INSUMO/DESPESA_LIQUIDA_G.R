@@ -1,5 +1,6 @@
 
 desp_liquidada <- e_orca |> 
+  filter(Poder == 'EXECUTIVO') |> 
   select(Exercício, GND_Cod, AnoMes,  Liquidação) |> 
   filter(Exercício >= 2023) |> 
   group_by(AnoMes, Exercício) |> 
@@ -63,17 +64,15 @@ filter(AnoMes <= as.numeric(month(Sys.Date()))) |>
             acum_24 = sum(`2024`, na.rm = T))
 
 
-Q1_23 <- quantile(desp_liquidada_Grupo$acum_23, 0.8)
-Q1_24 <- quantile(desp_liquidada_Grupo$acum_24, 0.8)
+
 
 fig2 <- desp_liquidada_Grupo |> 
   pivot_longer(cols = acum_23:acum_24, names_to = "variable", values_to = "value") |> 
   ggplot(aes(x = GND_Nome, y = value, fill = variable)) + 
-  geom_bar(stat = "identity", position = position_dodge(width = 0.9), width = 1) +
+  geom_bar(stat = "identity", position = position_dodge(width = 1), width = 1) +
   geom_text(aes(label = format(round(value / 1000000, 0), nsmall = 0, big.mark = ".", decimal.mark = ","),
-                color = ifelse((variable == "acum_23" & value > Q1_23) | (variable == "acum_24" & value > Q1_24), "white", "black")),
-            position = position_dodge(width = 0.9), hjust = "inward") + 
-  scale_y_continuous(labels = scales::label_number(scale_cut = scales::cut_short_scale())) +
+                color =  "black"),position = position_dodge(width = 0.9), hjust = 0) + 
+  scale_y_continuous(labels = scales::label_number(scale_cut = scales::cut_short_scale()),limits = c(0,15000000000)) +
 
   coord_flip() +
   scale_fill_manual(name = "Legenda:", values = c("acum_23" = cor2[1]
@@ -87,8 +86,13 @@ fig2 <- desp_liquidada_Grupo |>
     plot.title = element_text(hjust = 0.5),
     legend.title = element_blank(),
     legend.position = "bottom",
-    plot.margin = unit(c(1, 1, 1, 1), "cm")
+    axis.text.y = element_text(size = 8),
+    plot.margin = unit(c(0,0,0,0), "cm")
   ) +
   scale_color_identity()
 
 fig.allg <- ggarrange(fig1, fig2, ncol = 2, nrow = 1, common.legend = F)
+
+
+
+
