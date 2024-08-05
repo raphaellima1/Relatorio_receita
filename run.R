@@ -2,7 +2,7 @@ suppressMessages({
 
   pacman::p_load(tidyverse, readxl, lubridate, glue, ggpubr,gridExtra,grid,
                  ggthemes,officer, gt, kableExtra, magrittr,rvg, 
-                 mschart, janitor,sidrar, lemon,zoo, rlang,flextable, htmltools)
+                 mschart, janitor,sidrar, lemon,zoo, rlang,flextable, htmltools, rbcb)
   
   #setwd('C:/Users/rapha/OneDrive/Documentos/Trabalhos em R/Relatorio_receita')
   
@@ -10,7 +10,7 @@ suppressMessages({
   
   source( encoding = 'UTF-8', file = './1 - IMPORTAÇÃO/1 - importação Receita Total.R')
   
-  source( encoding = 'UTF-8', file = './1 - IMPORTAÇÃO/2 - importação Importação Atividade.R')
+  source( encoding = 'UTF-8', file = './1 - IMPORTAÇÃO/2 - Importação Atividade economica.R')
   
   source( encoding = 'UTF-8', file = './1 - IMPORTAÇÃO/3 - configurações gerais.R')
   

@@ -47,7 +47,7 @@ my <- my %>%
       fp_p = border2
     ),
     fpar(
-      ftext(glue('Realizado até {format(Sys.Date(), "%b")}/24'), 
+      ftext(glue('Realizado até {format(Sys.Date()- month(1), "%b")}/24'), 
             prop = fp_text(font.size = 16, color = "#ffffff")),
       fp_p = border2
     ),
@@ -68,7 +68,7 @@ my <- my %>%
       fp_p = border2
     ),
     fpar(
-      ftext(glue('Projetado até {format(Sys.Date(), "%b")}/24'), 
+      ftext(glue('Projetado até {format(Sys.Date()- month(1), "%b")}/24'), 
             prop = fp_text(font.size = 16, color = "#ffffff")),
       fp_p = border2
     ),
