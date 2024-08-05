@@ -54,7 +54,7 @@ ph_with(block_list(
     fp_p = border2
   ),
   fpar(
-    ftext(glue('Até {format(Sys.Date(), "%b")}/24'), 
+    ftext(glue('Até {format(Sys.Date()- month(1), "%b")}/24'), 
           prop = fp_text(font.size = 10.5, color = "#ffffff")),
     fp_p = border2
   )
@@ -75,7 +75,7 @@ location = ph_location(left = 0.2, top = 1.1, width = 3.14,
       fp_p = border2
     ),
     fpar(
-      ftext(glue('Até {format(Sys.Date(), "%b")}/24'), 
+      ftext(glue('Até {format(Sys.Date()- month(1), "%b")}/24'), 
             prop = fp_text(font.size = 10.5, color = "#ffffff")),
       fp_p = border2
     )
@@ -96,7 +96,7 @@ location = ph_location(left = 0.2, top = 1.1, width = 3.14,
       fp_p = border2
     ),
     fpar(
-      ftext(glue('Até {format(Sys.Date(), "%b")}/24'), 
+      ftext(glue('Até {format(Sys.Date()- month(1), "%b")}/24'), 
             prop = fp_text(font.size = 10.5, color = "#ffffff")),
       fp_p = border2
     )
@@ -117,7 +117,7 @@ location = ph_location(left = 0.2, top = 1.1, width = 3.14,
       fp_p = border2
     ),
     fpar(
-      ftext(glue('Até {format(Sys.Date(), "%b")}/24'), 
+      ftext(glue('Até {format(Sys.Date()- month(1), "%b")}/24'), 
             prop = fp_text(font.size = 10.5, color = "#ffffff")),
       fp_p = border2
     )

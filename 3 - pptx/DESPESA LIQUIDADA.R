@@ -38,13 +38,8 @@ my <- my %>%
       fp_p = border2
     ),
     fpar(
-      ftext(glue('Realizado até {format(Sys.Date(), "%b")}/24'), 
-            prop = fp_text(font.size = 16, color = "#ffffff")),
-      fp_p = border2
-    ),
-    fpar(
-      ftext(glue('(Acum. 12 meses)'), 
-            prop = fp_text(font.size = 10.5, color = "#ffffff")),
+      ftext(glue('Despesa Liquidada \n acumulada até {format(Sys.Date()- month(1), "%b")}/24'), 
+            prop = fp_text(font.size = 14, color = "#ffffff")),
       fp_p = border2
     )
   ),
@@ -59,13 +54,8 @@ my <- my %>%
       fp_p = border2
     ),
     fpar(
-      ftext(glue('Projetado até {format(Sys.Date(), "%b")}/24'), 
-            prop = fp_text(font.size = 16, color = "#ffffff")),
-      fp_p = border2
-    ),
-    fpar(
-      ftext(glue('(Acum. 12 meses)'), 
-            prop = fp_text(font.size = 10.5, color = "#ffffff")),
+      ftext(glue('Despesa Liquidada \n acumulada até {format(Sys.Date()- month(1), "%b")}/23'), 
+            prop = fp_text(font.size = 14, color = "#ffffff")),
       fp_p = border2
     )
   ),
@@ -76,14 +66,14 @@ my <- my %>%
   ph_with(block_list(
     fpar(
       ftext(ifelse(bloco3 > 0, 
-                   glue('+ R$ {format(bloco3, decimal.mark = ",", scientific = FALSE)} bi'), 
-                   glue('- R$ {format(bloco3, decimal.mark = ",", scientific = FALSE)} bi')), 
+                   glue('+ {format(bloco3, decimal.mark = ",", scientific = FALSE)} %'), 
+                   glue('- {format(bloco3, decimal.mark = ",", scientific = FALSE)} %i')), 
             prop = fp_text(font.size = 18, color = "#ffffff", bold = T)),
       fp_p = border2
     ),
     fpar(
-      ftext(glue('Realizado x Projetado'), 
-            prop = fp_text(font.size = 16, color = "#ffffff")),
+      ftext(glue('Variação (%) \n Despesa Liquidada Total'), 
+            prop = fp_text(font.size = 14, color = "#ffffff")),
       fp_p = border2
     )
   ),
@@ -93,13 +83,13 @@ my <- my %>%
   # quarto bloco
   ph_with(block_list(
     fpar(
-      ftext(glue('R$ {format(bloco4, decimal.mark = ",", scientific = FALSE)} bi'), 
+      ftext(glue('{format(bloco4, decimal.mark = ",", scientific = FALSE)} %'), 
             prop = fp_text(font.size = 18, color = "#ffffff", bold = T)),
       fp_p = border2
     ),
     fpar(
-      ftext(glue('Previsão para Dez/24'), 
-            prop = fp_text(font.size = 16, color = "#ffffff")),
+      ftext(glue('Variação (%) \n liquidação Pessoal e Encargos'), 
+            prop = fp_text(font.size = 14, color = "#ffffff")),
       fp_p = border2
     )
   ),

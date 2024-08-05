@@ -49,6 +49,7 @@ fig1 <- desp_liquidada |>
     legend.position = "bottom")
 
 desp_liquidada_Grupo <- e_orca |> 
+  filter(Poder == 'EXECUTIVO') |> 
   drop_na(Liquidação) |> 
   select(Exercício, GND_Nome, AnoMes,  Liquidação)  |> 
   filter(Exercício >= 2023) |> 
@@ -58,7 +59,7 @@ desp_liquidada_Grupo <- e_orca |>
   mutate(AnoMes = format(ym(AnoMes), '%m')) |> 
   pivot_wider(names_from = Exercício, values_from = Liquidação) |> 
   mutate(AnoMes = as.numeric(AnoMes)) |> 
-filter(AnoMes <= as.numeric(month(Sys.Date()))) |> 
+filter(AnoMes <= as.numeric(month(Sys.Date() - 1))) |> 
   group_by(GND_Nome) |> 
   summarise(acum_23 = sum(`2023`, na.rm = T),
             acum_24 = sum(`2024`, na.rm = T))
@@ -94,5 +95,21 @@ fig2 <- desp_liquidada_Grupo |>
 fig.allg <- ggarrange(fig1, fig2, ncol = 2, nrow = 1, common.legend = F)
 
 
+bloco1 <-  desp_liquidada_Grupo |> 
+  select(acum_24) |>
+  mutate(acum_24 = round(acum_24/1000000000,2)) |> 
+  sum() 
 
 
+bloco2 <-  desp_liquidada_Grupo |> 
+  select(acum_23) |>
+  mutate(acum_23 = round(acum_23/1000000000,2)) |> 
+  sum() 
+
+bloco3 <- round(((bloco1-bloco2)/bloco2)*100,2)
+
+bloco4 <- desp_liquidada_Grupo |> 
+  filter(GND_Nome =='PESSOAL E ENCARGOS SOCIAIS') |> 
+  mutate(variação = round(((acum_24 - acum_23)/acum_23)*100,2)) |> 
+  select(variação) |> 
+  pull()
