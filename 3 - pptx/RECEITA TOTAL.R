@@ -1,12 +1,12 @@
 ###############################################
-# RCL
+# RTL
 ###############################################
 
-# executando os insumos
+# EXECUTANDO OS INSUMOS
 source(encoding = 'UTF-8', file = './4- INSUMO/RECEITA_TOTAL_T.R')
 source(encoding = 'UTF-8', file = './4- INSUMO/RECEITA_TOTAL_G.R')
 
-# Receita total - Gráfico
+# Receita Total - Gráfico
 ###############################################
 my <- my %>%
   add_slide(layout = "título_conteúdo", master = "RRF_template_01") %>%
@@ -114,9 +114,9 @@ my <- my %>%
   
   
 
-# Receita total Tabela
+# Receita Total Tabela
 ###############################################
-# criação do slide
+# CRIAÇÃO DO SLIDE
 my <- my %>%
   add_slide(layout = "título_conteúdo", master = "RRF_template_01") %>%
   
@@ -138,7 +138,7 @@ my <- my %>%
   ph_with(tabela_acumulado, 
           location = ph_location(left = 0.5, top = 1.2))  %>% 
   
-  ph_with(block_list(fpar(ftext(glue('(Em milhões de R$)'), 
+  ph_with(block_list(fpar(ftext(glue('(Valores em milhões de R$)'), 
                                 prop = fp_text(font.size = 12, 
                                                color = "#292929")), 
                           fp_p = border1)),

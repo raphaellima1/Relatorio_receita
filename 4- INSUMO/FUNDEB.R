@@ -1,3 +1,5 @@
+
+# CARREGANDO OS DADOS DO FUNDEB
 FUNDEB <- realizado %>% 
   filter(Column1 == 'Transferências do FUNDEB') %>% 
   select(c(2, starts_with(glue('{year(Sys.Date())}')))) %>% 
@@ -31,9 +33,9 @@ FUNDEB <- realizado %>%
   add_column(col_space3 = NA, .name_repair = "universal") %>% 
   mutate(dif_mes = (RCL_2024 - Projeção_RCL),
          dif_acum = (acum_24 - proj_acum),
-         data1 = format(as.Date(data), "%B"))
+         data1 = tools::toTitleCase(format(as.Date(data), "%B")))
 
-
+# CRIANDO A TABELA DO FUNDEB ---------------------------------------------------
 tabela_acumulado <- FUNDEB %>%
   mutate(data = data1) %>% 
   select(-data1) %>% 
@@ -84,8 +86,8 @@ tabela_acumulado <- FUNDEB %>%
   width(j = 1, width = 2.6, unit = 'cm') %>% 
   width(j = c(2,3,5,6,8,9,11,12), width = 2, unit = 'cm') 
 
-##################################################################
 
+# CALCULANDO OS INTERVALOS DE CONFIANÇA PARA O GRÁFICO -------------------------
 FUNDEB_band <- FUNDEB %>%
   select(RCL_2024, Projeção_RCL) %>%
   drop_na() %>%
@@ -100,11 +102,8 @@ FUNDEB <- FUNDEB %>%
   mutate(band_inf = cumsum(band_inf),
          band_sup = cumsum(band_sup))
 
-##################################################################
 
-
-
-
+# CRIANDO O GRÁFICO DO FUNDEB --------------------------------------------------
 fig1 <- FUNDEB %>% 
   ggplot()+
   geom_ribbon(aes(x = data, ymin = band_inf * 1000000, 
@@ -121,8 +120,8 @@ fig1 <- FUNDEB %>%
                 linetype = "Acumulado 2024"), size=1) +
   
   labs(x = "  ", 
-       y = "Valores em Reais (R$)", 
-       title = "TRANSF. DO FUNDEB",
+       y = "Valores em R$", 
+       title = "Transf. do FUNDEB",
        linetype = "Variable",
        color = "Variable") +
   

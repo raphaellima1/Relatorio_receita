@@ -1,3 +1,5 @@
+
+# PUXANDO OS DADOS DAS RTLs DE REALIZADAS EM T-1 E T, E RTL PROJETADA DE T------
 RLT <- realizado %>% 
   filter(RECEITAS == 'RECEITA TOTAL LÍQUIDA (EXCETO INTRAORÇAMENTÁRIA)') %>% 
   select(c(1, starts_with(glue('{year(Sys.Date())}')))) %>% 
@@ -20,7 +22,8 @@ RLT <- realizado %>%
               pivot_longer(cols =  2:13) %>% 
               mutate(data = ymd(paste0(name, '01'))) %>% 
               select(value) %>% 
-              setNames('RCL_2023')) %>% 
+              setNames('RCL_2023'))%>%
+# RTL ACUMULADO NO ANO
   mutate(acum_23 = cumsum(RCL_2023),
          acum_24 = cumsum(RCL_2024),
          proj_acum = cumsum(Projeção_RCL)) %>% 
@@ -34,9 +37,9 @@ RLT <- realizado %>%
          col_space4 = NA,
          dif_proj = RCL_2024 - Projeção_RCL,
          dif_proj_acum = acum_24 - proj_acum,
-         data1 = format(as.Date(data), "%B"))
+         data1 = tools::toTitleCase(format(as.Date(data), "%B")))
 
-#########################################################
+# CRIANDO OS VALORES PARA OS BLOCOS --------------------------------------------
 bloco1 <- RLT |> 
   select(acum_24) |> 
   drop_na() |> 
@@ -59,8 +62,8 @@ bloco4 <- RLT |>
   tail(1) |> 
   mutate(proj_acum = round(proj_acum/1000,2)) |> 
   pull()
-########################################################
 
+# EDITANDO A TABELA DA RTL------------------------------------------------------
 tabela_acumulado <- RLT %>%
   mutate(data = data1) %>% 
   select(-data1) %>% 

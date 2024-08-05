@@ -1,3 +1,5 @@
+
+# CARREGANDO OS DADOS DO FPE ---------------------------------------------------
 FPE <- realizado %>% 
   filter(Column1 == 'Cota-Parte do FPE') %>% 
   select(c(2, starts_with(glue('{year(Sys.Date())}')))) %>% 
@@ -31,13 +33,11 @@ FPE <- realizado %>%
   add_column(col_space3 = NA, .name_repair = "universal") %>% 
   mutate(dif_mes = (RCL_2024 - Projeção_RCL),
          dif_acum = (acum_24 - proj_acum),
-         data1 = format(as.Date(data), "%B"))
-
-
-
+         data1 = tools::toTitleCase(format(as.Date(data), "%B")))
 
 std_border <- fp_border(color = cor1[3], width = 0.5)
 
+# CRIANDO A TABELA DO FPE ------------------------------------------------------
 tabela_acumulado <- FPE %>%
   mutate(data = data1) %>% 
   select(-data1) %>% 
@@ -88,8 +88,8 @@ tabela_acumulado <- FPE %>%
   width(j = 1, width = 2.6, unit = 'cm') %>% 
   width(j = c(2,3,5,6,8,9,11,12), width = 2, unit = 'cm')
 
-##################################################################
 
+# CALCULANDO O INTERVALO DE CONFIANÇA PARA PLOTAR NO GRÁFICO -------------------
 FPE_band <- FPE %>%
   select(RCL_2024, Projeção_RCL) %>%
   drop_na() %>%
@@ -104,9 +104,8 @@ FPE <- FPE %>%
   mutate(band_inf = cumsum(band_inf),
          band_sup = cumsum(band_sup))
 
-##################################################################
 
-
+# CRIANDO O GRÁFICO DO FPE -----------------------------------------------------
 fig1 <- FPE %>% 
   ggplot()+
   
@@ -124,8 +123,8 @@ fig1 <- FPE %>%
                 linetype = "Acumulado 2024"), size=1) +
   
   labs(x = "  ", 
-       y = "Valores em Reais (R$)", 
-       title = "COTA-PARTE DO FPE",
+       y = "Valores em R$", 
+       title = "Cota-Parte do FPE",
        linetype = "Variable",
        color = "Variable") +
   

@@ -28,7 +28,7 @@ my <- my %>%
   ph_with(tabela_acumulado,
           location = ph_location(left = 0.5, top = 1.2)) %>%
   
-  ph_with(block_list(fpar(ftext(glue('(Em milhões de R$)'),
+  ph_with(block_list(fpar(ftext(glue('(Valores em milhões de R$)'),
                                 prop = fp_text(font.size = 12,
                                                color = "#292929")),
                           fp_p = border1)),

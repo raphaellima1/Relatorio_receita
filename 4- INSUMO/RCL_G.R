@@ -157,8 +157,8 @@ fig1 <- RCL12_m %>%
 
   
   labs(x = "  ", 
-       y = "Em bilhões de R$", 
-       title = "RCL 12 MESES",
+       y = "Valores em R$", 
+       title = "RCL acumulada em 12 meses",
        linetype = "Variable",
        color = "Variable")+
   scale_y_continuous(labels=scales::label_number(scale_cut = scales::cut_short_scale(),decimal.mark = ',')) +
@@ -199,8 +199,8 @@ fig2 <- RCL %>%
                 linetype = "Projeção 2024"), size=0.5) +
   
   labs(x = "  ", 
-       y = "Em bilhões de R$", 
-       title = "RCL MENSAL",
+       y = "Valores em R$", 
+       title = "RCL mensal",
        linetype = "Variable",
        color = "Variable") +
   

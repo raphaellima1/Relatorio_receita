@@ -1,3 +1,5 @@
+
+# RCLs REALIZADAS EM T-1 E T E PROJETADA PARA T--------------------------
 RCL <- realizado %>% 
   filter(RECEITAS == 'RECEITA CORRENTE LÍQUIDA') %>% 
   select(c(1, starts_with(glue('{year(Sys.Date())}')))) %>% 
@@ -21,7 +23,8 @@ RCL <- realizado %>%
               mutate(data = ymd(paste0(name, '01'))) %>% 
               select(value) %>% 
               setNames('RCL_2023')) %>% 
-  bind_cols(realizado %>% 
+# RCLs REALIZADAS EM T-2, T-1 E T
+    bind_cols(realizado %>% 
               filter(RECEITAS == 'RECEITA CORRENTE LÍQUIDA') %>% 
               select(c(1, starts_with(glue('{year(Sys.Date())}')))) %>% 
               mutate(across(2:13, ~ na_if(as.numeric(.), 0.00))) %>% 
@@ -43,10 +46,12 @@ RCL <- realizado %>%
                           mutate(data = ymd(paste0(name, '01'))) %>% 
                           setNames(c('RCL', 'name', 'RCL_2024', 'data'))) %>% 
               arrange(data) %>% 
-              mutate(RCL12 = rollsum(RCL_2024, 12, fill = NA, align = "right"),
+# CALCULANDO O ACUMULADO DE 12 MESES DA RCL             
+                 mutate(RCL12 = rollsum(RCL_2024, 12, fill = NA, align = "right"),
                      ano = year(data)) %>% 
               filter(ano == 2024) %>% 
               select(data, RCL12) %>% 
+# PEGANDO A RCL REALIZADA EM T-1 E A PROJEÇÃO PARA T
               bind_cols(realizado %>% 
                           filter(RECEITAS == 'RECEITA CORRENTE LÍQUIDA') %>% 
                           select(c(1, starts_with(glue('{year(Sys.Date())-1}')))) %>% 
@@ -63,11 +68,13 @@ RCL <- realizado %>%
                                              CAMPO = as.character(CAMPO)) %>% 
                                       setNames(c('RCL', 'name', 'RCL_2024', 'data'))) %>% 
                           arrange(data) %>% 
+# ACUMULADO DE 12 MESES PARA T (PROJETADO)
                           mutate(RCL12 = rollsum(RCL_2024, 12, fill = NA, align = "right"),
                                  ano = year(data)) %>% 
                           filter(ano == 2024) %>% 
                           select(RCL12)) %>% 
               setNames(c('data', 'RCL_24', 'PROJ_24')) %>% 
+# RCL REALIZADA EM T-2, T-1 E T
               bind_cols(realizado %>% 
                           filter(RECEITAS == 'RECEITA CORRENTE LÍQUIDA') %>% 
                           select(c(1, starts_with(glue('{year(Sys.Date())}')))) %>% 
@@ -90,6 +97,7 @@ RCL <- realizado %>%
                                       mutate(data = ymd(paste0(name, '01'))) %>% 
                                       setNames(c('RCL', 'name', 'RCL_2024', 'data'))) %>% 
                           arrange(data) %>% 
+# RCL ACUMULADA DE 12 MESES PARA T-1
                           mutate(RCL_23 = rollsum(RCL_2024, 12, fill = NA, align = "right"),
                                  ano = year(data)) %>% 
                           filter(ano == 2023) %>% 
@@ -107,9 +115,9 @@ RCL <- realizado %>%
          col_space4 = NA,
          dif_proj = RCL_2024 - Projeção_RCL,
          dif_proj_acum = acum_24 - proj_acum,
-         data1 = format(as.Date(data), "%B"))
+         data1 = tools::toTitleCase(format(as.Date(data), "%B")))
   
-
+# CONFIGURANDO A TABELA --------------------------------------------------------
 tabela_acumulado <- RCL %>%
   mutate(data = data1) %>% 
   select(-data1) %>% 

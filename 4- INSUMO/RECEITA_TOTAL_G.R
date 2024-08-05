@@ -22,7 +22,8 @@ RLT <- RLT %>%
 
 fig1 <- RLT %>% 
   ggplot()+
-  geom_ribbon(aes(x = data, ymin = (proj_acum * (1 - RLT_band)) * 1000000, ymax = (proj_acum * (1 + RLT_band)) * 1000000), fill = "grey80", alpha = 0.5) +
+  geom_ribbon(aes(x = data, ymin = (proj_acum * (1 - RLT_band)) * 1000000,
+                  ymax = (proj_acum * (1 + RLT_band)) * 1000000), fill = "grey80", alpha = 0.5) +
   geom_line(aes(x = data, y = proj_acum*1000000, color = "Projeção 2024", 
                 linetype = "Projeção 2024"), size=0.5) +
   geom_line(aes(x = data, y = acum_23*1000000, color = "Acumulado 2023", 
@@ -33,8 +34,8 @@ fig1 <- RLT %>%
   
 
   labs(x = "  ", 
-       y = "Valores em Reais (R$)", 
-       title = "RTL ACUMULADA",
+       y = "Valores em R$", 
+       title = "RTL acumulada",
        linetype = "Variable",
        color = "Variable") +
   
@@ -71,7 +72,7 @@ fig2 <- RLT |>
   geom_line(data = RLT, aes(x = data, y = Projeção_RCL * 1000000, color = "Projeção 2024", linetype = "Projeção 2024"), size = 0.5) +
   geom_line(data = RLT, aes(x = data, y = RCL_2023 * 1000000, color = "Acumulado 2023", linetype = "Acumulado 2023"), size = 0.5) +
   geom_line(data = RLT, aes(x = data, y = RCL_2024 * 1000000, color = "Acumulado 2024", linetype = "Acumulado 2024"), size = 1) +
-  labs(x = "Meses", y = "Valores em Reais (R$)", title = "RTL MENSAL", linetype = "Variable", color = "Variable") +
+  labs(x = "Meses", y = "Valores em R$", title = "RTL mensal", linetype = "Variable", color = "Variable") +
   scale_y_continuous(labels = scales::label_number(scale_cut = scales::cut_short_scale())) +
   scale_x_date(date_breaks = "2 month", date_labels = "%b") +
   scale_color_manual(breaks = c('Acumulado 2023', "Acumulado 2024", 'Projeção 2024'),

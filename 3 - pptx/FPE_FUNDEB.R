@@ -1,10 +1,11 @@
-###############################################
-# FPE
-###############################################
+
+# TRASNFERÊNCIAS CORRENTES
+# FPE --------------------------------------------------------------------------
+# EXECUTANDO O INSUMO DO FPE
 source(encoding = 'UTF-8', file = './4- INSUMO/FPE.R')
 
 ###############################################
-# carregar a tabela total chamada df
+# CARREGANDO O SLIDE DO FPE ----------------------------------------------------
 
 my <- my %>%
   add_slide(layout = "título_conteúdo", master = "RRF_template_01") %>%
@@ -31,7 +32,7 @@ my <- my %>%
           location = ph_location(left =8.1 , top = 1.7, 
                                  width = 5, height = 4)) %>% 
   
-  ph_with(block_list(fpar(ftext(glue('(Em R$ milhões)'), 
+  ph_with(block_list(fpar(ftext(glue('(Valores em milhões de R$)'), 
                                 prop = fp_text(font.size = 12, 
                                                color = "#292929")), 
                           fp_p = border1)),
@@ -45,12 +46,9 @@ rm(fig1, tabela_acumulado)
 print('FPE <- OK')
 
 
-# FUNDEB
-###############################################
+# FUNDEB -----------------------------------------------------------------------
+# EXECUTANDO O INSUMO DO FUNDEB
 source(encoding = 'UTF-8', file = './4- INSUMO/FUNDEB.R')
-
-###############################################
-# carregar a tabela total chamada df
 
 
 my <- my %>%
@@ -78,7 +76,7 @@ my <- my %>%
           location = ph_location(left =8.1 , top = 1.7,
                                  width = 5, height = 4)) %>%
 
-  ph_with(block_list(fpar(ftext(glue('(Em R$ milhões)'),
+  ph_with(block_list(fpar(ftext(glue('(Valores em milhões de R$)'),
                                 prop = fp_text(font.size = 12,
                                                color = "#292929")),
                           fp_p = border1)),
