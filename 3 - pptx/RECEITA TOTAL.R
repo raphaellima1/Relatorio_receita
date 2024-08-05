@@ -41,20 +41,16 @@ my <- my %>%
       fp_p = border2
     ),
     fpar(
-<<<<<<< HEAD
-      ftext(glue('Realizado até {format(Sys.Date()- month(1), "%b")}/24'), 
-=======
+
       ftext(glue('Realizado até {format(Sys.Date() %m-% months(1), "%b")}/24'), 
->>>>>>> 0d2d03caa57bc299d60ecffa6fb58e9e1963e52a
+
             prop = fp_text(font.size = 16, color = "#ffffff")),
       fp_p = border2
     ),
     fpar(
-<<<<<<< HEAD
-      ftext(glue('(Acum. jan/24 a {format(Sys.Date()- month(1), "%b")}/24)'), 
-=======
+
       ftext(glue('(Acum. jan/24 a {format(Sys.Date() %m-% months(1), "%b")}/24)'), 
->>>>>>> 0d2d03caa57bc299d60ecffa6fb58e9e1963e52a
+
             prop = fp_text(font.size = 10.5, color = "#ffffff")),
       fp_p = border2
     )
@@ -70,20 +66,15 @@ my <- my %>%
       fp_p = border2
     ),
     fpar(
-<<<<<<< HEAD
-      ftext(glue('Projetado até {format(Sys.Date()- month(1), "%b")}/24'), 
-=======
+
       ftext(glue('Projetado até {format(Sys.Date() %m-% months(1), "%b")}/24'), 
->>>>>>> 0d2d03caa57bc299d60ecffa6fb58e9e1963e52a
+
             prop = fp_text(font.size = 16, color = "#ffffff")),
       fp_p = border2
     ),
     fpar(
-<<<<<<< HEAD
-      ftext(glue('(Acum. jan/24 a {format(Sys.Date()- month(1), "%b")}/24)'), 
-=======
       ftext(glue('(Acum. jan/24 a {format(Sys.Date() %m-% months(1), "%b")}/24)'), 
->>>>>>> 0d2d03caa57bc299d60ecffa6fb58e9e1963e52a
+
             prop = fp_text(font.size = 10.5, color = "#ffffff")),
       fp_p = border2
     )

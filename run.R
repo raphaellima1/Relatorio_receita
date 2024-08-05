@@ -1,7 +1,7 @@
 suppressMessages({
 
   pacman::p_load(tidyverse, readxl, lubridate, glue, ggpubr,gridExtra,grid,
-                 ggthemes,officer, gt, kableExtra, magrittr,rvg, 
+                 ggthemes,officer, gt, kableExtra, magrittr,rvg, GetBCBData,
                  mschart, janitor,sidrar, lemon,zoo, rlang,flextable, htmltools, rbcb)
   
   #setwd('C:/Users/rapha/OneDrive/Documentos/Trabalhos em R/Relatorio_receita')

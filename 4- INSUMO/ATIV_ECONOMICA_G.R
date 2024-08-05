@@ -74,28 +74,12 @@ fig4 <- cotacao %>%
   geom_line(aes(x = data, y = Venda_EUR, color="EUR"), size = 1)+
   
   scale_y_continuous(labels=scales::label_number(decimal.mark=','))+
-<<<<<<< HEAD
-  
-  labs(x = " ", y = "Taxa em R$", 
-       title = "Cotações do Euro e do Dólar dos EUA (2023-2024)",
-       linetype = "Variable", 
-       color = "Variable")+
-  
-  scale_color_manual(breaks = (c('USD','EUR')), 
-                     values = c('USD'= "#002E54",
-                                'EUR'="#009e3c"), 
-                     name=" ")+
-  
-  theme_classic()+
-  
-  theme(plot.title = element_text(hjust=0.5))+
-  
-=======
+
   labs(x = " ", y = "R$", title = "Cotações do Euro e do Dólar dos EUA (2023-2024)",
        linetype = "Variable", color = "Variable")+
   scale_color_manual(breaks = (c('USD','EUR')), values = c('USD'= "#002E54",'EUR'="#009e3c"), name=" ")+
   theme_classic()+theme(plot.title = element_text(hjust=0.5))+
->>>>>>> 0d2d03caa57bc299d60ecffa6fb58e9e1963e52a
+
   geom_label(aes(x = last_cotacao$data, y = last_cotacao$Venda_USD, 
                  label = paste0("", last_cotacao$Venda_USD)),
              vjust =1, colour = "black") +
