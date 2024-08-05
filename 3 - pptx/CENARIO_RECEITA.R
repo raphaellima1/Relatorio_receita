@@ -1,9 +1,12 @@
 ###############################################
-# Resumo Gerencial 323
+# Resumo Gerencial 323 (monitoramento da receita)
 ###############################################
+
+#executando o insumo
 source(encoding = 'UTF-8', file = './4- INSUMO/CENARIO_RECEITA_T.R')
 
 
+# criação e configuração do slide
 my <- my %>%
   add_slide(layout = "título_conteúdo",  master = "RRF_template_01") %>%
   
@@ -25,7 +28,7 @@ my <- my %>%
   ph_with(tabela_acumulado,
           location = ph_location(left = 0.5, top = 1.2)) %>%
   
-  ph_with(block_list(fpar(ftext(glue('(Em R$ milhões)'),
+  ph_with(block_list(fpar(ftext(glue('(Em milhões de R$)'),
                                 prop = fp_text(font.size = 12,
                                                color = "#292929")),
                           fp_p = border1)),

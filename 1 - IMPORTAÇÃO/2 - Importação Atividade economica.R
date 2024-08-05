@@ -1,20 +1,35 @@
+
 #importando a série do PIB----------------------------------
-PIB<-get_series(7326,start_date='2019-01-01')%>%
-  setNames(c('data','Valor'))
+PIB <- get_sidra(5932, variable=6562, period=c("last" = 16)) %>%
+  select('Valor', 'Trimestre (Código)', 'Setores e subsetores (Código)') %>%
+  setNames(c('pib', 'trimestre', 'setores')) %>%
+  filter(setores == '90707') %>%
+  mutate(trimestre = case_when(
+    substr(trimestre, 5, 6) == "01" ~ paste0(substr(trimestre, 1, 4), "-03-01"),
+    substr(trimestre, 5, 6) == "02" ~ paste0(substr(trimestre, 1, 4), "-06-01"),
+    substr(trimestre, 5, 6) == "03" ~ paste0(substr(trimestre, 1, 4), "-09-01"),
+    substr(trimestre, 5, 6) == "04" ~ paste0(substr(trimestre, 1, 4), "-12-01"))) %>%
+  mutate(trimestre = ymd(trimestre))
 
 #importando a série do ipca---------------------------------
-ipcabr<-get_series(433,start_date='2022-01-02')%>%
-  setNames(c('data','ValorBR'))
+start_data<-paste0(year(Sys.Date())-2,"-02-01")
+
+ipcabr<-gbcbd_get_series(433,first.date=start_data) %>% 
+  setNames(c('data','ValorBR'))%>%
+  select(data,ValorBR)
 
 ipcabr$ipcabr12<-round(rollapply(ipcabr$ValorBR,12,function(x)(prod(1+x/100)-1)*100,by.column=F,align='right',fill=NA),2)
+
 ipcabr<-ipcabr%>%
   filter(!is.na(ipcabr12))
 #importando o IPCA de Goiânia
 
-ipcago<-get_series(13255,start_date='2022-01-02')%>%
+ipcago<-get_series(13255,start_date=start_data)%>%
   setNames(c('data','ValorGO'))
 
-ipcago$ipcago12<-round(rollapply(ipcago$ValorGO,12,function(x)(prod(1+x/100)-1)*100,by.column=F,align='right',fill=NA),2)
+ipcago$ipcago12<-round(rollapply(ipcago$ValorGO,12,
+                                 function(x)(prod(1+x/100)-1)*100,
+                                 by.column=F,align='right',fill=NA),2)
 
 ipcago<-ipcago%>%
   filter(!is.na(ipcago12))
@@ -27,11 +42,8 @@ last_ipca <- ipca %>%
 
 
 #taxa de juros Selic----------------
-selic<-get_series(4390,start_date='2020-01-02')%>%
-  setNames(c('data','Selic'))
-selic$selic12<-round(rollapply(selic$Selic,12,function(x)(prod(1+x/100)-1)*100,by.column=F,align='right',fill=NA),2)
-selic<-selic%>%
-  filter(!is.na(selic12))
+selic<-get_series(432,start_date=start_data) %>% setNames(c('data','selic'))
+
 last_selic <- selic %>%
   filter(data == max(data))
 

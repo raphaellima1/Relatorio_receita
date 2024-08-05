@@ -1,11 +1,13 @@
 ###############################################
 # RCL
 ###############################################
+
+# executando os insumos (gráficos e tabela)
 source(encoding = 'UTF-8', file = './4- INSUMO/RCL_T.R')
 
 source(encoding = 'UTF-8', file = './4- INSUMO/RCL_G.R')
 
-# Receita TOtAL - Gráfico
+# Receita total - Gráfico
 ###############################################
 my <- my %>%
   add_slide(layout = "título_conteúdo", master = "RRF_template_01") %>%
@@ -47,7 +49,11 @@ my <- my %>%
       fp_p = border2
     ),
     fpar(
+<<<<<<< HEAD
       ftext(glue('Realizado até {format(Sys.Date()- month(1), "%b")}/24'), 
+=======
+      ftext(glue('Realizado até {format(Sys.Date() %m-% months(1), "%b")}/24'), 
+>>>>>>> 0d2d03caa57bc299d60ecffa6fb58e9e1963e52a
             prop = fp_text(font.size = 16, color = "#ffffff")),
       fp_p = border2
     ),
@@ -68,7 +74,11 @@ my <- my %>%
       fp_p = border2
     ),
     fpar(
+<<<<<<< HEAD
       ftext(glue('Projetado até {format(Sys.Date()- month(1), "%b")}/24'), 
+=======
+      ftext(glue('Projetado até {format(Sys.Date() %m-% months(1), "%b")}/24'), 
+>>>>>>> 0d2d03caa57bc299d60ecffa6fb58e9e1963e52a
             prop = fp_text(font.size = 16, color = "#ffffff")),
       fp_p = border2
     ),
@@ -115,7 +125,7 @@ my <- my %>%
   location = ph_location(left = 9.92, top = 1.1, width = 3.14, 
                          height = 0.90, bg = cor1[2]))
 
-# Receita TOtAL - Tabela
+# Receita total - Tabela
 ###############################################
 my <- my %>%
   add_slide(layout = "título_conteúdo", master = "RRF_template_01") %>%
@@ -138,7 +148,7 @@ my <- my %>%
   ph_with(tabela_acumulado, 
           location = ph_location(left = 0.5, top = 1.2))  %>% 
   
-  ph_with(block_list(fpar(ftext(glue('(Em R$ milhões)'), 
+  ph_with(block_list(fpar(ftext(glue('(Em milhões de R$)'), 
                                 prop = fp_text(font.size = 12, 
                                                color = "#292929")), 
                           fp_p = border1)),

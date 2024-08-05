@@ -1,3 +1,6 @@
+
+# CONFIGURANDO OS DADOS IMPORTADOS -------------------------------
+# RCLs REALIZADA EM T
 RCL12_m <- realizado %>% 
   filter(RECEITAS == 'RECEITA CORRENTE LÍQUIDA') %>% 
   select(c(1, starts_with(glue('{year(Sys.Date())}')))) %>% 
@@ -5,13 +8,16 @@ RCL12_m <- realizado %>%
   pivot_longer(cols =  2:13) %>% 
   mutate(data = ymd(paste0(name, '01'))) %>% 
   setNames(c('RCL', 'name', 'RCL_2024', 'data')) %>% 
-  bind_rows(realizado %>% 
+# ANEXANDO A RCL REALIZADA EM T-1 NA MESMA TABELA
+    bind_rows(realizado %>% 
               filter(RECEITAS == 'RECEITA CORRENTE LÍQUIDA') %>% 
               select(c(1, starts_with(glue('{year(Sys.Date())-1}')))) %>% 
               mutate(across(2:13, ~ na_if(as.numeric(.), 0.00))) %>% 
               pivot_longer(cols =  2:13) %>% 
-              mutate(data = ymd(paste0(name, '01'))) %>% 
-              setNames(c('RCL', 'name', 'RCL_2024', 'data'))) %>% 
+              mutate(data = ymd(paste0(name, '01')))%>%
+# SETNAMES RENOMEIA COLUNAS, MAS NESSE CASO TAMBÉM PODE SER USADO PARA JUNTAR VALORES DE DIFERENTES COLUNAS (VALORES DE 'RECEITAS' FORAM PARA RCL_2024)
+              setNames(c('RCL', 'name', 'RCL_2024', 'data'))) %>%
+# ANEXANDO A RCL DE T-2  
   bind_rows(realizado %>% 
               filter(RECEITAS == 'RECEITA CORRENTE LÍQUIDA') %>% 
               select(c(1, starts_with(glue('{year(Sys.Date())-2}')))) %>% 
@@ -20,11 +26,14 @@ RCL12_m <- realizado %>%
               mutate(data = ymd(paste0(name, '01'))) %>% 
               setNames(c('RCL', 'name', 'RCL_2024', 'data'))) %>% 
   arrange(data) %>% 
+# PEGANDO AS RCLs MENSAIS E CALCULANDO O ACUMULADO MÓVEL DE 12 MESES
   mutate(RCL12 = rollsum(RCL_2024, 12, fill = NA, align = "right"),
          ano = year(data)) %>% 
   filter(ano == 2024) %>% 
   select(data, RCL12) %>%
-  
+
+# PEGANDO OS DADOS DA RCL REALIZADA EM T-1 E DA RCL PROJETADA PARA T
+# RCL DE T-1
   bind_cols(realizado %>% 
               filter(RECEITAS == 'RECEITA CORRENTE LÍQUIDA') %>% 
               select(c(1, starts_with(glue('{year(Sys.Date())-1}')))) %>% 
@@ -34,6 +43,7 @@ RCL12_m <- realizado %>%
                      band_sup = value,
                      band_inf = value) %>% 
               setNames(c('RCL', 'name', 'RCL_2024', 'data', 'band_sup', 'band_inf')) %>% 
+# RCL PROJETADA PARA T              
               bind_rows(projeção %>% 
                           filter(ESPECIFICAÇÃO == 'RECEITA CORRENTE LÍQUIDA (III) = (I-II)') %>% 
                           select(c(1, starts_with(glue('{year(Sys.Date())}')))) %>% 
@@ -52,6 +62,7 @@ RCL12_m <- realizado %>%
               filter(ano == 2024) %>% 
               select(RCL12, band_sup, band_inf)) %>% 
   setNames(c('data', 'RCL_24', 'PROJ_24', 'band_sup', 'band_inf')) %>% 
+# PEGANDO DADOS E CALCULANDO A RCL DE 2023 ACUMULADA EM 12 MESES
   bind_cols(realizado %>% 
               filter(RECEITAS == 'RECEITA CORRENTE LÍQUIDA') %>% 
               select(c(1, starts_with(glue('{year(Sys.Date())}')))) %>% 
@@ -129,7 +140,7 @@ bloco4 <- RCL12_m |>
   tail(1) |> 
   mutate(PROJ_24 = round(PROJ_24/1000000000,2)) |> 
   pull()
-########################################################
+# CRIAÇÃO DAS FIGURAS -------------------------------
 
 fig1 <- RCL12_m %>%
   mutate(fant_24 = sub("\\.", ",", round(RCL_24 / 1000000000, digits = 2)),
@@ -146,7 +157,7 @@ fig1 <- RCL12_m %>%
 
   
   labs(x = "  ", 
-       y = "Valores em Reais (R$)", 
+       y = "Em bilhões de R$", 
        title = "RCL 12 MESES",
        linetype = "Variable",
        color = "Variable")+
@@ -188,7 +199,7 @@ fig2 <- RCL %>%
                 linetype = "Projeção 2024"), size=0.5) +
   
   labs(x = "  ", 
-       y = "Valores em Reais (R$)", 
+       y = "Em bilhões de R$", 
        title = "RCL MENSAL",
        linetype = "Variable",
        color = "Variable") +
