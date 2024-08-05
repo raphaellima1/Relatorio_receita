@@ -3,7 +3,7 @@ suppressMessages({
   pacman::p_load(tidyverse, readxl, lubridate, glue, ggpubr,gridExtra,grid,
                  ggthemes,officer, gt, kableExtra, magrittr,rvg, 
                  mschart, janitor,sidrar, lemon,zoo, rlang,flextable, 
-                 htmltools,rbcb,dplyr,ggplot2,tidyverse,zoo,magrittr,
+                 htmltools,GetBCBData,rbcb,dplyr,ggplot2,tidyverse,zoo,magrittr,
                  ggthemes,scales)
   
   setwd('C:/Users/marcus.montalvao/Documents/R/Relatorio_receita')

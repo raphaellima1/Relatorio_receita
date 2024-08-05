@@ -14,8 +14,9 @@ PIB <- get_sidra(5932, variable=6562, period=c("last" = 16)) %>%
 #importando a série do ipca---------------------------------
 start_data<-paste0(year(Sys.Date())-2,"-02-01")
 
-ipcabr<-get_series(433,start_date=start_data) %>% 
-  setNames(c('data','ValorBR'))
+ipcabr<-gbcbd_get_series(433,first.date=start_data) %>% 
+  setNames(c('data','ValorBR'))%>%
+  select(data,ValorBR)
 
 ipcabr$ipcabr12<-round(rollapply(ipcabr$ValorBR,12,function(x)(prod(1+x/100)-1)*100,by.column=F,align='right',fill=NA),2)
 
