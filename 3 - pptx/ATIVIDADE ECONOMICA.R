@@ -1,5 +1,6 @@
+
 ###############################################
-# RECEITAS TRIBUTÁRIAS
+# ATIVIDADE ECONÔMICA
 ###############################################
 source(encoding = 'UTF-8', file = './4- INSUMO/ATIV_ECONOMICA_G.R')
 

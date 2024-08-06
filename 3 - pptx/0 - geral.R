@@ -1,3 +1,7 @@
+
+
+# CRIAÇÃO DOS SLIDES PRINCIPAIS ----------------
+
 border1 <- fp_par(
   text.align = "right",
   shading.color = "#2d2e2d")
@@ -95,7 +99,14 @@ source( encoding = 'UTF-8', file = './3 - pptx/EXECUÇÃO ORÇAMENTARIA_E.R')
 source( encoding = 'UTF-8', file = './3 - pptx/DESPESA LIQUIDADA.R')
 # Finalização da apresentação
 ##############################################
-# Despesa Liquidada -------------------------------------------------------
+
+
+# Adicionar capa de seção - Atividade econômica --------------------------------
+my <- my %>%
+  add_slide(layout = "capa_seção", master = "RRF_template_01") %>% 
+  ph_with(value = "ATIVIDADE ECONÔMICA", location = ph_location_type(type = "title")) %>% 
+  ph_with(value = "1.", location = ph_location_type(type = "subTitle"))
+
 source( encoding = 'UTF-8', file = './3 - pptx/ATIVIDADE ECONOMICA.R')
 
 # add slide equipe_imagem

@@ -38,7 +38,7 @@ fig2<-ipca %>% ggplot()+
   
   scale_color_manual(breaks = c('IPCA Brasil','IPCA Goiânia'), 
                      values = c('IPCA Brasil'="#009e3c",'IPCA Goiânia'="#002E54"), name=" ")+
-  theme_classic()+theme(plot.title = element_text(hjust=0.5))+
+  theme_classic()+theme(plot.title = element_text(hjust=0.5, face = "bold"))+
   
   geom_label(aes(x = last_ipca$data, y = last_ipca$ipcago12, 
                  label = paste0("", last_ipca$ipcago12)),vjust =0, colour = "black")+
@@ -55,10 +55,11 @@ fig3<-selic %>% ggplot()+
   
   scale_y_continuous(labels=scales::label_number(decimal.mark=','))+
   
-  labs(x = " ", y = "% a.a.", title = "Selic definida pelo Copom", linetype = "Variable", color = "Variable")+
+  labs(x = " ", y = "% a.a.", title = "Selic definida pelo Copom")+
   scale_color_manual(breaks = ('Taxa Selic'), values = ('Taxa Selic'="#002E54"), name=" ")+
   
-  theme_classic()+theme(plot.title = element_text(hjust=0.5),legend.position="none")+
+  theme_classic()+theme(plot.title = element_text(hjust=0.5, face = "bold"),
+                        legend.title=element_blank())+
   
   geom_label(aes(x = last_selic$data, y = last_selic$selic, 
                  label = paste0("", last_selic$selic)),vjust =0.5, colour = "black")
@@ -78,7 +79,7 @@ fig4 <- cotacao %>%
   labs(x = " ", y = "R$", title = "Cotações do Euro e do Dólar dos EUA (2023-2024)",
        linetype = "Variable", color = "Variable")+
   scale_color_manual(breaks = (c('USD','EUR')), values = c('USD'= "#002E54",'EUR'="#009e3c"), name=" ")+
-  theme_classic()+theme(plot.title = element_text(hjust=0.5))+
+  theme_classic()+theme(plot.title = element_text(hjust=0.5, face = "bold"))+
 
   geom_label(aes(x = last_cotacao$data, y = last_cotacao$Venda_USD, 
                  label = paste0("", last_cotacao$Venda_USD)),
