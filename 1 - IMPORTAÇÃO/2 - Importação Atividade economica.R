@@ -11,31 +11,31 @@ PIB <- get_sidra(5932, variable=6562, period=c("last" = 16)) %>%
     substr(trimestre, 5, 6) == "04" ~ paste0(substr(trimestre, 1, 4), "-12-01"))) %>%
   mutate(trimestre = ymd(trimestre))
 
-#importando a série do ipca---------------------------------
 start_data<-paste0(year(Sys.Date())-2,"-02-01")
 
+#importando a série do ipca---------------------------------
 ipcabr<-gbcbd_get_series(433,first.date=start_data) %>% 
   setNames(c('data','ValorBR'))%>%
-  select(data,ValorBR)
-
-ipcabr$ipcabr12<-round(rollapply(ipcabr$ValorBR,12,function(x)(prod(1+x/100)-1)*100,by.column=F,align='right',fill=NA),2)
+  select(data,ValorBR) %>%
+  mutate(ipcabr12=round(rollapply(ValorBR,12,
+                                  function(x)(prod(1+x/100)-1)*100,
+                                  by.column=F,align='right',fill=NA),2))
 
 ipcabr<-ipcabr%>%
   filter(!is.na(ipcabr12))
 #importando o IPCA de Goiânia
 
 ipcago<-get_series(13255,start_date=start_data)%>%
-  setNames(c('data','ValorGO'))
-
-ipcago$ipcago12<-round(rollapply(ipcago$ValorGO,12,
+  setNames(c('data','ValorGO')) %>%
+mutate(ipcago12=round(rollapply(ValorGO,12,
                                  function(x)(prod(1+x/100)-1)*100,
-                                 by.column=F,align='right',fill=NA),2)
+                                 by.column=F,align='right',fill=NA),2))
 
-ipcago<-ipcago%>%
+ipcago<-ipcago %>%
   filter(!is.na(ipcago12))
 #mesclando os dois IPCAs
-ipca<-ipcabr%>%
-  merge(ipcago,by='data')%>%
+ipca<-ipcabr %>%
+  merge(ipcago,by='data') %>%
   select('data','ipcabr12','ipcago12')
 last_ipca <- ipca %>%
   filter(data == max(data))
