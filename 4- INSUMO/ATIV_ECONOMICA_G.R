@@ -26,25 +26,26 @@ fig1 <- PIB %>%
 
 #criando o gráfico do IPCA----------------------------------
 
-fig2<-ipca %>% ggplot()+
-  geom_line(aes(x = data, y = ipcabr12, color="IPCA Brasil"), size = 1)+
-  
-  geom_line(aes(x = data, y = ipcago12, color="IPCA Goiânia"), size = 1)+
-  
+fig2<-ipca %>% 
+  ggplot()+
+  geom_line(aes(x = data, y = ipcabr12, color="IPCA Brasil"), size = 1) +
+  geom_line(aes(x = data, y = ipcago12, color="IPCA Goiânia"), size = 1) +
   scale_y_continuous(labels=scales::label_number(decimal.mark=','))+
-  
-  labs(x = " ", y = "% a.a.", title = glue("IPCA acum. 12 meses ({year(Sys.Date())-1}-{year(Sys.Date())})"), 
+  labs(x = " ", y = "% a.a.", title = glue("IPCA acum. 12 meses ({year(Sys.Date())-2}-{year(Sys.Date())})"), 
        linetype = "Variable", color = "Variable")+
-  
   scale_color_manual(breaks = c('IPCA Brasil','IPCA Goiânia'), 
-                     values = c('IPCA Brasil'=cor2[2],'IPCA Goiânia'=cor2[1]), name=" ")+
-  theme_classic()+theme(plot.title = element_text(hjust=0.5, face = "bold"))+
-  
+                     values = c('IPCA Brasil'=cor2[2],'IPCA Goiânia'=cor2[1]),name="") +
+  theme_classic() +
+  theme(plot.title = element_text(hjust=0.5, face = "bold")) +
+  scale_x_date(limits = c(min(ipca$data), max(ipca$data) %m+% months(1))) +
+  theme(legend.position=c(0.99,0.9),
+        legend.key.size = unit(0.3,'cm'),
+        legend.justification = c("right", "bottom"),
+        legend.margin = margin(0,0,0,0)) +
   geom_label(aes(x = last_ipca$data, y = last_ipca$ipcago12, 
-                 label = format(last_ipca$ipcago12,decimal.mark=',')),vjust =0, colour = "black")+
-  
+                 label = paste0(format(last_ipca$ipcabr12,decimal.mark=','),'%')),vjust=0,hjust=0.4, colour = "black") +
   geom_label(aes(x = last_ipca$data, y = last_ipca$ipcabr12, 
-                 label = format(last_ipca$ipcabr12,decimal.mark=',')),vjust =0, colour = "black")
+                 label = paste0(format(last_ipca$ipcago12,decimal.mark=','),'%')),vjust=0,hjust=0.4, colour = "black")
 
 
 
@@ -52,42 +53,38 @@ fig2<-ipca %>% ggplot()+
 
 fig3<-selic %>% ggplot()+
   geom_line(aes(x = data, y = selic, color="Taxa Selic"), size = 1)+
-  
   scale_y_continuous(labels=scales::label_number(decimal.mark=','))+
-  
   labs(x = " ", y = "% a.a.", title = glue("Selic definida pelo Copom ({year(Sys.Date())-2}-{year(Sys.Date())})"))+
   scale_color_manual(breaks = ('Taxa Selic'), values = ('Taxa Selic'=cor2[1]), name=" ")+
-  
   theme_classic()+theme(plot.title = element_text(hjust=0.5, face = "bold"),
                         legend.title=element_blank(),legend.position='none')+
-  
   geom_label(aes(x = last_selic$data, y = last_selic$selic, 
-                 label = format(last_selic$selic,decimal.mark=',')),vjust =0.5, colour = "black")
+                 label = paste0(format(last_selic$selic,decimal.mark=','),'%')),vjust =0.5, colour = "black")
 
 
 #criando o gráfico das cotações---------------------------
 
-fig4 <- cotacao %>% 
-  ggplot()+
-  
-  geom_line(aes(x = data, y = Venda_USD, color="USD"), size = 1)+
-  
-  geom_line(aes(x = data, y = Venda_EUR, color="EUR"), size = 1)+
-  
+fig4<-cotacao %>% 
+  ggplot() +
+  geom_line(aes(x = data, y = Venda_EUR, color="EUR"), size = 1) +
+  geom_line(aes(x = data, y = Venda_USD, color="USD"), size = 1) +
   scale_y_continuous(labels=scales::label_number(decimal.mark=','))+
-
-  labs(x = " ", y = "R$", title = glue("Cotações do Euro e do Dólar dos EUA ({year(Sys.Date())-2}-{year(Sys.Date())})"),
+  labs(x = " ", y = "R$", title = glue("Cotações diárias do Euro e do Dólar dos EUA ({year(Sys.Date())-2}-{year(Sys.Date())})"),
        linetype = "Variable", color = "Variable")+
-  scale_color_manual(breaks = (c('USD','EUR')), values = c('USD'= cor2[2],'EUR'=cor2[1]), name=" ")+
-  theme_classic()+theme(plot.title = element_text(hjust=0.5, face = "bold"))+
-
-  geom_label(aes(x = last_cotacao$data, y = last_cotacao$Venda_USD, 
-                 label = format(last_cotacao$Venda_USD,decimal.mark=',')),
-             vjust =1, colour = "black") +
-  
+  scale_color_manual(breaks = (c('EUR','USD')), values = c('EUR'= cor2[2],'USD'=cor2[1]), name=" ") +
+  theme_classic() +
+  scale_x_date(limits = c(min(cotacao$data), max(cotacao$data) %m+% months(1)))+
+  theme(plot.title = element_text(hjust=0.5, face = "bold")) +
+  theme(legend.position=c(0.99,0.05),
+        legend.key.size = unit(0.3,'cm'),
+        legend.justification = c("right", "bottom"),
+        legend.margin = margin(0,0,0,0)) +
   geom_label(aes(x = last_cotacao$data, y = last_cotacao$Venda_EUR, 
-                 label = format(last_cotacao$Venda_EUR,decimal.mark=',')),
-             vjust =1, colour = "black")
+                 label = paste0("R$ ",format(last_cotacao$Venda_EUR,decimal.mark=','))),
+             vjust =1,hjust=0.4, colour = "black") +
+  geom_label(aes(x = last_cotacao$data, y = last_cotacao$Venda_USD, 
+                 label = paste0("R$ ",format(last_cotacao$Venda_USD,decimal.mark=','))),
+             vjust =1,hjust=0.4, colour = "black")
 
 
 #figuras agrupadas---------------------------
