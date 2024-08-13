@@ -9,8 +9,11 @@ my <- my %>%
   ph_with(value = "Execução Orçamentária",
           location = ph_location_type(type = "title")) %>%
   
-  ph_with(value = glue("Somente o Executivo"),
-          location = ph_location_type(type = "subTitle")) %>%
+  ph_with(value = fpar(
+    ftext("Comparativo anual - ", prop = fp_text(font.size = 0, color = '#00579E')),
+    ftext("Somente o Executivo", prop = fp_text(font.size = 0, shading.color ="yellow", color = '#00579E'))
+  ),
+  location = ph_location_type(type = "subTitle")) %>%
   
   ph_with(value = format(Sys.Date(), "%d/%m/%Y"),
           location = ph_location_type(type = "dt")) %>%
@@ -54,7 +57,7 @@ ph_with(block_list(
     fp_p = border2
   ),
   fpar(
-    ftext(glue('Até {format(Sys.Date()- month(1), "%b")}/24'), 
+    ftext(glue('Até {format(Sys.Date() %m-% months(1), "%b/%y")}'), 
           prop = fp_text(font.size = 10.5, color = "#ffffff")),
     fp_p = border2
   )
@@ -75,7 +78,7 @@ location = ph_location(left = 0.2, top = 1.1, width = 3.14,
       fp_p = border2
     ),
     fpar(
-      ftext(glue('Até {format(Sys.Date()- month(1), "%b")}/24'), 
+      ftext(glue('Até {format(Sys.Date() %m-% months(1), "%b/%y")}'), 
             prop = fp_text(font.size = 10.5, color = "#ffffff")),
       fp_p = border2
     )
@@ -96,7 +99,7 @@ location = ph_location(left = 0.2, top = 1.1, width = 3.14,
       fp_p = border2
     ),
     fpar(
-      ftext(glue('Até {format(Sys.Date()- month(1), "%b")}/24'), 
+      ftext(glue('Até {format(Sys.Date() %m-% months(1), "%b/%y")}'), 
             prop = fp_text(font.size = 10.5, color = "#ffffff")),
       fp_p = border2
     )
@@ -117,7 +120,7 @@ location = ph_location(left = 0.2, top = 1.1, width = 3.14,
       fp_p = border2
     ),
     fpar(
-      ftext(glue('Até {format(Sys.Date()- month(1), "%b")}/24'), 
+      ftext(glue('Até {format(Sys.Date() %m-% months(1), "%b/%y")}'), 
             prop = fp_text(font.size = 10.5, color = "#ffffff")),
       fp_p = border2
     )

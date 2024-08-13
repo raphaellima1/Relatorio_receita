@@ -1,10 +1,12 @@
-###############################################
-# RECEITAS TRIBUTÁRIAS
-###############################################
+# Receitas tributárias ----------------------------------------------------
 source(encoding = 'UTF-8', file = './4- INSUMO/EXECUÇÃO_ORÇAMENTÁRIA_T.R')
 source(encoding = 'UTF-8', file = './4- INSUMO/EXECUÇÃO_ORÇAMENTARIA_G.R')
+
 my <- my %>%
   add_slide(layout = "título_conteúdo", master = "RRF_template_01") %>%
+
+
+
   
   ph_with(value = "Execução Orçamentária",
           location = ph_location_type(type = "title")) %>%
@@ -54,7 +56,7 @@ my <- my %>%
       fp_p = border2
     ),
     fpar(
-      ftext(glue('Até {format(Sys.Date()- month(1), "%b")}/24'), 
+      ftext(glue('Até {format(Sys.Date() %m-% months(1), "%b/%y")}'), 
             prop = fp_text(font.size = 10.5, color = "#ffffff")),
       fp_p = border2
     )
@@ -75,7 +77,7 @@ my <- my %>%
       fp_p = border2
     ),
     fpar(
-      ftext(glue('Até {format(Sys.Date()- month(1), "%b")}/24'), 
+      ftext(glue('Até {format(Sys.Date() %m-% months(1), "%b/%y")}'), 
             prop = fp_text(font.size = 10.5, color = "#ffffff")),
       fp_p = border2
     )
@@ -96,7 +98,7 @@ my <- my %>%
       fp_p = border2
     ),
     fpar(
-      ftext(glue('Até {format(Sys.Date()- month(1), "%b")}/24'), 
+      ftext(glue('Até {format(Sys.Date() %m-% months(1), "%b/%y")}'), 
             prop = fp_text(font.size = 10.5, color = "#ffffff")),
       fp_p = border2
     )
@@ -117,7 +119,7 @@ my <- my %>%
       fp_p = border2
     ),
     fpar(
-      ftext(glue('Até {format(Sys.Date()- month(1), "%b")}/24'), 
+      ftext(glue('Até {format(Sys.Date() %m-% months(1), "%b/%y")}'), 
             prop = fp_text(font.size = 10.5, color = "#ffffff")),
       fp_p = border2
     )
