@@ -185,6 +185,7 @@ fig1 <- RCL12_m %>%
 fig1
 
 fig2 <- RCL %>% 
+  mutate(fant_24 = sub("\\.", ",", round(RCL_2024/1000, digits = 2))) |> 
   mutate(band_sup= Projeção_RCL*(1+0.0434106013926729),
          band_inf = Projeção_RCL*(1-0.0434106013926729)) |> 
   ggplot()+
@@ -194,6 +195,8 @@ fig2 <- RCL %>%
   
   geom_line(aes(x = data, y = RCL_2024*1000000, color = "Acumulado 2024", 
                 linetype = "Acumulado 2024"), size=1) +
+  
+  geom_label(aes(x = data, y = RCL_2024*1000000, label = fant_24),vjust = -0.7,colour = cor2[1])+
   
   geom_line(aes(x = data, y = Projeção_RCL*1000000, color = "Projeção 2024", 
                 linetype = "Projeção 2024"), size=0.5) +

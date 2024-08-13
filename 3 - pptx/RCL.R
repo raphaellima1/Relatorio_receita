@@ -33,14 +33,6 @@ my <- my %>%
                                  width = 12,8,
                                  height = 4.9)) %>% 
   
-  # ph_with(block_list(fpar(ftext(glue('* Resultados preliminares'),
-  #                               prop = fp_text(font.size = 11,
-  #                                              color = "#292929")))),
-          # 
-          # location = ph_location(left = 0, top = 0.88,
-          #                        width = 2,
-          #                        height = 0.201)) |> 
-  
   
   ph_with(block_list(
     fpar(
@@ -49,7 +41,7 @@ my <- my %>%
       fp_p = border2
     ),
     fpar(
-      ftext(glue('Realizado até {format(Sys.Date() %m-% months(1), "%b/%y")}'), 
+      ftext(glue('Realizado até {format(mes_atualizacao, "%b")}'), 
             prop = fp_text(font.size = 16, color = "#ffffff")),
       fp_p = border2
     ),
@@ -71,7 +63,7 @@ my <- my %>%
     ),
     fpar(
 
-      ftext(glue('Projetado até {format(Sys.Date() %m-% months(1), "%b/%y")}'), 
+      ftext(glue('Projetado até {format(mes_atualizacao, "%b")}'), 
             prop = fp_text(font.size = 16, color = "#ffffff")),
       fp_p = border2
     ),

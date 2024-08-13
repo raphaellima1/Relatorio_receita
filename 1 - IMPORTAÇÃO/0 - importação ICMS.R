@@ -1,6 +1,5 @@
-########################################
-# tabela do ICMS 
-#########################################
+# Tabela do ICMS ----------------------------------------------------------
+
 
 ICMS_base <- read_excel("./0 - DADOS/ICMS_TOTAL_2024.xlsx", 
                         sheet = "ICMS", 
@@ -9,9 +8,7 @@ ICMS_base <- read_excel("./0 - DADOS/ICMS_TOTAL_2024.xlsx",
   mutate(data = ymd(data), Ano = year(data), Tipo = 'ICMS')
 
 
-########################################
-# Tabela do Adicional de 2% 
-#########################################
+# Adicional de 2% ---------------------------------------------------------
 
 ADD2_base <- read_excel("./0 - DADOS/ICMS_TOTAL_2024.xlsx", 
                         sheet = "Adicional_2%", 
@@ -21,9 +18,8 @@ ADD2_base <- read_excel("./0 - DADOS/ICMS_TOTAL_2024.xlsx",
   mutate(Tipo = 'Adicional 2%') %>% 
   mutate(data = ymd(data), Ano = year(data))
 
-########################################
-# Tabela do PROTEGE
-########################################
+
+# Tabela PROTEGE ----------------------------------------------------------
 
 PROTEGE_base <- read_excel("./0 - DADOS/ICMS_TOTAL_2024.xlsx", 
                            sheet = "PROTEGE", 
@@ -32,9 +28,8 @@ PROTEGE_base <- read_excel("./0 - DADOS/ICMS_TOTAL_2024.xlsx",
   select(Tipo, data, Ano, Valor) %>% 
   mutate(data = ymd(data), Ano = year(data), Tipo = 'PROTEGE') 
 
-########################################
-# Tabela do IPVA
-########################################
+
+# Tabela IPVA -------------------------------------------------------------
 
 IPVA_base <- read_excel("./0 - DADOS/ICMS_TOTAL_2024.xlsx", 
                         sheet = "IPVA", 
@@ -44,9 +39,8 @@ IPVA_base <- read_excel("./0 - DADOS/ICMS_TOTAL_2024.xlsx",
   select(Tipo, data, Ano, Valor) %>% 
   mutate(data = ymd(data), Ano = year(data), Tipo = 'IPVA')
 
-########################################
-# Tabela do ITCD
-########################################
+
+# Tabela ITCD -------------------------------------------------------------
 
 ITCD_base <- read_excel("./0 - DADOS/ICMS_TOTAL_2024.xlsx", 
                         sheet = "ITCD", 
@@ -56,9 +50,9 @@ ITCD_base <- read_excel("./0 - DADOS/ICMS_TOTAL_2024.xlsx",
   select(Tipo, data, Ano, Valor) %>% 
   mutate(data = ymd(data), Ano = year(data), Tipo = 'ITCD')
 
-########################################
-# Tabela do FUNDEINFRA
-########################################
+
+# Tabela FUNDEINFRA -------------------------------------------------------
+
 FUNDEINFRA_base <- read_excel("./0 - DADOS/ICMS_TOTAL_2024.xlsx", 
                         sheet = "FUNDEINFRA", 
                         col_types = c("text", "text", "numeric", "text", "numeric")) %>% 
@@ -68,9 +62,7 @@ FUNDEINFRA_base <- read_excel("./0 - DADOS/ICMS_TOTAL_2024.xlsx",
   mutate(data = ymd(data), Ano = year(data), Tipo = 'FUNDEINFRA')
 
 
-########################################
-# Tabela TOTAL DAS RECEITAS TRIBUTÁRIAS
-########################################
+# Tabela total ------------------------------------------------------------
 
 receitas_base <- ICMS_base %>% 
   select(Tipo, data,Ano, Valor) %>% 
@@ -80,9 +72,7 @@ receitas_base <- ICMS_base %>%
   rbind(ITCD_base) %>% 
   rbind(FUNDEINFRA_base)
 
-########################################
-# Tabela Projeções
-########################################
+# Tabela projeção ---------------------------------------------------------
 
 projecao_base <- read_excel("./0 - DADOS/Previsão_receitas_tributarias.xlsx", sheet = 2) %>% 
   pivot_longer(cols = Janeiro:Dezembro) %>% 
@@ -104,10 +94,8 @@ projecao_base <- read_excel("./0 - DADOS/Previsão_receitas_tributarias.xlsx", s
          ),
          ano = 2024) 
 
-########################################
-# Tabela Projeções - Componentes do ICMS
-########################################
-# 
+# Tabela projeções do ICMS ------------------------------------------------
+
 projecao_ICMS <- read_csv2("./0 - DADOS/previsoes_icms_setor_mar_2024.csv") %>% 
   setNames(c('Setor', 'Mes', 'Valor', 'pred') ) %>% 
   mutate(ano = year(Mes),
