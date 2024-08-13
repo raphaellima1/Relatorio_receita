@@ -261,11 +261,11 @@ TAB_GER <- df_PLOA2024 %>%
   mutate_if(is.numeric, ~ ifelse(. == 0, NA, .)) %>% 
   mutate(across(everything(), ~ ifelse(is.infinite(.), NA, .))) %>% 
   rename("Acumulado 2023" = 5, "Acumulado 2024" = 6) %>% 
+  #add_column(col_space = " ", .name_repair = "unique") %>% 
   add_column(col_space = " ", .name_repair = "unique") %>% 
   add_column(col_space = " ", .name_repair = "unique") %>% 
   add_column(col_space = " ", .name_repair = "unique") %>% 
-  add_column(col_space = " ", .name_repair = "unique") %>% 
-  relocate(1,2,3,11,4,12,5,6,13,7,8,14)
+  relocate(1,2,3,4,12,5,6,13,7,8,11)
 
 
 # FORMATAÇÃO DA TABELA -----------------
@@ -275,7 +275,8 @@ tabela_acumulado <- TAB_GER %>%
   fontsize(size = 10, part = "header") %>% 
   fontsize(size = 10, part = "body") %>%
   border_remove() %>%
-  colformat_double(j = c("PLOA 2024", "GERENCIAL", glue::glue("Até {format(Sys.Date() %m-% months(1), '%B')}"), "Acumulado 2023",
+  colformat_double(j = c("PLOA 2024", "GERENCIAL", 
+                         glue::glue("Até {format(Sys.Date() %m-% months(1), '%B')}"), "Acumulado 2023",
                          "Acumulado 2024", "Dif. (R$)", "Dif.  (R$)"),
                    big.mark=".",
                    decimal.mark = ',', 
@@ -290,7 +291,7 @@ tabela_acumulado <- TAB_GER %>%
                    suffix = ' %') %>% 
 
   
-  set_header_labels(values = c("RECEITAS", "PLOA 2024","GERENCIAL", " ",
+  set_header_labels(values = c("RECEITAS", "PLOA 2024","GERENCIAL", 
                                glue::glue("Até {format(Sys.Date() %m-% months(1), '%B')}"), " ",
                                "Acumulado 2023", "Acumulado 2024", " ", "Dif. (R$)", "Dif. (%)", " ",
                                "Dif. (R$)", "Dif. (%)")) %>% 
@@ -303,11 +304,11 @@ tabela_acumulado <- TAB_GER %>%
     color = cor1[3]
   ),
   part = 'header') %>% 
-  bg(., i= c(1:2,8:13, 18, 23:29, 31), 
+  bg(., i= c(1:3,8:13, 18, 23:29, 31), 
      part = "body", 
      bg = cor1[1]) %>% 
   
-  bg(., i= c(3:7, 14:17, 19:22, 30), 
+  bg(., i= c(4:7, 14:17, 19:22, 30), 
      part = "body", 
      bg = cor1[3]) %>%
   
@@ -324,19 +325,20 @@ tabela_acumulado <- TAB_GER %>%
   color( ~ `Dif.  (R$)` < 0, ~ `Dif.  (R$)`,  color = cor1[4]) %>% 
   color( ~ `Dif. (%)` < 0, ~ `Dif. (%)`,  color = cor1[4]) %>% 
   color( ~ `Dif.  (%)` < 0, ~ `Dif.  (%)`,  color = cor1[4]) %>% 
-  add_header_row(values = c("RECEITAS", "Previsão para o Exercício", " ", "Gerencial", " ",
+  add_header_row(values = c("RECEITAS", "Previsão para o Exercício", " ",
                             glue::glue("Realizado até {format(Sys.Date() %m-% months(1), '%B')}"), " ",
                             "Gerencial", " ", "Acum24/Acum23"), 
-                 colwidths = c(1,2,1,1,1,2,1,2,1,2)) %>% 
+                 colwidths = c(1,3,1,2,1,2,1,2)) %>% 
   align(align = "center", part = "header") %>% 
   align(j = 1, align = "left", part = "header") %>% 
   width(j = 1, width = 8.3, unit = 'cm') %>%
-  width(j = c(4,6,9,12), width = .2, unit = 'cm') %>% 
-  width(j = c(2,3,5,7,8,10,11,13,14), width = 2.4, unit = 'cm') %>% 
+  
+  width(j = c(2:13), width = 2.4, unit = 'cm') |>
+  width(j = c(5,8,11), width = .2, unit = 'cm') |> 
   merge_at(i = 1:2, j = 1, part = "header") %>% 
-  hline(i = 1, j = c(2:3,5,7:8,10:11,13:14), border = fp_border(color = "white", width = .5), part = 'header') %>% 
+  hline(i = 1, j = c(2:4,6:7,9:10,12:13), border = fp_border(color = "white", width = .5), part = 'header') %>% 
   height(height = 0.4, part = "header", unit = 'cm') %>%
   height(height = 0.4, part = "body", unit = 'cm') %>% 
   padding(padding.left = 2, padding.right = 2, padding.top = 0, padding.bottom = 0, part = "all") %>% 
   padding( i=c(3:7, 14:17, 19:22, 30), j=1, padding.left=8) %>% 
-  fontsize(j = c(1:14), size = 10, part = "body")
+  fontsize(j = c(1:13), size = 10, part = "body")

@@ -16,14 +16,14 @@ start_data<-paste0(year(Sys.Date())-2,"-02-01")
 
 ipcabr<-gbcbd_get_series(433,first.date=start_data) %>% 
   setNames(c('data','ValorBR'))%>%
-  select(data,ValorBR)
-
-ipcabr$ipcabr12<-round(rollapply(ipcabr$ValorBR,12,function(x)(prod(1+x/100)-1)*100,by.column=F,align='right',fill=NA),2)
-
-ipcabr<-ipcabr%>%
+  select(data,ValorBR) |> 
+  mutate(ipcabr12 = round(rollapply(
+    ValorBR,12,function(x)(prod(1+x/100)-1)*100,
+    by.column=F,align='right',fill=NA),2)) |> 
   filter(!is.na(ipcabr12))
-#importando o IPCA de Goiânia
 
+
+#importando o IPCA de Goiânia
 ipcago<-get_series(13255,start_date=start_data)%>%
   setNames(c('data','ValorGO'))
 

@@ -28,7 +28,7 @@ my <- read_pptx('template - v2.pptx') %>%
 ###############################################
 my <- my %>%
   add_slide(layout = "capa_seção", master = "RRF_template_01") %>% 
-  ph_with(value = "RECEITA CORRENTE LÍQUIDA", location = ph_location_type(type = "title")) %>% 
+  ph_with(value = "Receita tributária \nReceitas de ICMS \n Detalhamento do ICMS", location = ph_location_type(type = "title")) %>% 
   ph_with(value = "1.", location = ph_location_type(type = "subTitle"))
 
 # RECEITA CORRENTE LIQUIDA - RCL

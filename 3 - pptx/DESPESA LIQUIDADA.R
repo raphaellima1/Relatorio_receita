@@ -13,8 +13,11 @@ my <- my %>%
   ph_with(value = "Despesa Liquidada", 
           location = ph_location_type(type = "title")) %>%
   
-  ph_with(value = glue("Comparativo anual"),
-          location = ph_location_type(type = "subTitle")) %>%
+  ph_with(value = fpar(
+    ftext("Comparativo anual - ", prop = fp_text(font.size = 0, color = '#00579E')),
+    ftext("Somente o Executivo", prop = fp_text(font.size = 0, shading.color ="yellow", color = '#00579E'))
+  ),
+  location = ph_location_type(type = "subTitle")) %>%
   
   ph_with(value = format(Sys.Date(), "%d/%m/%Y"),
           location = ph_location_type(type = "dt")) %>% 
@@ -38,7 +41,7 @@ my <- my %>%
       fp_p = border2
     ),
     fpar(
-      ftext(glue('Despesa Liquidada \n acumulada até {format(Sys.Date()- month(1), "%b")}/24'), 
+      ftext(glue('Despesa Liquidada \n acumulada até {format(Sys.Date() %m-% months(1), "%b/%y")}'), 
             prop = fp_text(font.size = 14, color = "#ffffff")),
       fp_p = border2
     )
@@ -54,7 +57,7 @@ my <- my %>%
       fp_p = border2
     ),
     fpar(
-      ftext(glue('Despesa Liquidada \n acumulada até {format(Sys.Date()- month(1), "%b")}/23'), 
+      ftext(glue('Despesa Liquidada \n acumulada até {format(Sys.Date() %m-% months(1), "%b")}/23'), 
             prop = fp_text(font.size = 14, color = "#ffffff")),
       fp_p = border2
     )
