@@ -3,19 +3,21 @@
 ##############################################
 index = c(2,4,1,5,6,3)
 
-filtro <- c('ICMS', 'IPVA', 'Adicional de 2% ICMS', 'Contribuições ao PROTEGE',
-            'Contribuição ao FUNDEINFRA', 'ITCD')
-
+filtro <- c('ICMS','IPVA','Adicional de 2% ICMS','Contribuições ao PROTEGE',
+            'Contribuição ao FUNDEINFRA','ITCD')
 
 data_fim <- max(receitas_base$data)
 
 tabela_total <- receitas_base %>% 
-  mutate(mes = month(data)) %>% 
-  filter(mes == month(data_fim) & Ano >= 2023) %>% 
+  mutate(mes = month(data)) %>%
+# FILTRA AS RECEITAS PARA (MÊS ATUAL-1) DE 2023 E 2024
+  filter(mes == month(data_fim) & Ano >= 2023) %>%
   group_by(Ano, Tipo) %>% 
+# CONVERTE OS VALORES PARA MILHÕES E SOMA O QUE FOI ARRECADADO AO LONGO DO MÊS PARA CADA UMA DAS RECEITAS
   summarise(Valor = sum(Valor)/1000000) %>% 
+# TRANSPOSTA: OS ANOS VIRAM COLUNAS
   pivot_wider(names_from = Ano, values_from = Valor) %>% 
-  arrange(Tipo) %>% 
+  arrange(Tipo) %>%
   mutate(index_ordem = index) %>% 
   arrange(index) %>% 
   setNames(c('Tipo', 'mes_23', 'mes_24')) %>% 
@@ -23,6 +25,7 @@ tabela_total <- receitas_base %>%
   
   add_column(col_space = NA, .name_repair = "universal") %>% 
   
+# PUXANDO DADOS DAS RECEITAS PARA CALCULAR O ACUMULADO ATÉ O MÊS ANTERIOR AO ATUAL EM 2023 E 2024
   bind_cols(receitas_base %>% 
               mutate(mes = month(data)) %>% 
               filter(mes <= month(data_fim), Ano >= 2023) %>% 
@@ -37,7 +40,7 @@ tabela_total <- receitas_base %>%
   ) %>% 
   
   add_column(col_space = NA, .name_repair = "universal") %>% 
-  
+# ANEXANDO O VALOR ARRECADADO PROJETADO PRO MÊS ANTERIOR AO ATUAL 
   bind_cols(projecao_base %>% 
               filter(mes == month(data_fim)) %>%
               group_by(DESCRIÇÃO) %>% 
@@ -54,7 +57,7 @@ tabela_total <- receitas_base %>%
               rename('projecao_mes' = 'valor') %>% 
               select(2)
   ) %>% 
-  
+# ANEXANDO O VALOR ARRECADADO PROJETADO ACUMULADO ATÉ O MÊS ANTERIOR AO ATUAL
   bind_cols(projecao_base %>% 
               filter(mes <= month(data_fim)) %>%
               group_by(DESCRIÇÃO) %>% 
@@ -73,7 +76,7 @@ tabela_total <- receitas_base %>%
   ) %>% 
   
   add_column(col_space = NA, .name_repair = "universal") %>%
-  
+# CALCULAR AS DIFERENÇAS
   mutate(dif_mes = mes_24 - projecao_mes,
          dif_acum = acum_24 - projecao_acum) %>% 
   adorn_totals(na.rm = TRUE, fill = " ") %>% 
@@ -82,7 +85,8 @@ tabela_total <- receitas_base %>%
 
 
 
-
+# EDITANDO A TABELA A SER PLOTADA NO SLIDE -------------------------------------
+# CONVERTENDO O DATA FRAME EM IMAGEM, E RENOMEANDO AS COLUNAS
 tabela_acumulado <- tabela_total %>%
   flextable() %>% 
   border_remove() %>%
@@ -92,8 +96,8 @@ tabela_acumulado <- tabela_total %>%
                    big.mark=".",
                    decimal.mark = ',', 
                    digits = 0, 
-                   na_str = "--") %>% 
-  
+                   na_str = "--") %>%
+# CONVERTENDO "." PARA "," E COLOCANDO VALOR NEGATIVO PRA FICAR VERMELHO
   colformat_double(j = c('Mensal', 'Acumulado'),
                    big.mark=".",
                    decimal.mark = ',', 
@@ -102,7 +106,8 @@ tabela_acumulado <- tabela_total %>%
   color( ~ Mensal < 0, ~ Mensal,  color = cor1[4]) %>% 
   color( ~ Acumulado < 0, ~ Acumulado,  color = cor1[4]) %>% 
   set_header_labels(values = c('Arrecadação',"2023", "2024",'', '2023', '2024','',
-                               "Mensal", "Acumulado",'', "Mensal", "Acumulado")) %>% 
+                               "Mensal", "Acumulado",'', "Mensal", "Acumulado")) %>%
+# DEFININDO AS CORES DAS LINHAS PRINCIPAL E SECUNDÁRIAS, E ADICIONANDO NEGRITO NA LINHA PRINCIPAL
   bg(., 
      part = "header", 
      bg = cor1[2]) %>% 
@@ -113,24 +118,26 @@ tabela_acumulado <- tabela_total %>%
   part = 'header') %>% 
   bg(., i= c(1,4,6), 
      part = "body", 
-     bg = cor1[1]) %>% 
-  
+     bg = cor1[1]) %>%
+# ALTERANDO A COR DA LINHA DO TOTAL
   bg(., i= ~ Arrecadação == "Total", 
      part = "body", 
-     bg = cor1[2]) %>% 
-  
+     bg = cor1[2]) %>%
+# COLOCANDO A COR BRANCA E ADICIONANDO NEGRITO NA LINHA DO TOTAL
   style(i =  ~ Arrecadação == "Total", 
         pr_t = fp_text_default(
           bold = T,
           color = cor1[1]
-        )) %>% 
+        )) %>%
   hline(i = c(6,7), part = "body", 
         border =  std_border) %>% 
+# ADICIONANDO UMA LINHA ACIMA DA LINHA PRINCIPAL
   add_header_row(values = c('Arrecadação', 'Mensal', '  ', "Acumulado (Ano)",
                             '   ', "Projeções", '    ', 'Diferença em R$ (Real./24) - (Proj./24)'), 
-                 colwidths = c(1,2,1,2,1,2,1,2)) %>% 
-  #merge_at(i = 1:2, j = 1, part = "header") %>% 
+                 colwidths = c(1,2,1,2,1,2,1,2)) %>%
+# MESCLANDO AS LINHAS 1 E 2 DA COLUNA 1
   merge_at(i = 1:2, j = 1, part = "header") %>% 
+# CENTRALIZANDO 
   align(i = 1, j = NULL, align = "center", part = "header") %>% 
   hline(i = 1, j = c(2,3,5,6,8,9,11,12), part = "header", 
         border =  std_border) %>% 
@@ -138,3 +145,5 @@ tabela_acumulado <- tabela_total %>%
   width(j = 1, width = 2.8, unit = 'cm') %>% 
   width(j = c(2,3,5,6,8,9,11,12), width = 1.8, unit = 'cm') |> 
   width(j = c(9,12), width = 2.4, unit = 'cm') 
+
+tabela_acumulado

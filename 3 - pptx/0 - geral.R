@@ -104,7 +104,7 @@ source( encoding = 'UTF-8', file = './3 - pptx/DESPESA LIQUIDADA.R')
 # Adicionar capa de seção - Atividade econômica --------------------------------
 my <- my %>%
   add_slide(layout = "capa_seção", master = "RRF_template_01") %>% 
-  ph_with(value = "ATIVIDADE ECONÔMICA", location = ph_location_type(type = "title")) %>% 
+  ph_with(value = "CONJUNTURA ECONÔMICA", location = ph_location_type(type = "title")) %>% 
   ph_with(value = "1.", location = ph_location_type(type = "subTitle"))
 
 source( encoding = 'UTF-8', file = './3 - pptx/ATIVIDADE ECONOMICA.R')

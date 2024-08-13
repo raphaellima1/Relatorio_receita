@@ -7,7 +7,7 @@ source(encoding = 'UTF-8', file = './4- INSUMO/ATIV_ECONOMICA_G.R')
 my <- my %>%
   add_slide(layout = "título_conteúdo", master = "RRF_template_01") %>%
   
-  ph_with(value = "Atividade econômica",
+  ph_with(value = "Conjuntura econômica",
           location = ph_location_type(type = "title")) %>%
   
   ph_with(value = glue("Indicadores"),

@@ -29,7 +29,7 @@ my <- my %>%
           location = ph_location(left =8.1 , top = 1.7,
                                  width = 5, height = 4))%>%
   
-  ph_with(block_list(fpar(ftext(glue('(Em R$ milhões)'),
+  ph_with(block_list(fpar(ftext(glue('(Em milhões de R$)'),
                                 prop = fp_text(font.size = 12,
                                                color = "#292929")),
                           fp_p = border1)),
@@ -41,6 +41,9 @@ my <- my %>%
 
 
 print('RECEITAS TRIBUTÁRIAS <- OK')
+
+
+
 ######################################################################
 source(encoding = 'UTF-8', file = './4- INSUMO/RECEITAS_TRIBUTARIAS_PERC.R')
 
