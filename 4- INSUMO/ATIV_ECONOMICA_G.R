@@ -20,12 +20,12 @@ fig1 <- PIB %>%
        title = glue("PIB Brasil - Var. real últimos 4 trimestres ({year(Sys.Date())-4}-{year(Sys.Date())})"), linetype = "Variable",
        color = "Variable") +
   theme_classic() +
-  theme(plot.title = element_text(hjust = 0.5, face = "bold"))
+  theme(plot.title = element_text(hjust = 0.5, face = "bold"),
+        plot.margin = margin(0, 0, 0, 0))
 
 
 
 #criando o gráfico do IPCA----------------------------------
-
 fig2<-ipca %>% 
   ggplot()+
   geom_line(aes(x = data, y = ipcabr12, color="IPCA Brasil"), size = 1) +
@@ -36,7 +36,8 @@ fig2<-ipca %>%
   scale_color_manual(breaks = c('IPCA Brasil','IPCA Goiânia'), 
                      values = c('IPCA Brasil'=cor2[2],'IPCA Goiânia'=cor2[1]),name="") +
   theme_classic() +
-  theme(plot.title = element_text(hjust=0.5, face = "bold")) +
+  theme(plot.title = element_text(hjust=0.5, face = "bold"),
+        plot.margin = margin(0, 0, 0, 0)) +
   scale_x_date(limits = c(min(ipca$data), max(ipca$data) %m+% months(1))) +
   theme(legend.position=c(0.99,0.9),
         legend.key.size = unit(0.3,'cm'),
@@ -50,31 +51,33 @@ fig2<-ipca %>%
 
 
 #gráfico da selic----------------------
-
-fig3<-selic %>% ggplot()+
+fig3<-selic %>% 
+  ggplot() +
   geom_line(aes(x = data, y = selic, color="Taxa Selic"), size = 1)+
   scale_y_continuous(labels=scales::label_number(decimal.mark=','))+
   labs(x = " ", y = "% a.a.", title = glue("Selic definida pelo Copom ({year(Sys.Date())-2}-{year(Sys.Date())})"))+
   scale_color_manual(breaks = ('Taxa Selic'), values = ('Taxa Selic'=cor2[1]), name=" ")+
   theme_classic()+theme(plot.title = element_text(hjust=0.5, face = "bold"),
-                        legend.title=element_blank(),legend.position='none')+
+                        legend.title=element_blank(),legend.position='none',
+                        plot.margin = margin(0, 0, 0, 0)) +
+  scale_x_date(limits = c(min(selic$data), max(selic$data) %m+% months(1))) +
   geom_label(aes(x = last_selic$data, y = last_selic$selic, 
                  label = paste0(format(last_selic$selic,decimal.mark=','),'%')),vjust =0.5, colour = "black")
 
 
 #criando o gráfico das cotações---------------------------
-
 fig4<-cotacao %>% 
   ggplot() +
   geom_line(aes(x = data, y = Venda_EUR, color="EUR"), size = 1) +
   geom_line(aes(x = data, y = Venda_USD, color="USD"), size = 1) +
   scale_y_continuous(labels=scales::label_number(decimal.mark=','))+
-  labs(x = " ", y = "R$", title = glue("Cotações diárias do Euro e do Dólar dos EUA ({year(Sys.Date())-2}-{year(Sys.Date())})"),
+  labs(x = "", y = "R$", title = glue("Cotações diárias do Euro e do Dólar dos EUA ({year(Sys.Date())-2}-{year(Sys.Date())})"),
        linetype = "Variable", color = "Variable")+
   scale_color_manual(breaks = (c('EUR','USD')), values = c('EUR'= cor2[2],'USD'=cor2[1]), name=" ") +
   theme_classic() +
   scale_x_date(limits = c(min(cotacao$data), max(cotacao$data) %m+% months(1)))+
-  theme(plot.title = element_text(hjust=0.5, face = "bold")) +
+  theme(plot.title = element_text(hjust=0.5, face = "bold"),
+        plot.margin = margin(0, 0, 0, 0)) +
   theme(legend.position=c(0.99,0.05),
         legend.key.size = unit(0.3,'cm'),
         legend.justification = c("right", "bottom"),

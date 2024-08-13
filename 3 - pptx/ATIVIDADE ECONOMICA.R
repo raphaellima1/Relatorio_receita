@@ -27,10 +27,10 @@ my <- my %>%
   #                                width = 5, height = 4))%>%
   
   ph_with(dml(code = plot(fig.allg)), 
-          location = ph_location(left = 0.6,
-                                 top = 1.16,
-                                 width = 12,8,
-                                 height = 5.9))
+          location = ph_location(left = 1.5,
+                                 top = 1.03,
+                                 width = 10,
+                                 height = 6.2))
 
 
 print('ATIVIDADE ECONÔMICA <- OK')
