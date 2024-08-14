@@ -86,7 +86,7 @@ df_G323_T <- df %>%
 # CEN. GER. 323 ACUMULADO ATÉ O MÊS --------------------
 
 df <- read_excel('./0 - DADOS/RECEITA_LIQUIDA_MONITOR_PLDO25_20240417.xlsx', sheet = "PLDO2025")
-mes_dados <- glue::glue("Até {format(Sys.Date() %m-% months(1), '%B')}")
+mes_dados <- glue::glue("Até {format(mes_atualizacao, '%B')}")
 
 df_G323 <- df %>% 
   filter(RECEITAS == "1. RECEITAS CORRENTES" |
@@ -232,7 +232,7 @@ new_col_names <- paste0("acumulado_", original_col_names)
 names(df_acum24)[(ncol(df_acum24) - length(original_col_names) + 1):ncol(df_acum24)] <- new_col_names
 
 df_acum24 <- df_acum24 %>% 
-  select(1, glue::glue("acumulado_{format(floor_date(Sys.Date(), 'month') %m-% months(1), '%Y%m')}")) %>% 
+  select(1, glue::glue("acumulado_{format(mes_atualizacao, '%Y%m')}")) %>% 
   mutate(across(where(is.numeric), ~ . / 1000000))
 
 
@@ -276,7 +276,7 @@ tabela_acumulado <- TAB_GER %>%
   fontsize(size = 10, part = "body") %>%
   border_remove() %>%
   colformat_double(j = c("PLOA 2024", "GERENCIAL", 
-                         glue::glue("Até {format(Sys.Date() %m-% months(1), '%B')}"), "Acumulado 2023",
+                         glue::glue("Até {format(mes_atualizacao, '%B')}"), "Acumulado 2023",
                          "Acumulado 2024", "Dif. (R$)", "Dif.  (R$)"),
                    big.mark=".",
                    decimal.mark = ',', 
@@ -291,8 +291,8 @@ tabela_acumulado <- TAB_GER %>%
                    suffix = ' %') %>% 
 
   
-  set_header_labels(values = c("RECEITAS", "PLOA 2024","GERENCIAL", 
-                               glue::glue("Até {format(Sys.Date() %m-% months(1), '%B')}"), " ",
+  set_header_labels(values = c("RECEITAS", "LOA 2024","Cenário atual", 
+                               glue::glue("Até {format(mes_atualizacao, '%B')}"), " ",
                                "Acumulado 2023", "Acumulado 2024", " ", "Dif. (R$)", "Dif. (%)", " ",
                                "Dif. (R$)", "Dif. (%)")) %>% 
   

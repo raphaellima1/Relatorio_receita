@@ -145,5 +145,6 @@ my <- my %>%
 print('RCL <- OK')
 
 
-
+rm(RCL, RCL12_m, bloco1, bloco2, bloco3, bloco4, a,
+   fig.allg, fig1, fig2, tabela_acumulado)
 

@@ -154,4 +154,7 @@ my <- my %>%
                                  width = 6.5,
                                  height = 0.3)) 
 
+rm(bloco1, bloco2, bloco3, bloco4, a,fig.allg, fig1, fig2,
+   RLT_band, RLT, spacer)
+
 print('RTL <- OK')
