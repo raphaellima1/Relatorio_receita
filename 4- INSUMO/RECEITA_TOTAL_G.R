@@ -20,7 +20,8 @@ RLT <- RLT %>%
 
 
 
-fig1 <- RLT %>% 
+fig1 <- RLT %>%
+  mutate(fant_24 = sub("\\.", ",", round(acum_24 / 1000, digits = 2))) |> 
   ggplot()+
   geom_ribbon(aes(x = data, ymin = (proj_acum * (1 - RLT_band)) * 1000000,
                   ymax = (proj_acum * (1 + RLT_band)) * 1000000), fill = "grey80", alpha = 0.5) +
@@ -31,6 +32,11 @@ fig1 <- RLT %>%
   
   geom_line(aes(x = data, y = acum_24*1000000, color = "Acumulado 2024", 
                 linetype = "Acumulado 2024"), size=1) +
+  geom_label(aes(x = data, 
+                 y = acum_24*1000000, 
+                 label = fant_24),
+             vjust = -0.7,
+             colour = cor2[1])+
   
 
   labs(x = "  ", 
@@ -67,21 +73,60 @@ fig1 <- RLT %>%
 
 
 fig2 <- RLT |> 
+  mutate(fant_24 = sub("\\.", ",", round(RCL_2024 / 1000, digits = 2))) |> 
   ggplot() +
-  geom_ribbon(aes(x = data, ymin = band_inf * 1000000, ymax = band_sup * 1000000), fill = "grey80", alpha = 0.5) +
-  geom_line(data = RLT, aes(x = data, y = Projeção_RCL * 1000000, color = "Projeção 2024", linetype = "Projeção 2024"), size = 0.5) +
-  geom_line(data = RLT, aes(x = data, y = RCL_2023 * 1000000, color = "Acumulado 2023", linetype = "Acumulado 2023"), size = 0.5) +
-  geom_line(data = RLT, aes(x = data, y = RCL_2024 * 1000000, color = "Acumulado 2024", linetype = "Acumulado 2024"), size = 1) +
-  labs(x = "Meses", y = "Valores em R$", title = "RTL mensal", linetype = "Variable", color = "Variable") +
+  geom_ribbon(aes(x = data, ymin = band_inf * 1000000, 
+                  ymax = band_sup * 1000000), 
+              fill = "grey80", alpha = 0.5) +
+  
+  geom_line(aes(x = data, 
+                y = Projeção_RCL * 1000000, 
+                color = "Projeção 2024", 
+                linetype = "Projeção 2024"), 
+            size = 0.5) +
+  
+  geom_line(data = RLT, 
+            aes(x = data, 
+                y = RCL_2023 * 1000000, 
+                color = "Acumulado 2023", 
+                linetype = "Acumulado 2023"), 
+            size = 0.5) +
+  
+  geom_label(aes(x = data, 
+                 y = RCL_2024*1000000, 
+                 label = fant_24),
+             vjust = -0.7,
+             colour = cor2[1])+
+  
+  geom_line(data = RLT, aes(x = data, 
+                            y = RCL_2024 * 1000000, 
+                            color = "Acumulado 2024", 
+                            linetype = "Acumulado 2024"), 
+            size = 1) +
+  
+  labs(x = "Meses", y = "Valores em R$", title = "Receita Líquida mensal", 
+       linetype = "Variable", color = "Variable") +
+  
   scale_y_continuous(labels = scales::label_number(scale_cut = scales::cut_short_scale())) +
   scale_x_date(date_breaks = "2 month", date_labels = "%b") +
-  scale_color_manual(breaks = c('Acumulado 2023', "Acumulado 2024", 'Projeção 2024'),
-                     values = c("Acumulado 2024" = cor2[1], "Acumulado 2023" = cor2[2], "Projeção 2024" = cor2[3]), 
+  
+  scale_color_manual(breaks = c('Acumulado 2023', 
+                                "Acumulado 2024", 
+                                'Projeção 2024'),
+                     values = c("Acumulado 2024" = cor2[1], 
+                                "Acumulado 2023" = cor2[2], 
+                                "Projeção 2024" = cor2[3]), 
                      name = "Legenda:") +
-  scale_linetype_manual(breaks = c('Acumulado 2023', "Acumulado 2024", 'Projeção 2024'),
-                        values = c("Acumulado 2024" = 'solid', "Acumulado 2023" = 'solid', "Projeção 2024" = 'longdash'), 
+  
+  scale_linetype_manual(breaks = c('Acumulado 2023', 
+                                   "Acumulado 2024", 
+                                   'Projeção 2024'),
+                        values = c("Acumulado 2024" = 'solid', 
+                                   "Acumulado 2023" = 'solid', 
+                                   "Projeção 2024" = 'longdash'), 
                         name = "Legenda:") +
   theme_classic2() + 
+  
   theme(plot.title = element_text(hjust = 0.5),
         legend.title = element_blank(),
         legend.position = "bottom")

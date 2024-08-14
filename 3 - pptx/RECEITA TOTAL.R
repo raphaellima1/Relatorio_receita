@@ -127,7 +127,7 @@ my <- my %>%
 my <- my %>%
   add_slide(layout = "título_conteúdo", master = "RRF_template_01") %>%
   
-  ph_with(value = "Receita Total Líquida", 
+  ph_with(value = "Receita Total", 
           location = ph_location_type(type = "title")) %>%
   
   ph_with(value = glue('Resultados preliminares em {format(Sys.Date(), "%d/%m/%y")}'),

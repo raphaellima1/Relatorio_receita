@@ -68,22 +68,20 @@ my <- my %>%
   ph_with(value = espaco('\n',vezes = 1,'2.'), location = ph_location_type(type = "subTitle"))
 
 source( encoding = 'UTF-8', file = './3 - pptx/RECEITA TOTAL.R')
-# 
-# 
-# # Cenário receita
-# ###############################################
-# source( encoding = 'UTF-8', file = './3 - pptx/CENARIO_RECEITA.R')
-# 
-# # add capa_seção - Seção 1
-# ###############################################
-# my <- my %>%
-#   add_slide(layout = "capa_seção", master = "RRF_template_01") %>% 
-#   ph_with(value = "TRANSFERÊNCIAS CORRENTES", location = ph_location_type(type = "title")) %>% 
-#   ph_with(value = "1.", location = ph_location_type(type = "subTitle"))
-# 
-# 
-# # FPE e FUNDEB
-# ###############################################
+
+
+# Cenário da Receita ------------------------------------------------------
+my <- my %>%
+  add_slide(layout = "capa_seção", master = "RRF_template_01") %>%
+  ph_with(value = espaco('\n',2,dados[3]), location = ph_location_type(type = "title")) %>%
+  ph_with(value = espaco('\n',vezes = 2,'3.'), location = ph_location_type(type = "subTitle"))
+
+source( encoding = 'UTF-8', file = './3 - pptx/CENARIO_RECEITA.R')
+
+
+# TRANSFERÊNCIAS CORRENTES -----------------------------------------------
+
+
 # source( encoding = 'UTF-8', file = './3 - pptx/FPE_FUNDEB.R')
 # 
 # # add capa_seção - Seção 1
@@ -134,6 +132,9 @@ source( encoding = 'UTF-8', file = './3 - pptx/RECEITA TOTAL.R')
 # # add slide equipe_imagem
 # my <- my %>% 
 #   add_slide(layout = "equipe", master = "RRF_template_01")
+
+# Tranferências Constitucionais -------------------------------------------
+
 
 #rm(tabela_receita, p, g, )
 my %>%
