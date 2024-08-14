@@ -11,7 +11,7 @@ source(encoding = 'UTF-8', file = './4- INSUMO/RECEITA_TOTAL_G.R')
 my <- my %>%
   add_slide(layout = "título_conteúdo", master = "RRF_template_01") %>%
   
-  ph_with(value = "Receita Total Líquida", 
+  ph_with(value = "Receita Total", 
           location = ph_location_type(type = "title")) %>%
   
   ph_with(value = glue('Resultados preliminares em {format(Sys.Date(), "%d/%m/%y")}'),
@@ -42,14 +42,14 @@ my <- my %>%
     ),
     fpar(
 
-      ftext(glue('Realizado até {format(Sys.Date() %m-% months(1), "%b")}/24'), 
+      ftext(glue('Realizado até {format(mes_atualizacao, "%b")}/24'), 
 
             prop = fp_text(font.size = 16, color = "#ffffff")),
       fp_p = border2
     ),
     fpar(
 
-      ftext(glue('(Acum. jan/24 a {format(Sys.Date() %m-% months(1), "%b")}/24)'), 
+      ftext(glue('(Acum. jan/24 a {format(mes_atualizacao, "%b")}/24)'), 
 
             prop = fp_text(font.size = 10.5, color = "#ffffff")),
       fp_p = border2
@@ -67,13 +67,13 @@ my <- my %>%
     ),
     fpar(
 
-      ftext(glue('Projetado até {format(Sys.Date() %m-% months(1), "%b")}/24'), 
+      ftext(glue('Projetado até {format(mes_atualizacao, "%b")}/24'), 
 
             prop = fp_text(font.size = 16, color = "#ffffff")),
       fp_p = border2
     ),
     fpar(
-      ftext(glue('(Acum. jan/24 a {format(Sys.Date() %m-% months(1), "%b")}/24)'), 
+      ftext(glue('(Acum. jan/24 a {format(mes_atualizacao, "%b")}/24)'), 
 
             prop = fp_text(font.size = 10.5, color = "#ffffff")),
       fp_p = border2

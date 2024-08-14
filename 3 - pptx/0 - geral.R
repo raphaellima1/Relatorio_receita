@@ -1,6 +1,16 @@
+dados <- c('Receita Corrente Líquida','Receita Total','Cenário da Receita')
+sumario <- paste(dados, collapse = "\n")
+n_sumario <- '1.\n2.\n3.\n'
+# Esqueleto das apresentações ---------------------------------------------
 
+espaco <- function(n_espacos, vezes, dado = NULL){
+  a <- rep(n_espacos, vezes)
+  b <- paste(a, collapse = "")
+  c <- paste0(b, dado)
+  return(c)
+}
+# sb <- espaco(n_espacos = '\n', 5, dados[1])
 
-# CRIAÇÃO DOS SLIDES PRINCIPAIS ----------------
 
 border1 <- fp_par(
   text.align = "right",
@@ -12,10 +22,8 @@ g <- 1
 # Nº de tabelas
 t <- 1
 
-###############################################
-# Capa Slide
-###############################################
 
+# Capa --------------------------------------------------------------------
 my <- read_pptx('template - v2.pptx') %>% 
   
   ph_with(value = "Boletim Econômico", 
@@ -24,28 +32,42 @@ my <- read_pptx('template - v2.pptx') %>%
   ph_with(value = glue("Edição de {format(Sys.Date(), '%d/%m/%Y')}"), 
           location = ph_location_type(type = "subTitle"))
 
-# rcl
-###############################################
-my <- my %>%
-  add_slide(layout = "capa_seção", master = "RRF_template_01") %>% 
-  ph_with(value = "Receita tributária \nReceitas de ICMS \n Detalhamento do ICMS", location = ph_location_type(type = "title")) %>% 
-  ph_with(value = "1.", location = ph_location_type(type = "subTitle"))
 
-# RECEITA CORRENTE LIQUIDA - RCL
-###############################################
+# Sumário -----------------------------------------------------------------
+my <- my %>%
+  add_slide(layout = "capa_seção", 
+            master = "RRF_template_01") %>% 
+  
+  ph_with(value = sumario, 
+          location = ph_location_type(type = "title")) %>% 
+  
+  ph_with(value = n_sumario, 
+          location = ph_location_type(type = "subTitle"))
+
+
+# Receita Corrente Líquida RCL --------------------------------------------
+
+my <- my %>%
+  add_slide(layout = "capa_seção", 
+            master = "RRF_template_01") %>% 
+  
+  ph_with(value = espaco('\n',0,dados[1]), 
+          location = ph_location_type(type = "title")) %>% 
+  
+  ph_with(value = espaco('\n',0,'1.'), 
+          location = ph_location_type(type = "subTitle"))
+
+# Slide PPTX da RCL
 source( encoding = 'UTF-8', file = './3 - pptx/RCL.R')
 
-###############################################
-# add capa_seção - Seção 1
-###############################################
+
+# Receita Total -----------------------------------------------------------
 my <- my %>%
   add_slide(layout = "capa_seção", master = "RRF_template_01") %>% 
-  ph_with(value = "RECEITA TOTAL LÍQUIDA", location = ph_location_type(type = "title")) %>% 
-  ph_with(value = "1.", location = ph_location_type(type = "subTitle"))
+  ph_with(value = espaco('\n',1,dados[2]), location = ph_location_type(type = "title")) %>% 
+  ph_with(value = espaco('\n',vezes = 1,'2.'), location = ph_location_type(type = "subTitle"))
 
-# # RECEITA TOTAL
-# ###############################################
-# source( encoding = 'UTF-8', file = './3 - pptx/RECEITA TOTAL.R')
+source( encoding = 'UTF-8', file = './3 - pptx/RECEITA TOTAL.R')
 # 
 # 
 # # Cenário receita

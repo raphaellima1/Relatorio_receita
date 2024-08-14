@@ -1,7 +1,7 @@
-mes_atualizacao <- Sys.Date() %m-% months(1)
-# mes_atualizacao <- Sys.Date()
+#mes_atualizacao <- Sys.Date() %m-% months(1)
+mes_atualizacao <- Sys.Date()
 
-
+tempo_execucao <- system.time({
 suppressMessages({
 
   pacman::p_load(tidyverse, readxl, lubridate, glue, ggpubr,gridExtra,grid,
@@ -26,3 +26,7 @@ suppressMessages({
 
 
 })
+})
+
+
+print(tempo_execucao)
