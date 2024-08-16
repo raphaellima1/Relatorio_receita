@@ -23,8 +23,17 @@ tabela_total <- receitas_base %>%
   setNames(c('Tipo', 'mes_23', 'mes_24')) %>% 
   select(1:3) %>% 
   
-  add_column(col_space = NA, .name_repair = "universal") %>% 
+  add_column(col_space = NA, .name_repair = "universal") #%>% 
   
+
+new_projecoes |> 
+  filter(month(data) <= month(mes_atualizacao) &
+           year(data) == year(mes_atualizacao)) |> 
+  group_by(RECEITA) |> 
+  summarise(valor = sum(`VALOR PROJECAO`, na.rm = T))
+
+
+
 # PUXANDO DADOS DAS RECEITAS PARA CALCULAR O ACUMULADO ATÉ O MÊS ANTERIOR AO ATUAL EM 2023 E 2024
   bind_cols(receitas_base %>% 
               mutate(mes = month(data)) %>% 
@@ -40,7 +49,8 @@ tabela_total <- receitas_base %>%
   ) %>% 
   
   add_column(col_space = NA, .name_repair = "universal") %>% 
-# ANEXANDO O VALOR ARRECADADO PROJETADO PRO MÊS ANTERIOR AO ATUAL 
+
+  # ANEXANDO O VALOR ARRECADADO PROJETADO PRO MÊS ANTERIOR AO ATUAL 
   bind_cols(projecao_base %>% 
               filter(mes == month(data_fim)) %>%
               group_by(DESCRIÇÃO) %>% 
