@@ -1,4 +1,4 @@
-#mes_atualizacao <- Sys.Date() %m-% months(1)
+# mes_atualizacao <- Sys.Date() %m-% months(1)
 mes_atualizacao <- Sys.Date()
 
 tempo_execucao <- system.time({
@@ -19,8 +19,7 @@ suppressMessages({
 # Rodar o script ----------------------------------------------------------
   source( encoding = 'UTF-8', file = './3 - pptx/0 - geral.R')
 
-
-})
+  })
 })
 
 

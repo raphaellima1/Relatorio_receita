@@ -85,8 +85,6 @@ my <- my %>%
                                  width = 6.5,
                                  height = 0.3))
 
-
-
-
+rm(FPE_band, FUNDEB_band, fig1, FUNDEB, FPE)
 
 print('FUNDEB <- OK')
