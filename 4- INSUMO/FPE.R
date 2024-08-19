@@ -94,21 +94,22 @@ FPE_band <- FPE %>%
   select(RCL_2024, Projeção_RCL) %>%
   drop_na() %>%
   mutate(dif = round(abs(RCL_2024/Projeção_RCL - 1),3)) %>%
-  summarise(valor = sum(dif) / a) %>%
+  summarise(valor = sum(dif) / month(mes_atualizacao)) %>%
   pull() 
 
 FPE <- FPE %>%
-  mutate(band_inf = Projeção_RCL * (1 - RLT_band),
-         band_sup = Projeção_RCL * (1 + RLT_band),
+  mutate(band_inf = Projeção_RCL * (1 - FPE_band),
+         band_sup = Projeção_RCL * (1 + FPE_band),
          mes = month(data)) |> 
   mutate(band_inf = cumsum(band_inf),
          band_sup = cumsum(band_sup))
 
 
 # CRIANDO O GRÁFICO DO FPE -----------------------------------------------------
-fig1 <- FPE %>% 
+ fig1 <- FPE %>% 
+  mutate(fant_24 = sub("\\.", ",", round(acum_24, digits = 0))) |>
   ggplot()+
-  
+ 
   geom_ribbon(aes(x = data, ymin = band_inf * 1000000, 
                   ymax = band_sup * 1000000), 
               fill = "grey80", alpha = 0.5) +
@@ -121,6 +122,8 @@ fig1 <- FPE %>%
   
   geom_line(aes(x = data, y = acum_24*1000000, color = "Acumulado 2024", 
                 linetype = "Acumulado 2024"), size=1) +
+  
+  geom_label(aes(x = data, y = acum_24*1000000, label = fant_24),vjust = -0.8,colour = cor2[1], size = 3)+
   
   labs(x = "  ", 
        y = "Valores em R$", 

@@ -35,9 +35,10 @@ flex_tab1 <- set_flextable_defaults(
 # configuração de borda
 std_border <- fp_border(color = cor1[3], width = 0.5)
 
-dados <- c('Receita Corrente Líquida','Receita Total','Cenário da Receita')
+dados <- c('Receita Corrente Líquida','Receita Total','Cenário da Receita',
+           'Transferências Correntes', 'Receitas tributárias')
 sumario <- paste(dados, collapse = "\n")
-n_sumario <- '1.\n2.\n3.\n'
+n_sumario <- '1.\n2.\n3.\n4.\n5.'
 
 
 

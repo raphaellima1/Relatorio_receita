@@ -22,10 +22,9 @@ tabela_total <- receitas_base %>%
   arrange(index) %>% 
   setNames(c('Tipo', 'mes_23', 'mes_24')) %>% 
   select(1:3) %>% 
-  
   add_column(col_space = NA, .name_repair = "universal") %>% 
-  
-# PUXANDO DADOS DAS RECEITAS PARA CALCULAR O ACUMULADO ATÉ O MÊS ANTERIOR AO ATUAL EM 2023 E 2024
+  arrange(Tipo) |> 
+  # PUXANDO DADOS DAS RECEITAS PARA CALCULAR O ACUMULADO ATÉ O MÊS ANTERIOR AO ATUAL EM 2023 E 2024
   bind_cols(receitas_base %>% 
               mutate(mes = month(data)) %>% 
               filter(mes <= month(data_fim), Ano >= 2023) %>% 
@@ -33,55 +32,43 @@ tabela_total <- receitas_base %>%
               summarise(Valor = sum(Valor)/1000000) %>% 
               pivot_wider(names_from = Ano, values_from = Valor) %>% 
               arrange(Tipo) %>% 
-              mutate(index_ordem = index) %>% 
-              arrange(index) %>%
               setNames(c('Tipo', 'acum_23', 'acum_24')) %>% 
               select(2:3)
   ) %>% 
-  
   add_column(col_space = NA, .name_repair = "universal") %>% 
-# ANEXANDO O VALOR ARRECADADO PROJETADO PRO MÊS ANTERIOR AO ATUAL 
-  bind_cols(projecao_base %>% 
-              filter(mes == month(data_fim)) %>%
-              group_by(DESCRIÇÃO) %>% 
-              summarise(valor = sum(Valor)/1000000) %>% 
-              filter(DESCRIÇÃO %in% filtro) %>% 
-              mutate(DESCRIÇÃO = case_when(
-                DESCRIÇÃO == "Adicional de 2% ICMS" ~ 'Adicional 2%',
-                DESCRIÇÃO == "Contribuições ao PROTEGE" ~ 'PROTEGE',
-                DESCRIÇÃO == "Contribuição ao FUNDEINFRA" ~ 'FUNDEINFRA',
-                TRUE ~ DESCRIÇÃO)) %>% 
-              arrange(DESCRIÇÃO) %>% 
-              mutate(index_ordem = index) %>% 
-              arrange(index) %>% 
-              rename('projecao_mes' = 'valor') %>% 
-              select(2)
-  ) %>% 
-# ANEXANDO O VALOR ARRECADADO PROJETADO ACUMULADO ATÉ O MÊS ANTERIOR AO ATUAL
-  bind_cols(projecao_base %>% 
-              filter(mes <= month(data_fim)) %>%
-              group_by(DESCRIÇÃO) %>% 
-              summarise(valor = sum(Valor)/1000000) %>% 
-              filter(DESCRIÇÃO %in% filtro) %>% 
-              mutate(DESCRIÇÃO = case_when(
-                DESCRIÇÃO == "Adicional de 2% ICMS" ~ 'Adicional 2%',
-                DESCRIÇÃO == "Contribuições ao PROTEGE" ~ 'PROTEGE',
-                DESCRIÇÃO == "Contribuição ao FUNDEINFRA" ~ 'FUNDEINFRA',
-                TRUE ~ DESCRIÇÃO)) %>% 
-              arrange(DESCRIÇÃO) %>% 
-              mutate(index_ordem = index) %>% 
-              arrange(index) %>% 
-              rename('projecao_acum' = 'valor') %>% 
-              select(2)
-  ) %>% 
+  # Adicionar as projeções
+  bind_cols(new_projecoes |> 
+              filter(month(data) == month(mes_atualizacao) &
+                       year(data) == year(mes_atualizacao)) |> 
+              group_by(RECEITA) |> 
+              summarise(valor = sum(`VALOR PROJECAO`, na.rm = T)) |> 
+              bind_rows(data.frame(RECEITA = c('Adicional de 2%'), valor = NA)) |> 
+              arrange(RECEITA) |> 
+              select(-RECEITA) |> 
+              setNames('projecao_mes') |> 
+              mutate(projecao_mes = projecao_mes/1000000)) |> 
   
-  add_column(col_space = NA, .name_repair = "universal") %>%
+  bind_cols(new_projecoes |> 
+              filter(month(data) <= month(mes_atualizacao) &
+                       year(data) == year(mes_atualizacao)) |> 
+              group_by(RECEITA) |> 
+              summarise(valor = sum(`VALOR PROJECAO`, na.rm = T)) |> 
+              bind_rows(data.frame(RECEITA = c('Adicional de 2%'), valor = NA)) |> 
+              arrange(RECEITA) |> 
+              select(-RECEITA) |> 
+              setNames('projecao_acum') |> 
+              mutate(projecao_acum = projecao_acum/1000000)) |> 
+  add_column(col_space = NA, .name_repair = "universal") %>% 
 # CALCULAR AS DIFERENÇAS
   mutate(dif_mes = mes_24 - projecao_mes,
          dif_acum = acum_24 - projecao_acum) %>% 
+  mutate(index = index) |> 
+  arrange(index) |> 
+  select(-index) |> 
   adorn_totals(na.rm = TRUE, fill = " ") %>% 
   setNames(c("Arrecadação", "2023", "2024", " ", ' 2023', ' 2024', "  ",
              " Mensal", " Acumulado", "   ", 'Mensal', 'Acumulado'))
+  
 
 
 
@@ -144,6 +131,8 @@ tabela_acumulado <- tabela_total %>%
   width(j = c(4,7,10), width = .2, unit = 'cm') %>% 
   width(j = 1, width = 2.8, unit = 'cm') %>% 
   width(j = c(2,3,5,6,8,9,11,12), width = 1.8, unit = 'cm') |> 
+  width(j = c(2,3,5,6), width = 1.8, unit = 'cm') |> 
+  width(j = c(11), width = 2.1, unit = 'cm') |> 
   width(j = c(9,12), width = 2.4, unit = 'cm') 
 
 tabela_acumulado

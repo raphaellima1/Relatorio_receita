@@ -104,5 +104,7 @@ projecao_ICMS <- read_csv2("./0 - DADOS/previsoes_icms_setor_mar_2024.csv") %>%
   mutate(valor = rowSums(select(., Valor, pred), na.rm = TRUE)) %>% 
   select(Setor, Mes, valor, ano, mes)
   
+new_projecoes <- read_excel("./0 - DADOS/Projeções_receita.xlsx", sheet = 1) |> 
+  mutate(data = ym(`ANOMES REFERENCIA`))
 
-
+new_projecoes_base <- read_excel("./0 - DADOS/Projeções_receita.xlsx", sheet = 2)
