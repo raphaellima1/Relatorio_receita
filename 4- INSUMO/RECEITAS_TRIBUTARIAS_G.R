@@ -1,3 +1,4 @@
+
 filtro <- c('ICMS', 'IPVA', 'Adicional de 2% ICMS', 'Contribuições ao PROTEGE',
             'Contribuição ao FUNDEINFRA', 'ITCD')
 

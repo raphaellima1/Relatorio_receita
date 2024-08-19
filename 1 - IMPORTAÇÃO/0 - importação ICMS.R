@@ -107,4 +107,10 @@ projecao_ICMS <- read_csv2("./0 - DADOS/previsoes_icms_setor_mar_2024.csv") %>%
 new_projecoes <- read_excel("./0 - DADOS/Projeções_receita.xlsx", sheet = 1) |> 
   mutate(data = ym(`ANOMES REFERENCIA`))
 
-new_projecoes_base <- read_excel("./0 - DADOS/Projeções_receita.xlsx", sheet = 2)
+new_projecoes_base <- read_excel("./0 - DADOS/Projeções_receita.xlsx", sheet = 2) %>%
+  mutate(ano = year(Mes),
+         mes = month(Mes)) %>%
+  setNames(c( 'periodo', 'setor', 'valor','alt_atualizacao', 'ano', 'mes'))
+
+
+
