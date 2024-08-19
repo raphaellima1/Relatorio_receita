@@ -19,6 +19,8 @@ suppressMessages({
 # Rodar o script ----------------------------------------------------------
   source( encoding = 'UTF-8', file = './3 - pptx/0 - geral.R')
 
+# CONJUNTURA ECONÔMICA ---------------------------------------------------------
+  source( encoding = 'UTF-8', file = './2 - Importação Atividade economica.R')
 
 })
 })
