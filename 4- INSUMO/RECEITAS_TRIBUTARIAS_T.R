@@ -22,15 +22,27 @@ tabela_total <- receitas_base %>%
   arrange(index) %>% 
   setNames(c('Tipo', 'mes_23', 'mes_24')) %>% 
   select(1:3) %>% 
-  
-  add_column(col_space = NA, .name_repair = "universal") #%>% 
-  
-
-new_projecoes |> 
+  add_column(col_space = NA, .name_repair = "universal") %>% 
+  arrange(Tipo) |> 
+  # Adicionar as projeções
+  bind_cols(new_projecoes |> 
   filter(month(data) <= month(mes_atualizacao) &
            year(data) == year(mes_atualizacao)) |> 
   group_by(RECEITA) |> 
-  summarise(valor = sum(`VALOR PROJECAO`, na.rm = T))
+  summarise(valor = sum(`VALOR PROJECAO`, na.rm = T)) |> 
+  bind_rows(data.frame(RECEITA = c('Adicional de 2%'), valor = c(0))) |> 
+  arrange(RECEITA) |> 
+    select(-RECEITA) |> 
+    setNames('Proj_acum')) |> 
+  bind_cols(new_projecoes |> 
+              filter(month(data) == month(mes_atualizacao) &
+                       year(data) == year(mes_atualizacao)) |> 
+              group_by(RECEITA) |> 
+              summarise(valor = sum(`VALOR PROJECAO`, na.rm = T)) |> 
+              bind_rows(data.frame(RECEITA = c('Adicional de 2%'), valor = c(0))) |> 
+              arrange(RECEITA) |> 
+              select(-RECEITA) |> 
+              setNames('Proj_acum_mes'))
 
 
 
