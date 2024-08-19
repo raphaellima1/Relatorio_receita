@@ -79,9 +79,9 @@ my <- my %>%
   ph_with(value = espaco('\n',vezes = 4,'5.'), location = ph_location_type(type = "subTitle"))
 
 source( encoding = 'UTF-8', file = './3 - pptx/RECEITAS TRIBUTARIAS.R')
-# 
+
 # source( encoding = 'UTF-8', file = './3 - pptx/RECEITAS TRIBUTARIAS G.R')
-# 
+
 # source( encoding = 'UTF-8', file = './3 - pptx/MACRO SETORES.R')
 
 # # add capa_seção - Seção 1

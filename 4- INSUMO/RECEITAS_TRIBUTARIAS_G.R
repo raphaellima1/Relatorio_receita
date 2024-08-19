@@ -9,19 +9,28 @@ tabela_graf_total <- receitas_base %>%
   summarise(Valor = sum(Valor)) %>% 
   pivot_wider(names_from = 'Ano', values_from = Valor) %>% 
   setNames(c('mes', 'ano_23', 'ano_24')) %>% 
-  bind_cols(projecao_base %>% 
-              filter(DESCRIÇÃO == 'TOTAL') %>%
-              select(name, Valor) %>% 
-              mutate(Valor = Valor)) %>% 
+  bind_cols(new_projecoes |> 
+              mutate(data = ym(`ANOMES REFERENCIA`)) |> 
+              group_by(data) |> 
+              summarise(valor = sum(`VALOR PROJECAO`, na.rm = T),
+                        lim_sup = sum(`LIMITE SUPERIOR`, na.rm = T),
+                        lim_inf = sum(`LIMITE INFERIOR`, na.rm = T)) |> 
+              filter(year(data) == '2024')) %>% 
   mutate(data = as.Date(paste0('2024-', mes, '-', '01'))) 
 
 
 tabela_graf_total$acum_23 <- cumsum(tabela_graf_total$ano_23)
 tabela_graf_total$acum_24 <- cumsum(tabela_graf_total$ano_24)
-tabela_graf_total$acum_proj <- cumsum(tabela_graf_total$Valor)
+tabela_graf_total$acum_proj <- cumsum(tabela_graf_total$valor)
+tabela_graf_total$acum_lim_s <- cumsum(tabela_graf_total$lim_sup)
+tabela_graf_total$acum_lim_inf <- cumsum(tabela_graf_total$lim_inf)
+
 
 fig1 <- tabela_graf_total %>% 
+  mutate(fant_24 = sub("\\.", ",", round(acum_24 / 1000000000, digits = 2))) |> 
   ggplot()+
+  
+  geom_ribbon(aes(x = data, ymin = acum_lim_inf, ymax = acum_lim_s), fill = "grey80", alpha = 0.5) +
   
   geom_line(aes(x = data, y = acum_proj, color = "Projeção 2024", 
                 linetype = "Projeção 2024"), size=0.5) +
@@ -32,7 +41,7 @@ fig1 <- tabela_graf_total %>%
   geom_line(aes(x = data, y = acum_24, color = "Acumulado 2024", 
                 linetype = "Acumulado 2024"), size=1) +
   
-
+  geom_label(aes(x = data, y = acum_24, label = fant_24),vjust = -0.7,colour = cor2[1])+
   
   labs(x = "  ", 
        y = "Valores em Reais (R$)", 
