@@ -117,15 +117,15 @@ tabela_COM_ICMS <- tabela_COMB %>%
                             '   ', "Projeções", '    ', 
                             'Diferença em R$ (Real./24) - (Proj./24)'), 
                  colwidths = c(1,2,1,2,1,2,1,2)) %>% 
-  #merge_at(i = 1:2, j = 1, part = "header") %>% 
+
   merge_at(i = 1:2, j = c(1), part = "header") %>% 
   align(i = 1, j = NULL, align = "center", part = "header") %>% 
   hline(i = 1, j = c(2,3,5,6,8,9,11,12), part = "header", 
-        border =  std_border) %>% 
+         border =  std_border) %>% 
   width(j = c(4,7,10), width = .2, unit = 'cm') %>% 
   width(j = 1, width = 4.0, unit = 'cm') %>% 
-  width(j = c(2,3,5,6,8,9,11,12), width = 1.9, unit = 'cm') |> 
-  width(j = c(9,12), width = 2.5, unit = 'cm')
+  width(j = c(2,3,5,6,8,11), width = 1.8, unit = 'cm') |> 
+  width(j = c(9,12), width = 2.4, unit = 'cm')
 
 index <- c(1:11)
 # Definir o tamanho do gráfico

@@ -66,7 +66,7 @@ my <- my %>%
 
   ph_with(value = empty_content(),
           location = ph_location_type(type = "sldNum")) %>%
-  #
+
   ph_with(tabela_COM_ICMS,
           location = ph_location(left = 0.4, top = 1.3)) %>%
 
