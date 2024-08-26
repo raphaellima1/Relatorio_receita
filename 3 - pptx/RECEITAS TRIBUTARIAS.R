@@ -76,7 +76,7 @@ my <- my %>%
                                  width = 4,
                                  height = 5)) %>%
 
-  ph_with(block_list(fpar(ftext(glue('(Em R$ milhões)'),
+  ph_with(block_list(fpar(ftext(glue('(Em milhões de R$)'),
                                 prop = fp_text(font.size = 12,
                                                color = "#292929")),
                           fp_p = border1)),

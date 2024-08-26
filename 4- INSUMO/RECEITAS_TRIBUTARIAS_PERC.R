@@ -1,6 +1,7 @@
 #------------- fig 1 - COMBUSTÍVEL ------------------
 index <- c(1:7,10,8:9)
 
+# PEGANDO OS VALORES DE T E T-1 E CALCULANDO O ACUMULADO
 tabela_COMB <- ICMS_base %>% 
   mutate(mes = month(data)) %>% 
   filter(Ano >= 2023,
@@ -10,7 +11,7 @@ tabela_COMB <- ICMS_base %>%
   pivot_wider(names_from = Ano, values_from = Valor) %>%
   setNames(c('Grupo', 'acum_23', 'acum_24')) %>%
   arrange(Grupo) %>%
-  
+# INSERINDO O VALOR MENSAL DE T-1
   bind_cols(ICMS_base %>% 
               mutate(mes = month(data)) %>% 
               filter(Ano == 2023,
@@ -18,8 +19,8 @@ tabela_COMB <- ICMS_base %>%
               group_by(Grupo) %>% 
               summarise(Valor = sum(Valor)/1000000) %>% 
               select(Valor) %>% 
-              setNames('mes_23')) %>% 
-  
+              setNames('mes_23')) %>%
+# INSERINDO O VALOR MENSAL DE T
   bind_cols(ICMS_base %>% 
               mutate(mes = month(data)) %>% 
               filter(Ano == 2024,
@@ -28,7 +29,7 @@ tabela_COMB <- ICMS_base %>%
               summarise(Valor = sum(Valor)/1000000) %>% 
               select(Valor) %>% 
               setNames('mes_24')) %>% 
-  
+# INSERINDO OS VALORES MENSAIS PROJETADOS POR SETOR PARA T  
   bind_cols(new_projecoes_base %>%
               filter(ano == 2024,
                      mes == month(data_fim)) %>% 
@@ -42,8 +43,8 @@ tabela_COMB <- ICMS_base %>%
               summarise(valor = sum(valor)) %>%
               filter(grupo != 'SIMPLES NACIONAL') %>%
               select(valor) %>% 
-              setNames('proj_me')) %>% 
-  
+              setNames('proj_me')) %>%
+# INSERINDO OS VALORES PROJETADOS ACUMULADOS PARA T
   bind_cols(new_projecoes_base %>%
               filter(ano == 2024,
                      mes <= month(data_fim)) %>% 
@@ -58,20 +59,27 @@ tabela_COMB <- ICMS_base %>%
               filter(grupo != 'SIMPLES NACIONAL') %>%
               select(valor) %>% 
               setNames('proj_acum')) %>% 
+# ADICIONANDO COLUNAS VARIAS
   add_column(col_space1 = NA, .name_repair = "universal") %>% 
-  add_column(col_space2 = NA, .name_repair = "universal") %>% 
+  add_column(col_space2 = NA, .name_repair = "universal") %>%
+# ORDENANDO AS POSIÇÕES DAS COLUNAS
   select(Grupo, mes_23, mes_24, col_space1, acum_23, 
          acum_24,col_space2, proj_me, proj_acum) %>% 
-  mutate(index_ordem = index) %>% 
-  arrange(index) %>% 
-  select(-index_ordem) |> 
-  adorn_totals()  %>%   
+# CRIANDO UMA COLUNA DE ÍNDICES PARA ORDENAR OS SETORES
+  mutate(index_ordem = index) %>%
+  arrange(index) %>%
+# EXCLUINDO A COLUNA
+  select(-index_ordem) |>
+# LINHA DOS TOTAIS
+  adorn_totals()  %>%
+# COLUNA VAZIA
   add_column(col_space = NA, .name_repair = "universal") %>%
+# COLUNAS DE DIFERENÇAS E TAXAS DE CRESCIMENTO
   mutate(dif_mes = mes_24 - proj_me,
          dif_acum = acum_24 - proj_acum,
          crescimento = ((acum_24 - acum_23)/acum_23)*100)
 
-
+# CRIANDO A TABELA
 tabela_COM_ICMS <- tabela_COMB %>%
   select(-crescimento) %>%
   flextable() %>% 

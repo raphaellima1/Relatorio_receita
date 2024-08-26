@@ -1,5 +1,5 @@
-# Tabela do ICMS ----------------------------------------------------------
 
+# Tabela do ICMS ----------------------------------------------------------
 
 ICMS_base <- read_excel("./0 - DADOS/ICMS_TOTAL_2024.xlsx", 
                         sheet = "ICMS", 

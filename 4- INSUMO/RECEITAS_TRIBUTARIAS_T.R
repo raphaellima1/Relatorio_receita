@@ -10,7 +10,7 @@ data_fim <- max(receitas_base$data)
 
 tabela_total <- receitas_base %>% 
   mutate(mes = month(data)) %>%
-# FILTRA AS RECEITAS PARA (MÊS ATUAL-1) DE 2023 E 2024
+# FILTRA AS RECEITAS PARA O MÊS ATUAL-1 DE T E T-1
   filter(mes == month(data_fim) & Ano >= 2023) %>%
   group_by(Ano, Tipo) %>% 
 # CONVERTE OS VALORES PARA MILHÕES E SOMA O QUE FOI ARRECADADO AO LONGO DO MÊS PARA CADA UMA DAS RECEITAS
@@ -24,7 +24,7 @@ tabela_total <- receitas_base %>%
   select(1:3) %>% 
   add_column(col_space = NA, .name_repair = "universal") %>% 
   arrange(Tipo) |> 
-  # PUXANDO DADOS DAS RECEITAS PARA CALCULAR O ACUMULADO ATÉ O MÊS ANTERIOR AO ATUAL EM 2023 E 2024
+# PUXANDO DADOS DAS RECEITAS PARA CALCULAR O ACUMULADO ATÉ O MÊS ANTERIOR AO ATUAL EM T-1 E T
   bind_cols(receitas_base %>% 
               mutate(mes = month(data)) %>% 
               filter(mes <= month(data_fim), Ano >= 2023) %>% 
@@ -36,7 +36,7 @@ tabela_total <- receitas_base %>%
               select(2:3)
   ) %>% 
   add_column(col_space = NA, .name_repair = "universal") %>% 
-  # Adicionar as projeções
+# Adicionar as projeções
   bind_cols(new_projecoes |> 
               filter(month(data) == month(mes_atualizacao) &
                        year(data) == year(mes_atualizacao)) |> 
@@ -47,7 +47,6 @@ tabela_total <- receitas_base %>%
               select(-RECEITA) |> 
               setNames('projecao_mes') |> 
               mutate(projecao_mes = projecao_mes/1000000)) |> 
-  
   bind_cols(new_projecoes |> 
               filter(month(data) <= month(mes_atualizacao) &
                        year(data) == year(mes_atualizacao)) |> 
@@ -66,9 +65,9 @@ tabela_total <- receitas_base %>%
   arrange(index) |> 
   select(-index) |> 
   adorn_totals(na.rm = TRUE, fill = " ") %>% 
+# RENOMEAR AS COLUNAS DA TABELA
   setNames(c("Arrecadação", "2023", "2024", " ", ' 2023', ' 2024', "  ",
              " Mensal", " Acumulado", "   ", 'Mensal', 'Acumulado'))
-  
 
 
 
